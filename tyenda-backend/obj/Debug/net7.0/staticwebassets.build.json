@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Vn+hjCYvqbw0ukrQZHjNsTB9oY8kLXy9eALGsSuPU4A=",
+  "Source": "tyenda-backend",
+  "BasePath": "_content/tyenda-backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
