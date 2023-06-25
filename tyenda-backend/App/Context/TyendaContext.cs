@@ -1,22 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using tyenda_backend.App.Models._Account_;
 using tyenda_backend.App.Models._Branches_;
+using tyenda_backend.App.Models._Cart_;
 using tyenda_backend.App.Models._Category_;
 using tyenda_backend.App.Models._City_;
 using tyenda_backend.App.Models._Country_;
 using tyenda_backend.App.Models._Customer_;
+using tyenda_backend.App.Models._Follower_;
 using tyenda_backend.App.Models._Item_;
 using tyenda_backend.App.Models._ItemColor_;
 using tyenda_backend.App.Models._ItemImage_;
+using tyenda_backend.App.Models._Like_;
 using tyenda_backend.App.Models._Order_;
 using tyenda_backend.App.Models._Role_;
 using tyenda_backend.App.Models._Session_;
+using tyenda_backend.App.Models._Size_;
 using tyenda_backend.App.Models._Store_;
 using tyenda_backend.App.Models._Store_Category_;
 using tyenda_backend.App.Models._Token_;
 using TyendaBackend.App.Models._Account_;
 using Color = tyenda_backend.App.Models._Color_.Color;
-using Size = tyenda_backend.App.Models._Size_.Size;
 
 namespace tyenda_backend.App.Context
 {
@@ -35,11 +38,15 @@ namespace tyenda_backend.App.Context
         public DbSet<StoreCategory> StoreCategories { get; set; }
 
         public DbSet<Color> Colors { get; set; }
-        public DbSet<Size> Sizes { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<Size> Sizes { get; set; }
         public DbSet<ItemImage> ItemImages { get; set; }
         public DbSet<ItemColor> ItemColors { get; set; }
+        public DbSet<Like> Likes { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Follower> Followers { get; set; }
+
+        public DbSet<Cart> Carts { get; set; }
         
         public TyendaContext(DbContextOptions<TyendaContext> opt) : base(opt) { }
 
@@ -101,6 +108,11 @@ namespace tyenda_backend.App.Context
                 .HasOne(item => item.Store)
                 .WithMany(store => store.Items)
                 .HasForeignKey(item => item.StoreId);
+
+            modelBuilder.Entity<Size>()
+                .HasOne(size => size.Item)
+                .WithMany(item => item.Sizes)
+                .HasForeignKey(size => size.ItemId);
             
             modelBuilder.Entity<ItemImage>()
                 .HasOne(itemImage => itemImage.Item)
@@ -129,6 +141,41 @@ namespace tyenda_backend.App.Context
                 .HasOne(order => order.Item)
                 .WithMany(customer => customer.Orders)
                 .HasForeignKey(order => order.ItemId);
+
+            modelBuilder.Entity<Like>().HasKey(like => new {like.ItemId, like.CustomerId});
+            modelBuilder.Entity<Like>()
+                .HasOne(like => like.Item)
+                .WithMany(item => item.Likes)
+                .HasForeignKey(like => like.ItemId);
+            modelBuilder.Entity<Like>()
+                .HasOne(like => like.Customer)
+                .WithMany(item => item.Likes)
+                .HasForeignKey(like => like.CustomerId);
+
+            modelBuilder.Entity<Follower>().HasKey(follower => new {follower.StoreId, follower.CustomerId});
+            modelBuilder.Entity<Follower>()
+                .HasOne(follower => follower.Store)
+                .WithMany(store => store.Followers)
+                .HasForeignKey(follower => follower.StoreId);
+            modelBuilder.Entity<Follower>()
+                .HasOne(follower => follower.Customer)
+                .WithMany(store => store.Followers)
+                .HasForeignKey(follower => follower.CustomerId);
+
+            modelBuilder.Entity<Cart>()
+                .HasOne(cart => cart.Customer)
+                .WithMany(customer => customer.Carts)
+                .HasForeignKey(cart => cart.CustomerId);
+            modelBuilder.Entity<Cart>()
+                .HasOne(cart => cart.Item)
+                .WithMany(customer => customer.Carts)
+                .HasForeignKey(cart => cart.ItemId);
+            modelBuilder.Entity<Cart>()
+                .HasOne(cart => cart.Store)
+                .WithMany(customer => customer.Carts)
+                .HasForeignKey(cart => cart.StoreId);
+
+
 
         }
     }

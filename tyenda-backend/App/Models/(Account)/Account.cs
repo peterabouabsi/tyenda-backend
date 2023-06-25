@@ -25,7 +25,6 @@ namespace tyenda_backend.App.Models._Account_
         public DateTime CreatedAt { get; set; }
         public string Username { get; set; } = "";
         public string Password { get; set; } = "";
-        public bool OnNovelty { get; set; } = false;
         public bool Active { get; set; } = false;
 
         public virtual Role? Role { get; set; }

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using tyenda_backend.App.Models._Account_;
+using tyenda_backend.App.Models._Cart_;
+using tyenda_backend.App.Models._Follower_;
+using tyenda_backend.App.Models._Like_;
 using tyenda_backend.App.Models._Order_;
 using TyendaBackend.App.Models._Account_;
 
@@ -13,6 +16,9 @@ namespace tyenda_backend.App.Models._Customer_
         public Customer()
         {
             Orders = new HashSet<Order>();
+            Likes = new HashSet<Like>();
+            Followers = new HashSet<Follower>();
+            Carts = new HashSet<Cart>();
         }
         
         [Key]
@@ -25,5 +31,8 @@ namespace tyenda_backend.App.Models._Customer_
         public Guid AccountId { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Like> Likes { get; set; }
+        public virtual ICollection<Follower> Followers { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; }
     }
 }

@@ -56,7 +56,6 @@ namespace tyenda_backend.App.Models._Account_.Services._Customer_Signup_
                     Password = BCrypt.Net.BCrypt.HashPassword(request.CustomerSignupForm.Password),
                     RoleId = customerRole.Id,
                     CreatedAt = DateTime.UtcNow,
-                    OnNovelty = false,
                     Active = false,
                     PhoneNumber = request.CustomerSignupForm.PhoneNumber.Trim(),
                     ProfileImage = null
