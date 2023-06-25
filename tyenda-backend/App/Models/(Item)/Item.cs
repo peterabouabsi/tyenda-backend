@@ -5,6 +5,7 @@ using tyenda_backend.App.Models._Cart_;
 using tyenda_backend.App.Models._ItemColor_;
 using tyenda_backend.App.Models._ItemImage_;
 using tyenda_backend.App.Models._Like_;
+using tyenda_backend.App.Models._Notification_;
 using tyenda_backend.App.Models._Order_;
 using tyenda_backend.App.Models._Size_;
 using tyenda_backend.App.Models._Store_;
@@ -21,6 +22,7 @@ namespace tyenda_backend.App.Models._Item_
             Likes = new HashSet<Like>();
             Sizes = new HashSet<Size>();
             Carts = new HashSet<Cart>();
+            Notifications = new HashSet<Notification>();   
         }
         
         [Key]
@@ -42,5 +44,6 @@ namespace tyenda_backend.App.Models._Item_
         public virtual ICollection<Size> Sizes { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
 
+        public virtual ICollection<Notification> Notifications { get; set; }
     }
 }

@@ -178,6 +178,15 @@ namespace tyenda_backend.App.Context
                 .WithMany(customer => customer.Carts)
                 .HasForeignKey(cart => cart.StoreId);
 
+            modelBuilder.Entity<Notification>()
+                .HasOne(notification => notification.Item)
+                .WithMany(item => item.Notifications)
+                .HasForeignKey(notification => notification.ItemId);
+            modelBuilder.Entity<Notification>()
+                .HasOne(notification => notification.Store)
+                .WithMany(item => item.Notifications)
+                .HasForeignKey(notification => notification.StoreId);
+            
             modelBuilder.Entity<Alert>().HasKey(receiver => new {receiver.AccountId, receiver.NotificationId});
             modelBuilder.Entity<Alert>()
                 .HasOne(alert => alert.Account)

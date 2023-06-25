@@ -6,6 +6,7 @@ using tyenda_backend.App.Models._Branches_;
 using tyenda_backend.App.Models._Cart_;
 using tyenda_backend.App.Models._Follower_;
 using tyenda_backend.App.Models._Item_;
+using tyenda_backend.App.Models._Notification_;
 using tyenda_backend.App.Models._Store_Category_;
 using TyendaBackend.App.Models._Account_;
 
@@ -21,6 +22,7 @@ namespace tyenda_backend.App.Models._Store_
             Items = new HashSet<Item>();
             Followers = new HashSet<Follower>();
             Carts = new HashSet<Cart>();
+            Notifications = new HashSet<Notification>();
         }
         
         [Key]
@@ -39,6 +41,7 @@ namespace tyenda_backend.App.Models._Store_
         public virtual ICollection<Item> Items { get; set; }
         public virtual ICollection<Follower> Followers { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
+        public virtual ICollection<Notification> Notifications { get; set; }
 
     }
 }
