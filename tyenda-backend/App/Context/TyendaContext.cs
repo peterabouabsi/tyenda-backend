@@ -11,7 +11,9 @@ using tyenda_backend.App.Models._Item_;
 using tyenda_backend.App.Models._ItemColor_;
 using tyenda_backend.App.Models._ItemImage_;
 using tyenda_backend.App.Models._Like_;
+using tyenda_backend.App.Models._Notification_;
 using tyenda_backend.App.Models._Order_;
+using tyenda_backend.App.Models._Alert_;
 using tyenda_backend.App.Models._Role_;
 using tyenda_backend.App.Models._Session_;
 using tyenda_backend.App.Models._Size_;
@@ -45,9 +47,10 @@ namespace tyenda_backend.App.Context
         public DbSet<Like> Likes { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Follower> Followers { get; set; }
-
         public DbSet<Cart> Carts { get; set; }
-        
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Alert> Alerts { get; set; }
+
         public TyendaContext(DbContextOptions<TyendaContext> opt) : base(opt) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -175,7 +178,15 @@ namespace tyenda_backend.App.Context
                 .WithMany(customer => customer.Carts)
                 .HasForeignKey(cart => cart.StoreId);
 
-
+            modelBuilder.Entity<Alert>().HasKey(receiver => new {receiver.AccountId, receiver.NotificationId});
+            modelBuilder.Entity<Alert>()
+                .HasOne(alert => alert.Account)
+                .WithMany(account => account.Alerts)
+                .HasForeignKey(alert => alert.AccountId);
+            modelBuilder.Entity<Alert>()
+                .HasOne(alert => alert.Notification)
+                .WithMany(account => account.Alerts)
+                .HasForeignKey(alert => alert.NotificationId);
 
         }
     }

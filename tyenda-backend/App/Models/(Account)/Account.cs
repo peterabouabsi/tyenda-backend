@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using tyenda_backend.App.Models._Alert_;
 using tyenda_backend.App.Models._Customer_;
 using tyenda_backend.App.Models._Role_;
 using tyenda_backend.App.Models._Session_;
@@ -15,6 +16,7 @@ namespace tyenda_backend.App.Models._Account_
         public Account()
         {
             Tokens = new HashSet<Token>();
+            Alerts = new HashSet<Alert>();
         }
         
         [Key]
@@ -35,6 +37,8 @@ namespace tyenda_backend.App.Models._Account_
         public virtual Customer? Customer { get; set; }
         public virtual Store? Store { get; set; }
         public virtual Session? Session { get; set; }
-        
+
+        public virtual ICollection<Alert> Alerts { get; set; }
+
     }
 }
