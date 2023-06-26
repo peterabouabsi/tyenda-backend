@@ -26,7 +26,7 @@ namespace tyenda_backend.App.Models._Notification_
         public virtual Item? Item { get; set; }
         
         public Guid StoreId { get; set; }
-        public virtual Store Store { get; set; }
+        public virtual Store? Store { get; set; }
 
         public virtual ICollection<Alert> Alerts { get; set; }
     }
