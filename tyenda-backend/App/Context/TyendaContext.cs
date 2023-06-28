@@ -14,19 +14,21 @@ using tyenda_backend.App.Models._Like_;
 using tyenda_backend.App.Models._Notification_;
 using tyenda_backend.App.Models._Order_;
 using tyenda_backend.App.Models._Alert_;
+using tyenda_backend.App.Models._ItemCategory_;
+using tyenda_backend.App.Models._ItemRate_;
 using tyenda_backend.App.Models._Role_;
 using tyenda_backend.App.Models._Session_;
 using tyenda_backend.App.Models._Size_;
 using tyenda_backend.App.Models._Store_;
 using tyenda_backend.App.Models._Store_Category_;
 using tyenda_backend.App.Models._Token_;
-using TyendaBackend.App.Models._Account_;
 using Color = tyenda_backend.App.Models._Color_.Color;
 
 namespace tyenda_backend.App.Context
 {
     public class TyendaContext : DbContext
     {
+
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Token> Tokens { get; set; }
         public DbSet<Session> Sessions { get; set; }
@@ -38,9 +40,10 @@ namespace tyenda_backend.App.Context
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<StoreCategory> StoreCategories { get; set; }
-
         public DbSet<Color> Colors { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<ItemRate> ItemRates { get; set; }
+        public DbSet<ItemCategory> ItemCategories { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<ItemImage> ItemImages { get; set; }
         public DbSet<ItemColor> ItemColors { get; set; }
@@ -111,6 +114,26 @@ namespace tyenda_backend.App.Context
                 .HasOne(item => item.Store)
                 .WithMany(store => store.Items)
                 .HasForeignKey(item => item.StoreId);
+            
+            modelBuilder.Entity<ItemRate>().HasKey(itemColor => new {itemColor.ItemId, itemColor.CustomerId});
+            modelBuilder.Entity<ItemRate>()
+                .HasOne(itemColor => itemColor.Item)
+                .WithMany(item => item.ItemRates)
+                .HasForeignKey(itemColor => itemColor.ItemId);
+            modelBuilder.Entity<ItemRate>()
+                .HasOne(itemColor => itemColor.Customer)
+                .WithMany(color => color.ItemRates)
+                .HasForeignKey(itemColor => itemColor.CustomerId);
+
+            modelBuilder.Entity<ItemCategory>().HasKey(itemCategory => new {itemCategory.ItemId, itemCategory.CategoryId});
+            modelBuilder.Entity<ItemCategory>()
+                .HasOne(itemCategory => itemCategory.Item)
+                .WithMany(item => item.ItemCategories)
+                .HasForeignKey(itemCategory => itemCategory.ItemId);
+            modelBuilder.Entity<ItemCategory>()
+                .HasOne(itemCategory => itemCategory.Category)
+                .WithMany(item => item.ItemCategories)
+                .HasForeignKey(itemCategory => itemCategory.CategoryId);
 
             modelBuilder.Entity<Size>()
                 .HasOne(size => size.Item)
@@ -196,7 +219,6 @@ namespace tyenda_backend.App.Context
                 .HasOne(alert => alert.Notification)
                 .WithMany(account => account.Alerts)
                 .HasForeignKey(alert => alert.NotificationId);
-
         }
     }
 }

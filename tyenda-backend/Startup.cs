@@ -110,6 +110,19 @@ namespace tyenda_backend
                     ClockSkew = TimeSpan.Zero
                 };
             });
+            
+            //Roles Authentication
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("CustomerPolicy", policy =>
+                {
+                    policy.RequireClaim("Role", "Customer");
+                });
+                options.AddPolicy("StorePolicy", policy =>
+                {
+                    policy.RequireClaim("Role", "Store");
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

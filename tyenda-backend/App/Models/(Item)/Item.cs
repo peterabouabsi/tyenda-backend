@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using tyenda_backend.App.Models._Cart_;
+using tyenda_backend.App.Models._ItemCategory_;
 using tyenda_backend.App.Models._ItemColor_;
 using tyenda_backend.App.Models._ItemImage_;
+using tyenda_backend.App.Models._ItemRate_;
 using tyenda_backend.App.Models._Like_;
 using tyenda_backend.App.Models._Notification_;
 using tyenda_backend.App.Models._Order_;
@@ -22,7 +24,9 @@ namespace tyenda_backend.App.Models._Item_
             Likes = new HashSet<Like>();
             Sizes = new HashSet<Size>();
             Carts = new HashSet<Cart>();
-            Notifications = new HashSet<Notification>();   
+            Notifications = new HashSet<Notification>();
+            ItemCategories = new HashSet<ItemCategory>();
+            ItemRates = new HashSet<ItemRate>();
         }
         
         [Key]
@@ -43,7 +47,8 @@ namespace tyenda_backend.App.Models._Item_
         public virtual ICollection<Like> Likes { get; set; }
         public virtual ICollection<Size> Sizes { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
-
         public virtual ICollection<Notification> Notifications { get; set; }
+        public virtual ICollection<ItemCategory> ItemCategories { get; set; }
+        public virtual ICollection<ItemRate> ItemRates { get; set; }
     }
 }

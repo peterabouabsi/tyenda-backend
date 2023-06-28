@@ -63,6 +63,7 @@ namespace tyenda_backend.App.Models._Account_.Services._Store_Signup_
                 var newStore = new Store()
                 {
                     Id = Guid.NewGuid(),
+                    Name = signupForm.StoreName,
                     Website = signupForm.Website,
                     OwnerName = signupForm.OwnerName,
                     OwnerEmail = signupForm.OwnerEmail,

@@ -27,6 +27,7 @@ namespace tyenda_backend.App.Models._Store_
         
         [Key]
         public Guid Id { get; set; }
+        public string Name { get; set; } = "";
         public string OwnerName { get; set; } = "";
         public string OwnerEmail { get; set; } = "";
         public string Website { get; set; } = "";
