@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using tyenda_backend.App.Models._Account_;
 using tyenda_backend.App.Models._Branches_;
 using tyenda_backend.App.Models._Cart_;
@@ -29,6 +30,8 @@ namespace tyenda_backend.App.Context
     public class TyendaContext : DbContext
     {
 
+        private readonly IConfiguration _configuration;
+
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Token> Tokens { get; set; }
         public DbSet<Session> Sessions { get; set; }
@@ -54,7 +57,10 @@ namespace tyenda_backend.App.Context
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Alert> Alerts { get; set; }
 
-        public TyendaContext(DbContextOptions<TyendaContext> opt) : base(opt) { }
+        public TyendaContext(DbContextOptions<TyendaContext> opt, IConfiguration configuration) : base(opt)
+        {
+            _configuration = configuration;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -219,6 +225,12 @@ namespace tyenda_backend.App.Context
                 .HasOne(alert => alert.Notification)
                 .WithMany(account => account.Alerts)
                 .HasForeignKey(alert => alert.NotificationId);
+        }
+        
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql(_configuration["ConnectionStrings:connection"], 
+                o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
         }
     }
 }

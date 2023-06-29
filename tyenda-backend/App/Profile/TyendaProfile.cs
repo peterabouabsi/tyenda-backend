@@ -10,6 +10,8 @@ using tyenda_backend.App.Models._Item_;
 using tyenda_backend.App.Models._Item_.Views;
 using tyenda_backend.App.Models._ItemRate_;
 using tyenda_backend.App.Models._Notification_.Views;
+using tyenda_backend.App.Models._Order_;
+using tyenda_backend.App.Models._Order_.Views;
 using tyenda_backend.App.Models._Store_;
 using tyenda_backend.App.Models._Store_.Views;
 
@@ -51,6 +53,15 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.IsFollowed, map => map.MapFrom(src => src.Followers.Count > 0? true : false))
                 .ForMember(dest => dest.IsAddedToCart, map => map.MapFrom(src => src.Carts.Count > 0 ? true : false))
                 .ForMember(dest => dest.CreatedAt, map => map.MapFrom(src => src.Account!.CreatedAt));
+
+            CreateMap<Order, OrderBasicView>()
+                .ForMember(dest => dest.City, map => map.MapFrom(src => src.City!.Value))
+                .ForMember(dest => dest.Country, map => map.MapFrom(src => src.City!.Country!.Value))
+                .ForMember(dest => dest.Price, map => map.MapFrom(src => src.Item!.Discount == 0? src.Item!.Price * src.Quantity : (src.Item!.Price - (src.Item!.Price * ((decimal) src.Item!.Discount / 100))) * src.Quantity))
+                .ForMember(dest => dest.CustomerName, map => map.MapFrom(src => src.Customer!.Firstname + " " + src.Customer!.Lastname))
+                .ForMember(dest => dest.ItemName, map => map.MapFrom(src => src.Item!.Value))
+                .ForMember(dest => dest.ProfileImage, map => map.MapFrom(src => src.Item!.Store!.Account!.ProfileImage))
+                .ForMember(dest => dest.StoreName, map => map.MapFrom(src => src.Item!.Store!.Name));
         }
 
         private static double GenerateItemRate(ICollection<ItemRate> itemRates)

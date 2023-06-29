@@ -2,10 +2,10 @@
 {
     public enum OrderStatus
     {
-        Submitted,
-        Approved,
-        Rejected,
-        OnGoing,
-        Completed
+        Submitted, //0
+        Approved,  //1
+        Rejected,  //2
+        OnGoing,   //3
+        Completed  //4
     }
 }
