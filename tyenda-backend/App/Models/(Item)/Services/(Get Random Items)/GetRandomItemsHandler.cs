@@ -43,6 +43,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Get_Random_Items_
                     .Include(item => item.Carts.Where(cart => cart.CustomerId == customer!.Id))
                     .Include(item => item.Store)
                     .ThenInclude(store => store!.Account)
+                    .Include(item => item.Likes.Where(like => like.CustomerId == customer!.Id))
                     .OrderBy(item => item.Id)
                     .Skip(skip)
                     .Take(top)

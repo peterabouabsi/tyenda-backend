@@ -13,5 +13,6 @@
         public string ItemImage { get; set; } = "";
         public string Description { get; set; } = "";
         public bool IsAddedToCart { get; set; } = false;
+        public bool IsItemLiked { get; set; } = false;
     }
 }

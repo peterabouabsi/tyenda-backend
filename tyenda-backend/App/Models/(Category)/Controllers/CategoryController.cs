@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
@@ -22,7 +23,7 @@ namespace tyenda_backend.App.Models._Category_.Controllers
         }
 
         [HttpGet()]
-        public async Task<IActionResult> GetCategories()
+        public async Task<IActionResult> GetAllCategories()
         {
             try
             {
@@ -36,5 +37,6 @@ namespace tyenda_backend.App.Models._Category_.Controllers
                 return Ok(new {error = true, message = error.Message});
             }
         }
+
     }
 }

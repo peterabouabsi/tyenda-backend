@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using tyenda_backend.App.Base_Controllers;
 using tyenda_backend.App.Models._Item_.Services._AddToCart_;
 using tyenda_backend.App.Models._Item_.Services._Get_Random_Items_;
+using tyenda_backend.App.Models._Item_.Services._Like_Item_;
+using tyenda_backend.App.Models._Item_.Services._Like_Item_.Form;
 using tyenda_backend.App.Models._Item_.Services._Top_Selling_Item_;
 using tyenda_backend.App.Models._Item_.Views;
 using tyenda_backend.App.Models.Form;
@@ -66,6 +68,22 @@ namespace tyenda_backend.App.Models._Item_.Controllers
                 var req = new AddToCart(form);
                 var res = await _mediator.Send(req);
                 return Ok(new {isAddedToCart = res});
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [Authorize(Policy = "CustomerPolicy")]
+        [HttpPost("Like()")]
+        public async Task<IActionResult> LikeItem([FromBody] LikeItemForm form)
+        {
+            try
+            {
+                var req = new LikeItem(form);
+                var res = await _mediator.Send(req);
+                return Ok(new {isItemLiked = res});
             }
             catch (Exception error)
             {

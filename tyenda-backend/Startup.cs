@@ -29,6 +29,7 @@ namespace tyenda_backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "[My Projects] Tyenda", Version = "v1"});
                 
@@ -56,7 +57,6 @@ namespace tyenda_backend
                         new List<string>()
                     }
                 });
-
             });
             
             //Db Context
@@ -75,8 +75,6 @@ namespace tyenda_backend
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IEmailService, EmailService>();
             
-            //Email
-
             //Cors
             services.AddCors(options =>
             {
@@ -128,11 +126,6 @@ namespace tyenda_backend
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            app.UseCors();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -144,9 +137,16 @@ namespace tyenda_backend
 
             app.UseRouting();
 
+            app.UseCors();
+            
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
+
     }
 }

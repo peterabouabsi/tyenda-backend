@@ -55,16 +55,7 @@ namespace tyenda_backend.App.Models._Account_.Services._Login_
 
                     var accessToken = _tokenService.GenerateAccessToken(tokenClaims);
                     var refreshToken = _tokenService.GenerateRefreshToken(tokenClaims);
-                
-                    var existingSession = await _context.Sessions.SingleOrDefaultAsync(
-                        session => session.AccountId == account.Id,
-                        cancellationToken);
-                
-                    if (existingSession != null)
-                    {
-                        _context.Sessions.Remove(existingSession);
-                    }
-                
+
                     var newSession = new Session()
                     {
                         Id = Guid.NewGuid(),

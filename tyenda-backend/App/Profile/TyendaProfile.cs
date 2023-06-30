@@ -42,6 +42,7 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.StoreName, map => map.MapFrom(src => src.Store!.Name))
                 .ForMember(dest => dest.ProfileImage, map => map.MapFrom(src => src.Store!.Account!.ProfileImage))
                 .ForMember(dest => dest.IsAddedToCart, map => map.MapFrom(src => src.Carts.Count > 0 ? true : false))
+                .ForMember(dest => dest.IsItemLiked, map => map.MapFrom(src => src.Likes.Count > 0 ? true : false))
                 .ForMember(dest => dest.StoreEmail, map => map.MapFrom(src => src.Store!.Account!.Email))
                 .ForMember(dest => dest.Price, map => map.MapFrom(src => src.Discount > 0 ? src.Price - (src.Price * ((decimal) src.Discount / 100)) : src.Price))
                 .ForMember(dest => dest.Rate, map => map.MapFrom(src =>  GenerateItemRate(src.ItemRates)));

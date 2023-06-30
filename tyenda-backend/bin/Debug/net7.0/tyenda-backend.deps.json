@@ -14,12 +14,13 @@
           "MediatR": "7.0.0",
           "MediatR.Extensions.Microsoft.DependencyInjection": "7.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.0",
-          "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "7.0.0",
+          "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "7.0.8",
           "Microsoft.AspNetCore.OpenApi": "7.0.0",
           "Microsoft.EntityFrameworkCore": "7.0.0",
           "Microsoft.EntityFrameworkCore.Design": "7.0.0",
           "Microsoft.EntityFrameworkCore.Tools": "7.0.0",
           "MimeKit": "4.0.0",
+          "Newtonsoft.Json": "13.0.1",
           "Npgsql": "7.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.0",
           "Swashbuckle.AspNetCore": "6.4.0"
@@ -118,28 +119,28 @@
           }
         }
       },
-      "Microsoft.AspNetCore.JsonPatch/7.0.0": {
+      "Microsoft.AspNetCore.JsonPatch/7.0.8": {
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
           "Newtonsoft.Json": "13.0.1"
         },
         "runtime": {
           "lib/net7.0/Microsoft.AspNetCore.JsonPatch.dll": {
-            "assemblyVersion": "7.0.0.0",
-            "fileVersion": "7.0.22.51819"
+            "assemblyVersion": "7.0.8.0",
+            "fileVersion": "7.0.823.31807"
           }
         }
       },
-      "Microsoft.AspNetCore.Mvc.NewtonsoftJson/7.0.0": {
+      "Microsoft.AspNetCore.Mvc.NewtonsoftJson/7.0.8": {
         "dependencies": {
-          "Microsoft.AspNetCore.JsonPatch": "7.0.0",
+          "Microsoft.AspNetCore.JsonPatch": "7.0.8",
           "Newtonsoft.Json": "13.0.1",
           "Newtonsoft.Json.Bson": "1.0.2"
         },
         "runtime": {
           "lib/net7.0/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll": {
-            "assemblyVersion": "7.0.0.0",
-            "fileVersion": "7.0.22.51819"
+            "assemblyVersion": "7.0.8.0",
+            "fileVersion": "7.0.823.31807"
           }
         }
       },
@@ -609,19 +610,19 @@
       "path": "microsoft.aspnetcore.authentication.jwtbearer/7.0.0",
       "hashPath": "microsoft.aspnetcore.authentication.jwtbearer.7.0.0.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.JsonPatch/7.0.0": {
+    "Microsoft.AspNetCore.JsonPatch/7.0.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-svHQiUvLNdI2nac68WNQHNo/ZWyavFpt3Oip09QRnWeFqG9iyakKiNLavXr6KE8y7KxEXZNld96KQYbKz8SJMQ==",
-      "path": "microsoft.aspnetcore.jsonpatch/7.0.0",
-      "hashPath": "microsoft.aspnetcore.jsonpatch.7.0.0.nupkg.sha512"
+      "sha512": "sha512-1nfhZ34Hw7H+t+uwkA0p1Q97amvjLGxhJJ6LK+0/qIblf2HlBQDTyhiSD2VIoHp0mo2rhoiubFk6o5rV3GQ1EQ==",
+      "path": "microsoft.aspnetcore.jsonpatch/7.0.8",
+      "hashPath": "microsoft.aspnetcore.jsonpatch.7.0.8.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Mvc.NewtonsoftJson/7.0.0": {
+    "Microsoft.AspNetCore.Mvc.NewtonsoftJson/7.0.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-IJOsB1cm6FYGXxhlNoWR6zZYFREEBzeFX76NlBGhrZ7+VMK4piLm3fAgUBliasyEUg5MOOqFz5EGv8nmU5rXWQ==",
-      "path": "microsoft.aspnetcore.mvc.newtonsoftjson/7.0.0",
-      "hashPath": "microsoft.aspnetcore.mvc.newtonsoftjson.7.0.0.nupkg.sha512"
+      "sha512": "sha512-zpUnjjBMaGPIndirgmn6lj1TctrjUfSH/gveOhFi6gGcq76e2dGGzmVovugjdzdHuMvyQYxQup6Q/59KeTuBcA==",
+      "path": "microsoft.aspnetcore.mvc.newtonsoftjson/7.0.8",
+      "hashPath": "microsoft.aspnetcore.mvc.newtonsoftjson.7.0.8.nupkg.sha512"
     },
     "Microsoft.AspNetCore.OpenApi/7.0.0": {
       "type": "package",
