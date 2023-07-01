@@ -8,46 +8,45 @@ using Microsoft.EntityFrameworkCore;
 using tyenda_backend.App.Context;
 using tyenda_backend.App.Services.Token_Service;
 
-namespace tyenda_backend.App.Models._Cart_.Services._Get_Stores_
+namespace tyenda_backend.App.Models._Cart_.Services._Get_Items_
 {
-    public class GetStoresHandler : IRequestHandler<GetStores, ICollection<Cart>>
+    public class GetItemsHandler : IRequestHandler<GetItems, ICollection<Cart>>
     {
         private readonly TyendaContext _context;
         private readonly ITokenService _tokenService;
 
-        public GetStoresHandler(TyendaContext context, ITokenService tokenService)
+        public GetItemsHandler(TyendaContext context, ITokenService tokenService)
         {
             _context = context;
             _tokenService = tokenService;
         }
 
-        public async Task<ICollection<Cart>> Handle(GetStores request, CancellationToken cancellationToken)
+        public async Task<ICollection<Cart>> Handle(GetItems request, CancellationToken cancellationToken)
         {
             try
             {
                 var accountId = _tokenService.GetHeaderTokenClaim("AccountId");
-                var customer = await _context.Customers
-                    .SingleOrDefaultAsync(customer => customer.AccountId == Guid.Parse(accountId), cancellationToken);
+                var customer = await _context.Customers.SingleOrDefaultAsync(customer => customer.AccountId == Guid.Parse(accountId), cancellationToken);
                 if (customer == null)
                 {
                     throw new UnauthorizedAccessException("Customer not found");
                 }
 
                 var customerId = customer.Id;
-
-                var storesCart = await _context.Carts
-                    .Where(cart => cart.CustomerId == customerId && cart.StoreId != null)
-                    .Include(cart => cart.Store)
+                var itemsCart = await _context.Carts
+                    .Where(cart => cart.CustomerId == customerId && cart.ItemId != null)
+                    .Include(cart => cart.Item!)
+                    .ThenInclude(item => item.Likes)
+                    .Include(cart => cart.Item!.ItemRates)
+                    .Include(cart => cart.Item!.Orders)
+                    .Include(cart => cart.Item!.ItemImages)
+                    .Include(cart => cart.Item!.Store)
                     .ThenInclude(store => store!.Account)
-                    .Include(cart => cart.Store!.Items)
-                    .ThenInclude(item => item.Orders)
-                    .Include(cart => cart.Store!.Followers)
                     .OrderByDescending(cart => cart.Store!.Account!.CreatedAt)
                     .Take(request.Top)
                     .ToArrayAsync(cancellationToken);
 
-                return storesCart;
-                
+                return itemsCart;
             }
             catch (Exception error)
             {

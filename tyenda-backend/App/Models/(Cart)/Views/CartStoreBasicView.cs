@@ -11,6 +11,5 @@
         public int ItemsCount { get; set; } = 0;
         public int OrdersCount { get; set; } = 0;
         public string Description { get; set; } = "";
-        public bool IsAddedToCart { get; set; } = true;
     }
 }

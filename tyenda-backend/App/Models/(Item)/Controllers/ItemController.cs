@@ -65,6 +65,7 @@ namespace tyenda_backend.App.Models._Item_.Controllers
         {
             try
             {
+                Console.Write(form.ItemId);
                 var req = new AddRemoveCart(form);
                 var res = await _mediator.Send(req);
                 return Ok(new {isAddedToCart = res});

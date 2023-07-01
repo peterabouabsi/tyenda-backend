@@ -27,6 +27,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Remove_Cart_
             {
 
                 var accountId = _tokenService.GetHeaderTokenClaim("AccountId");
+
                 var customer = await _context.Customers.SingleOrDefaultAsync(customer => customer.AccountId == Guid.Parse(accountId), cancellationToken);
 
                 if (customer == null)
@@ -36,7 +37,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Remove_Cart_
 
                 var customerId = customer.Id;
                 var itemId = Guid.Parse(request.AddRemoveCartForm.ItemId!);
-
+                
                 var myCart = await _context.Carts.SingleOrDefaultAsync(cart => cart.ItemId == itemId && cart.CustomerId == customerId,cancellationToken);
 
                 var isAddedToCart = false;
