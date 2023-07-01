@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using tyenda_backend.App.Models._Alert_;
+using tyenda_backend.App.Models._Cart_;
+using tyenda_backend.App.Models._Cart_.Views;
 using tyenda_backend.App.Models._Category_;
 using tyenda_backend.App.Models._City_;
 using tyenda_backend.App.Models._City_.Views;
@@ -21,6 +23,7 @@ namespace tyenda_backend.App.Profile
     {
         public TyendaProfile()
         {
+            //------------------------------------------------Mapping------------------------------------------------
             CreateMap<Country, BasicCountryView>();
 
             CreateMap<City, BasicCityView>();
@@ -45,7 +48,7 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.IsItemLiked, map => map.MapFrom(src => src.Likes.Count > 0 ? true : false))
                 .ForMember(dest => dest.StoreEmail, map => map.MapFrom(src => src.Store!.Account!.Email))
                 .ForMember(dest => dest.Price, map => map.MapFrom(src => src.Discount > 0 ? src.Price - (src.Price * ((decimal) src.Discount / 100)) : src.Price))
-                .ForMember(dest => dest.Rate, map => map.MapFrom(src =>  GenerateItemRate(src.ItemRates)));
+                .ForMember(dest => dest.Rate, map => map.MapFrom(src => GenerateItemRate(src.ItemRates)));
 
             CreateMap<Store, StoreModerateView>()
                 .ForMember(dest => dest.ProfileImage, map => map.MapFrom(src => src.Account!.ProfileImage))
@@ -63,9 +66,21 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.ItemName, map => map.MapFrom(src => src.Item!.Value))
                 .ForMember(dest => dest.ProfileImage, map => map.MapFrom(src => src.Item!.Store!.Account!.ProfileImage))
                 .ForMember(dest => dest.StoreName, map => map.MapFrom(src => src.Item!.Store!.Name));
-        }
 
-        private static double GenerateItemRate(ICollection<ItemRate> itemRates)
+            CreateMap<Cart, CartStoreBasicView>()
+                .ForMember(dest => dest.StoreId, map => map.MapFrom(src => src.Store!.Id))
+                .ForMember(dest => dest.StoreName, map => map.MapFrom(src => src.Store!.Name))
+                .ForMember(dest => dest.ProfileImage, map => map.MapFrom(src => src.Store!.Account!.ProfileImage))
+                .ForMember(dest => dest.BackgroundImage, map => map.MapFrom(src => src.Store!.BackgroundImage))
+                .ForMember(dest => dest.FollowersCount, map => map.MapFrom(src => src.Store!.Followers.Count))
+                .ForMember(dest => dest.ItemsCount, map => map.MapFrom(src => src.Store!.Items.Count))
+                .ForMember(dest => dest.OrdersCount, map => map.MapFrom(src => GenerateOrdersCount(src.Store!.Items)))
+                .ForMember(dest => dest.Description, map => map.MapFrom(src => src.Store!.Description));
+
+            //------------------------------------------------Mapping------------------------------------------------
+        }
+        
+        public static double GenerateItemRate(ICollection<ItemRate> itemRates)
         {
             var sum = 0.0;
             if (itemRates.Count == 0) return 0;
@@ -76,6 +91,18 @@ namespace tyenda_backend.App.Profile
             }
 
             return sum / itemRates.Count;
-        } 
+
+        }
+
+        public static int GenerateOrdersCount(ICollection<Item> items)
+        {
+            var count = 0;
+            foreach (var item in items)
+            {
+                count += item.Orders.Count;
+            }
+
+            return count;
+        }
     }
 }

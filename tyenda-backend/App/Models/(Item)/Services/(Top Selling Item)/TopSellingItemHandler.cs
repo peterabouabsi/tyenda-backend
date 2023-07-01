@@ -50,8 +50,12 @@ namespace tyenda_backend.App.Models._Item_.Services._Top_Selling_Item_
                     .Include(item => item.Store)
                     .ThenInclude(store => store!.Account)
                     .SingleOrDefaultAsync(item => item.Id == itemId, cancellationToken);
-                
-                return item!;
+
+                if (item == null)
+                {
+                    throw new Exception("No items sold");
+                }
+                return item;
             }
             catch (Exception error)
             {

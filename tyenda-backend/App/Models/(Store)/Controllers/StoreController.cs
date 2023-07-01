@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using tyenda_backend.App.Base_Controllers;
-using tyenda_backend.App.Models._Store_.Services._AddToCart_;
+using tyenda_backend.App.Models._Store_.Services._Add_Remove_Cart_;
 using tyenda_backend.App.Models._Store_.Services._Follow_;
 using tyenda_backend.App.Models._Store_.Services._Follow_.Form;
 using tyenda_backend.App.Models._Store_.Services._Get_Random_Stores_;
@@ -57,12 +57,12 @@ namespace tyenda_backend.App.Models._Store_.Controllers
         }
 
         [Authorize(Policy = "CustomerPolicy")]
-        [HttpPost("AddCart()")]
-        public async Task<IActionResult> AddRemoveCart([FromBody] AddToCartForm form)
+        [HttpPost("AddRemoveCart()")]
+        public async Task<IActionResult> AddRemoveCart([FromBody] AddRemoveCartForm form)
         {
             try
             {
-                var req = new AddToCart(form);
+                var req = new AddRemoveCart(form);
                 var res = await _mediator.Send(req);
                 return Ok(new {isAddedToCart = res});
             }
