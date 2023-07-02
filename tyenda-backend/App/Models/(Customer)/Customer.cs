@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using tyenda_backend.App.Models._Account_;
 using tyenda_backend.App.Models._Cart_;
+using tyenda_backend.App.Models._Comment_;
 using tyenda_backend.App.Models._Follower_;
 using tyenda_backend.App.Models._ItemRate_;
 using tyenda_backend.App.Models._Like_;
@@ -21,6 +22,7 @@ namespace tyenda_backend.App.Models._Customer_
             Followers = new HashSet<Follower>();
             Carts = new HashSet<Cart>();
             ItemRates = new HashSet<ItemRate>();
+            Comments = new HashSet<Comment>();
         }
         
         [Key]
@@ -37,5 +39,6 @@ namespace tyenda_backend.App.Models._Customer_
         public virtual ICollection<Follower> Followers { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<ItemRate> ItemRates { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

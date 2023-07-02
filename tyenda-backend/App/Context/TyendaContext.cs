@@ -15,7 +15,9 @@ using tyenda_backend.App.Models._Like_;
 using tyenda_backend.App.Models._Notification_;
 using tyenda_backend.App.Models._Order_;
 using tyenda_backend.App.Models._Alert_;
+using tyenda_backend.App.Models._Comment_;
 using tyenda_backend.App.Models._ItemCategory_;
+using tyenda_backend.App.Models._ItemNote_;
 using tyenda_backend.App.Models._ItemRate_;
 using tyenda_backend.App.Models._Role_;
 using tyenda_backend.App.Models._Session_;
@@ -56,6 +58,8 @@ namespace tyenda_backend.App.Context
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Alert> Alerts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<ItemNote> ItemNotes { get; set; }
 
         public TyendaContext(DbContextOptions<TyendaContext> opt, IConfiguration configuration) : base(opt)
         {
@@ -124,7 +128,7 @@ namespace tyenda_backend.App.Context
             modelBuilder.Entity<ItemRate>().HasKey(itemColor => new {itemColor.ItemId, itemColor.CustomerId});
             modelBuilder.Entity<ItemRate>()
                 .HasOne(itemColor => itemColor.Item)
-                .WithMany(item => item.ItemRates)
+                .WithMany(item => item.Rates)
                 .HasForeignKey(itemColor => itemColor.ItemId);
             modelBuilder.Entity<ItemRate>()
                 .HasOne(itemColor => itemColor.Customer)
@@ -148,13 +152,13 @@ namespace tyenda_backend.App.Context
             
             modelBuilder.Entity<ItemImage>()
                 .HasOne(itemImage => itemImage.Item)
-                .WithMany(item => item.ItemImages)
+                .WithMany(item => item.Images)
                 .HasForeignKey(itemImage => itemImage.ItemId);
 
             modelBuilder.Entity<ItemColor>().HasKey(itemColor => new {itemColor.ItemId, itemColor.ColorId});
             modelBuilder.Entity<ItemColor>()
                 .HasOne(itemColor => itemColor.Item)
-                .WithMany(item => item.ItemColors)
+                .WithMany(item => item.Colors)
                 .HasForeignKey(itemColor => itemColor.ItemId);
             modelBuilder.Entity<ItemColor>()
                 .HasOne(itemColor => itemColor.Color)
@@ -225,6 +229,21 @@ namespace tyenda_backend.App.Context
                 .HasOne(alert => alert.Notification)
                 .WithMany(account => account.Alerts)
                 .HasForeignKey(alert => alert.NotificationId);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(comment => comment.Customer)
+                .WithMany(customer => customer.Comments)
+                .HasForeignKey(comment => comment.CustomerId);
+            modelBuilder.Entity<Comment>()
+                .HasOne(comment => comment.Item)
+                .WithMany(item => item.Comments)
+                .HasForeignKey(comment => comment.ItemId);
+
+            modelBuilder.Entity<ItemNote>()
+                .HasOne(itemNote => itemNote.Item)
+                .WithMany(item => item.Notes)
+                .HasForeignKey(itemNote => itemNote.ItemId);
+
         }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

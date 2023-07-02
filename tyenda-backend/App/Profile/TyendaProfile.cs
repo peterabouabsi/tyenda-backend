@@ -35,20 +35,20 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.Description, map => map.MapFrom(src => src.Notification!.Description))
                 .ForMember(dest => dest.CreatedAt, map => map.MapFrom(src => src.Notification!.CreatedAt))
                 .ForMember(dest => dest.Link, map => map.MapFrom(src => src.Notification!.Link))
-                .ForMember(dest => dest.ItemImageUrl, map => map.MapFrom(src => src.Notification!.Item!.ItemImages.First().Url))
+                .ForMember(dest => dest.ItemImageUrl, map => map.MapFrom(src => src.Notification!.Item!.Images.First().Url))
                 .ForMember(dest => dest.StoreImageUrl, map => map.MapFrom(src => src.Notification!.Store!.Account!.ProfileImage))
                 .ForMember(dest => dest.IsViewed, map => map.MapFrom(src => src.IsViewed));
 
             CreateMap<Item, ItemBasicView>()
                 .ForMember(dest => dest.ItemImage,
-                    map => map.MapFrom(src => src.ItemImages.Count > 0 ? src.ItemImages.First().Url : null))
+                    map => map.MapFrom(src => src.Images.Count > 0 ? src.Images.First().Url : null))
                 .ForMember(dest => dest.StoreName, map => map.MapFrom(src => src.Store!.Name))
                 .ForMember(dest => dest.ProfileImage, map => map.MapFrom(src => src.Store!.Account!.ProfileImage))
                 .ForMember(dest => dest.IsAddedToCart, map => map.MapFrom(src => src.Carts.Count > 0 ? true : false))
                 .ForMember(dest => dest.IsItemLiked, map => map.MapFrom(src => src.Likes.Count > 0 ? true : false))
                 .ForMember(dest => dest.StoreEmail, map => map.MapFrom(src => src.Store!.Account!.Email))
                 .ForMember(dest => dest.Price, map => map.MapFrom(src => src.Discount > 0 ? src.Price - (src.Price * ((decimal) src.Discount / 100)) : src.Price))
-                .ForMember(dest => dest.Rate, map => map.MapFrom(src => GenerateItemRate(src.ItemRates)));
+                .ForMember(dest => dest.Rate, map => map.MapFrom(src => GenerateItemRate(src.Rates)));
 
             CreateMap<Store, StoreModerateView>()
                 .ForMember(dest => dest.ProfileImage, map => map.MapFrom(src => src.Account!.ProfileImage))
@@ -80,11 +80,11 @@ namespace tyenda_backend.App.Profile
             CreateMap<Cart, CartItemModerateView>()
                 .ForMember(dest => dest.ItemId, map => map.MapFrom(src => src.Item!.Id))
                 .ForMember(dest => dest.ItemName, map => map.MapFrom(src => src.Item!.Value))
-                .ForMember(dest => dest.ItemImage, map => map.MapFrom(src => src.Item!.ItemImages.First().Url))
+                .ForMember(dest => dest.ItemImage, map => map.MapFrom(src => src.Item!.Images.First().Url))
                 .ForMember(dest => dest.Description, map => map.MapFrom(src => src.Item!.Description))
                 .ForMember(dest => dest.Discount, map => map.MapFrom(src => src.Item!.Discount))
                 .ForMember(dest => dest.Price, map => map.MapFrom(src => src.Item!.Discount > 0? src.Item!.Price - (src.Item!.Price * ((decimal) src.Item!.Discount / 100)) : src.Item!.Price))
-                .ForMember(dest => dest.Rate, map => map.MapFrom(src => src.Item!.ItemRates.Count > 0? src.Item!.ItemRates.Average(itemRate => itemRate.Rate) : 0))
+                .ForMember(dest => dest.Rate, map => map.MapFrom(src => src.Item!.Rates.Count > 0? src.Item!.Rates.Average(itemRate => itemRate.Rate) : 0))
                 .ForMember(dest => dest.Stock, map => map.MapFrom(src => src.Item!.Stock))
                 .ForMember(dest => dest.StoreName, map => map.MapFrom(src => src.Item!.Store!.Name))
                 .ForMember(dest => dest.ProfileImage, map => map.MapFrom(src => src.Item!.Store!.Account!.ProfileImage))

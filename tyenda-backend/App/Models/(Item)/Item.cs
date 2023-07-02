@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using tyenda_backend.App.Models._Cart_;
+using tyenda_backend.App.Models._Comment_;
 using tyenda_backend.App.Models._ItemCategory_;
 using tyenda_backend.App.Models._ItemColor_;
 using tyenda_backend.App.Models._ItemImage_;
+using tyenda_backend.App.Models._ItemNote_;
 using tyenda_backend.App.Models._ItemRate_;
 using tyenda_backend.App.Models._Like_;
 using tyenda_backend.App.Models._Notification_;
@@ -18,15 +20,17 @@ namespace tyenda_backend.App.Models._Item_
     {
         public Item()
         {
-            ItemImages = new HashSet<ItemImage>();
-            ItemColors = new HashSet<ItemColor>();
+            Images = new HashSet<ItemImage>();
+            Colors = new HashSet<ItemColor>();
             Orders = new HashSet<Order>();
             Likes = new HashSet<Like>();
             Sizes = new HashSet<Size>();
             Carts = new HashSet<Cart>();
             Notifications = new HashSet<Notification>();
             Categories = new HashSet<ItemCategory>();
-            ItemRates = new HashSet<ItemRate>();
+            Rates = new HashSet<ItemRate>();
+            Comments = new HashSet<Comment>();
+            Notes = new HashSet<ItemNote>();
         }
         
         [Key]
@@ -41,14 +45,16 @@ namespace tyenda_backend.App.Models._Item_
         public Guid StoreId { get; set; }
         public virtual Store? Store { get; set; }
 
-        public virtual ICollection<ItemImage> ItemImages { get; set; }
-        public virtual ICollection<ItemColor> ItemColors { get; set; }
+        public virtual ICollection<ItemImage> Images { get; set; }
+        public virtual ICollection<ItemColor> Colors { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Like> Likes { get; set; }
         public virtual ICollection<Size> Sizes { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<ItemCategory> Categories { get; set; }
-        public virtual ICollection<ItemRate> ItemRates { get; set; }
+        public virtual ICollection<ItemRate> Rates { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<ItemNote> Notes { get; set; }
     }
 }

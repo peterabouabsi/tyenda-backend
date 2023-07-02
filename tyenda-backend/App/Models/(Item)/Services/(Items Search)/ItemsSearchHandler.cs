@@ -33,8 +33,8 @@ namespace tyenda_backend.App.Models._Item_.Services._Items_Search_
                 }
 
                 IQueryable<Item> query = _context.Items
-                        .Include(item => item.ItemImages)
-                        .Include(item => item.ItemRates)
+                        .Include(item => item.Images)
+                        .Include(item => item.Rates)
                         .Include(item => item.Carts.Where(cart => cart.CustomerId == customer.Id))
                         .Include(item => item.Store)
                         .ThenInclude(store => store!.Account)
