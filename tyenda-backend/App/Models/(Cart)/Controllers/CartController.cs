@@ -26,7 +26,7 @@ namespace tyenda_backend.App.Models._Cart_.Controllers
         }
         
         [Authorize(Policy = "CustomerPolicy")]
-        [HttpGet("Stores")]
+        [HttpGet("Store")]
         public async Task<IActionResult> GetCartStores([FromQuery] int top)
         {
             var req = new GetStores(top);
@@ -36,7 +36,7 @@ namespace tyenda_backend.App.Models._Cart_.Controllers
         }
         
         [Authorize(Policy = "CustomerPolicy")]
-        [HttpGet("Items")]
+        [HttpGet("Item")]
         public async Task<IActionResult> GetCartItems([FromQuery] int top)
         {
             var req = new GetItems(top);

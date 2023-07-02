@@ -25,7 +25,7 @@ namespace tyenda_backend.App.Models._Item_
             Sizes = new HashSet<Size>();
             Carts = new HashSet<Cart>();
             Notifications = new HashSet<Notification>();
-            ItemCategories = new HashSet<ItemCategory>();
+            Categories = new HashSet<ItemCategory>();
             ItemRates = new HashSet<ItemRate>();
         }
         
@@ -48,7 +48,7 @@ namespace tyenda_backend.App.Models._Item_
         public virtual ICollection<Size> Sizes { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
-        public virtual ICollection<ItemCategory> ItemCategories { get; set; }
+        public virtual ICollection<ItemCategory> Categories { get; set; }
         public virtual ICollection<ItemRate> ItemRates { get; set; }
     }
 }

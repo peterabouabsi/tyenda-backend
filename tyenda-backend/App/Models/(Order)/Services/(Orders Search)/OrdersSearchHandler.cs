@@ -51,10 +51,10 @@ namespace tyenda_backend.App.Models._Order_.Services._Orders_Search_
                 if (!string.IsNullOrEmpty(keyword))
                 {
                     query = query.Where(order =>
-                        order.Item!.Value.Contains(keyword) || order.Note.Contains(keyword) ||
-                        order.Customer!.Firstname.Contains(keyword) || order.Customer!.Lastname.Contains(keyword) ||
-                        order.Item!.Store!.Name.Contains(keyword) || order.City!.Value.Contains(keyword) ||
-                        order.Receiver.Contains(keyword) || order.City!.Country!.Value.Contains(keyword));
+                        order.Item!.Value.ToLower().Contains(keyword.ToLower()) || order.Note.ToLower().Contains(keyword.ToLower()) ||
+                        order.Customer!.Firstname.ToLower().Contains(keyword.ToLower()) || order.Customer!.Lastname.ToLower().Contains(keyword.ToLower()) ||
+                        order.Item!.Store!.Name.ToLower().Contains(keyword.ToLower()) || order.City!.Value.ToLower().Contains(keyword.ToLower()) ||
+                        order.Receiver.ToLower().Contains(keyword.ToLower()) || order.City!.Country!.Value.ToLower().Contains(keyword.ToLower()));
                 }
 
                 // Apply reference filter if provided

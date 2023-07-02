@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using tyenda_backend.App.Base_Controllers;
 using tyenda_backend.App.Models._Item_.Services._Add_Remove_Cart_;
 using tyenda_backend.App.Models._Item_.Services._Get_Random_Items_;
+using tyenda_backend.App.Models._Item_.Services._Items_Search_;
 using tyenda_backend.App.Models._Item_.Services._Like_Item_;
 using tyenda_backend.App.Models._Item_.Services._Like_Item_.Form;
 using tyenda_backend.App.Models._Item_.Services._Top_Selling_Item_;
@@ -65,7 +67,6 @@ namespace tyenda_backend.App.Models._Item_.Controllers
         {
             try
             {
-                Console.Write(form.ItemId);
                 var req = new AddRemoveCart(form);
                 var res = await _mediator.Send(req);
                 return Ok(new {isAddedToCart = res});
@@ -85,6 +86,23 @@ namespace tyenda_backend.App.Models._Item_.Controllers
                 var req = new LikeItem(form);
                 var res = await _mediator.Send(req);
                 return Ok(new {isItemLiked = res});
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+        
+        [Authorize(Policy = "CustomerPolicy")]
+        [HttpPost("Search()")]
+        public async Task<IActionResult> ItemsSearch([FromBody] ItemStoreSearchForm form)
+        {
+            try
+            {
+                var req = new ItemsSearch(form);
+                var res = await _mediator.Send(req);
+                var result = _mapper.Map<ICollection<ItemBasicView>>(res);
+                return Ok(result);
             }
             catch (Exception error)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
@@ -9,6 +10,8 @@ using tyenda_backend.App.Models._Store_.Services._Add_Remove_Cart_;
 using tyenda_backend.App.Models._Store_.Services._Follow_;
 using tyenda_backend.App.Models._Store_.Services._Follow_.Form;
 using tyenda_backend.App.Models._Store_.Services._Get_Random_Stores_;
+using tyenda_backend.App.Models._Store_.Services._Stores_Search_;
+using tyenda_backend.App.Models._Store_.Views;
 using tyenda_backend.App.Models.Form;
 
 namespace tyenda_backend.App.Models._Store_.Controllers
@@ -71,5 +74,23 @@ namespace tyenda_backend.App.Models._Store_.Controllers
                 return Ok(new {error = true, message = error.Message});
             }
         }
+        
+        [Authorize(Policy = "CustomerPolicy")]
+        [HttpPost("Search()")]
+        public async Task<IActionResult> StoresSearch([FromBody] ItemStoreSearchForm form)
+        {
+            try
+            {
+                var req = new StoresSearch(form);
+                var res = await _mediator.Send(req);
+                var result = _mapper.Map<ICollection<StoreModerateView>>(res);
+                return Ok(result);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+        
     }
 }

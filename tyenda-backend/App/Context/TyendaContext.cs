@@ -134,7 +134,7 @@ namespace tyenda_backend.App.Context
             modelBuilder.Entity<ItemCategory>().HasKey(itemCategory => new {itemCategory.ItemId, itemCategory.CategoryId});
             modelBuilder.Entity<ItemCategory>()
                 .HasOne(itemCategory => itemCategory.Item)
-                .WithMany(item => item.ItemCategories)
+                .WithMany(item => item.Categories)
                 .HasForeignKey(itemCategory => itemCategory.ItemId);
             modelBuilder.Entity<ItemCategory>()
                 .HasOne(itemCategory => itemCategory.Category)
