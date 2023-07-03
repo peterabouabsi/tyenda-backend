@@ -7,6 +7,8 @@ using tyenda_backend.App.Models._Cart_.Views;
 using tyenda_backend.App.Models._Category_;
 using tyenda_backend.App.Models._City_;
 using tyenda_backend.App.Models._City_.Views;
+using tyenda_backend.App.Models._Comment_;
+using tyenda_backend.App.Models._Comment_.Views;
 using tyenda_backend.App.Models._Country_;
 using tyenda_backend.App.Models._Country_.Views;
 using tyenda_backend.App.Models._Item_;

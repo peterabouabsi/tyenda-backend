@@ -148,6 +148,7 @@ namespace tyenda_backend.App.Models._Item_.Controllers
             }
         }
 
+        [Authorize(Policy = "CustomerPolicy")]
         [HttpPost("Rate()")]
         public async Task<IActionResult> RateItem([FromBody] RateItemForm form)
         {

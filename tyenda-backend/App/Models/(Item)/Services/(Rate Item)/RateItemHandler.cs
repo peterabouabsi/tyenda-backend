@@ -70,11 +70,16 @@ namespace tyenda_backend.App.Models._Item_.Services._Rate_Item_
                 var newItemRate = await _context.ItemRates
                     .Where(itemRate => itemRate.ItemId == itemId)
                     .AverageAsync(itemRate => itemRate.Rate, cancellationToken);
+
+                var ratersCount = await _context.ItemRates
+                    .Where(itemRate => itemRate.ItemId == itemId)
+                    .CountAsync(cancellationToken);
                 
                 return new
                 {
                     itemRate = newItemRate,
-                    myRate = finalRate
+                    myRate = finalRate,
+                    ratersCount = ratersCount
                 };
 
             }

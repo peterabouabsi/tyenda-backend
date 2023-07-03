@@ -52,6 +52,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Get_Item_
                     .Include(item => item.Likes)
                     .Include(item => item.Orders)
                     .Include(item => item.Comments)
+                    .ThenInclude(comment => comment.Customer)
                     .SingleOrDefaultAsync(item => item.Id == itemId, cancellationToken);
                 
                 if (item == null)
@@ -61,8 +62,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Get_Item_
 
                 var mappedItem = _mapper.Map<ItemAdvancedView>(item);
                 mappedItem.IsLiked = item.Likes.Any(like => like.CustomerId == customerId);
-                var rate = item.Rates.SingleOrDefault(rate => rate.CustomerId == customerId);
-                mappedItem.MyRate = rate?.Rate ?? 0;
+                mappedItem.MyRate = item.Rates.SingleOrDefault(rate => rate.CustomerId == customerId)?.Rate ?? 0;
                 
                 return mappedItem;                
             }
