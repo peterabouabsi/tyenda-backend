@@ -7,12 +7,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using tyenda_backend.App.Base_Controllers;
 using tyenda_backend.App.Models._Item_.Services._Add_Remove_Cart_;
+using tyenda_backend.App.Models._Item_.Services._Get_Item_;
 using tyenda_backend.App.Models._Item_.Services._Get_Random_Items_;
 using tyenda_backend.App.Models._Item_.Services._Items_Search_;
 using tyenda_backend.App.Models._Item_.Services._Like_Item_;
 using tyenda_backend.App.Models._Item_.Services._Like_Item_.Form;
+using tyenda_backend.App.Models._Item_.Services._My_Item_Orders_;
+using tyenda_backend.App.Models._Item_.Services._Rate_Item_;
+using tyenda_backend.App.Models._Item_.Services._Rate_Item_.Form;
 using tyenda_backend.App.Models._Item_.Services._Top_Selling_Item_;
 using tyenda_backend.App.Models._Item_.Views;
+using tyenda_backend.App.Models._Order_.Views;
 using tyenda_backend.App.Models.Form;
 
 namespace tyenda_backend.App.Models._Item_.Controllers
@@ -107,6 +112,54 @@ namespace tyenda_backend.App.Models._Item_.Controllers
             catch (Exception error)
             {
                 return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [Authorize(Policy = "CustomerPolicy")]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetItem([FromRoute] string id)
+        {
+            try
+            {
+                var req = new GetItem(id);
+                var res = await _mediator.Send(req);
+                return Ok(res);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [Authorize(Policy = "CustomerPolicy")]
+        [HttpGet("{id}/MyOrders()")]
+        public async Task<IActionResult> GetMyItemOrders([FromRoute] string id)
+        {
+            try
+            {
+                var req = new MyItemOrders(id);
+                var res = await _mediator.Send(req);
+                var result = _mapper.Map<ICollection<OrderBasicView>>(res);
+                return Ok(result);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [HttpPost("Rate()")]
+        public async Task<IActionResult> RateItem([FromBody] RateItemForm form)
+        {
+            try
+            {
+                var req = new RateItem(form);
+                var res = await _mediator.Send(req);
+                return Ok(res);
+            }
+            catch (Exception error)
+            {
+                throw new Exception(error.Message);
             }
         }
     }
