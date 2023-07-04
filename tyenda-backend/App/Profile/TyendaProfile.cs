@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using tyenda_backend.App.Models._Alert_;
 using tyenda_backend.App.Models._Cart_;
 using tyenda_backend.App.Models._Cart_.Views;
@@ -110,6 +111,13 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.ProfileImage, map => map.MapFrom(src => src.Item!.Store!.Account!.ProfileImage))
                 .ForMember(dest => dest.LikesCount, map => map.MapFrom(src => src.Item!.Likes.Count))
                 .ForMember(dest => dest.OrdersCount, map => map.MapFrom(src => src.Item!.Orders.Count));
+
+            CreateMap<Comment, CommentAdvancedView>()
+                .ForMember(dest => dest.CustomerName, map => map.MapFrom(src => src.Customer!.Firstname + " " + src.Customer.Lastname))
+                .ForMember(dest => dest.ProfileImage, map => map.MapFrom(src => src.Customer!.Account!.ProfileImage))
+                .ForMember(dest => dest.CustomerId, map => map.MapFrom(src => src.Customer!.Id));
+            ;
+
             //------------------------------------------------Mapping------------------------------------------------
         }
         

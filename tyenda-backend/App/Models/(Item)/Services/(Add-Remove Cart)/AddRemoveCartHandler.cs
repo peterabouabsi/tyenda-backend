@@ -26,7 +26,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Remove_Cart_
             try
             {
 
-                var accountId = _tokenService.GetHeaderTokenClaim("AccountId");
+                var accountId = _tokenService.GetHeaderTokenClaim(Constants.AccountId);
 
                 var customer = await _context.Customers.SingleOrDefaultAsync(customer => customer.AccountId == Guid.Parse(accountId), cancellationToken);
 

@@ -54,7 +54,6 @@ namespace tyenda_backend.App.Models._Account_.Controllers
         }
 
         [HttpGet("Role()")]
-        [Authorize]
         public async Task<IActionResult> GetAccountRole()
         {
             try

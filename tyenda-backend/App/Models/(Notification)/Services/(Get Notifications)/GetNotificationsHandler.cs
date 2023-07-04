@@ -26,7 +26,7 @@ namespace tyenda_backend.App.Models._Notification_.Services._Get_Notifications_
         {
             try
             {
-                var accountId = _tokenService.GetHeaderTokenClaim("AccountId");
+                var accountId = _tokenService.GetHeaderTokenClaim(Constants.AccountId);
                 var account = await _context.Accounts.SingleOrDefaultAsync(account => account.Id == Guid.Parse(accountId), cancellationToken);
                 if (account == null)
                 {

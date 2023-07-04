@@ -33,7 +33,7 @@ namespace tyenda_backend.App.Models._Item_.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpGet("Top()")]
         public async Task<IActionResult> GetTopSellingItem()
         {
@@ -50,7 +50,7 @@ namespace tyenda_backend.App.Models._Item_.Controllers
             }
         }
 
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpGet("Random()")]
         public async Task<IActionResult> GetRandomItems([FromQuery] int top, [FromQuery] int skip)
         {
@@ -66,7 +66,7 @@ namespace tyenda_backend.App.Models._Item_.Controllers
             }
         }
 
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpPost("AddRemoveCart()")]
         public async Task<IActionResult> AddRemoveCart([FromBody] AddRemoveCartForm form)
         {
@@ -82,7 +82,7 @@ namespace tyenda_backend.App.Models._Item_.Controllers
             }
         }
 
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpPost("Like()")]
         public async Task<IActionResult> LikeItem([FromBody] LikeItemForm form)
         {
@@ -98,7 +98,7 @@ namespace tyenda_backend.App.Models._Item_.Controllers
             }
         }
         
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpPost("Search()")]
         public async Task<IActionResult> ItemsSearch([FromBody] ItemStoreSearchForm form)
         {
@@ -115,7 +115,7 @@ namespace tyenda_backend.App.Models._Item_.Controllers
             }
         }
 
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetItem([FromRoute] string id)
         {
@@ -131,7 +131,7 @@ namespace tyenda_backend.App.Models._Item_.Controllers
             }
         }
 
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpGet("{id}/MyOrders()")]
         public async Task<IActionResult> GetMyItemOrders([FromRoute] string id)
         {
@@ -148,7 +148,7 @@ namespace tyenda_backend.App.Models._Item_.Controllers
             }
         }
 
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpPost("Rate()")]
         public async Task<IActionResult> RateItem([FromBody] RateItemForm form)
         {

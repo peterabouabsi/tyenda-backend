@@ -30,7 +30,7 @@ namespace tyenda_backend.App.Models._Store_.Services._Get_Random_Stores_
         {
             try
             {
-                var accountId = _tokenService.GetHeaderTokenClaim("AccountId");
+                var accountId = _tokenService.GetHeaderTokenClaim(Constants.AccountId);
                 var customer = await _context.Customers.SingleOrDefaultAsync(customer => customer.AccountId == Guid.Parse(accountId), cancellationToken);
                 if (customer == null)
                 {

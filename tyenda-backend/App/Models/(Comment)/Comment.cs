@@ -10,7 +10,8 @@ namespace tyenda_backend.App.Models._Comment_
         [Key]
         public Guid Id { get; set; }
         public string Value { get; set; } = "";
-    
+        public DateTime CreatedAt { get; set; }
+
         public Guid CustomerId { get; set; }
         public virtual Customer? Customer { get; set; }
 

@@ -33,7 +33,7 @@ namespace tyenda_backend.App.Models._Session_.Services._Token_Expiration_Checker
                 }
                 else
                 {
-                    var tokenAccountId = Guid.Parse(_tokenService.GetTokenClaim(token, "AccountId"));
+                    var tokenAccountId = Guid.Parse(_tokenService.GetTokenClaim(token, Constants.AccountId));
                     var session = await _context.Sessions.SingleOrDefaultAsync(session => session.AccessToken == token && session.AccountId == tokenAccountId, cancellationToken);
                     
                     var tokenExpirationCheckerView = new TokenExpirationCheckerView()

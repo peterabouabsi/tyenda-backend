@@ -26,7 +26,7 @@ namespace tyenda_backend.App.Models._Order_.Services._Get_Recent_Orders_
             try
             {
                 
-                var accountId = Guid.Parse(_tokenService.GetHeaderTokenClaim("AccountId"));
+                var accountId = Guid.Parse(_tokenService.GetHeaderTokenClaim(Constants.AccountId));
                 var customer = await _context.Customers.SingleOrDefaultAsync(customer => customer.AccountId == accountId,cancellationToken);
                 
                 if (customer == null)

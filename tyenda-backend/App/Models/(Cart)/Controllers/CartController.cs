@@ -25,7 +25,7 @@ namespace tyenda_backend.App.Models._Cart_.Controllers
             _mapper = mapper;
         }
         
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpGet("Store")]
         public async Task<IActionResult> GetCartStores([FromQuery] int top)
         {
@@ -35,7 +35,7 @@ namespace tyenda_backend.App.Models._Cart_.Controllers
             return Ok(result);
         }
         
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpGet("Item")]
         public async Task<IActionResult> GetCartItems([FromQuery] int top)
         {
@@ -45,7 +45,7 @@ namespace tyenda_backend.App.Models._Cart_.Controllers
             return Ok(result);
         }
 
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpPost("Update()")]
         public async Task<IActionResult> UpdateItemCart([FromBody] ItemCartUpdateForm form)
         {

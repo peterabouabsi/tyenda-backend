@@ -27,7 +27,7 @@ namespace tyenda_backend.App.Models._Store_.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpGet("Random()")]
         public async Task<IActionResult> GetRandomStores([FromQuery] int top, [FromQuery] int skip)
         {
@@ -43,7 +43,7 @@ namespace tyenda_backend.App.Models._Store_.Controllers
             }
         }
 
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpPost("Follow()")]
         public async Task<IActionResult> FollowUnfollow([FromBody] FollowForm form)
         {
@@ -59,7 +59,7 @@ namespace tyenda_backend.App.Models._Store_.Controllers
             }
         }
 
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpPost("AddRemoveCart()")]
         public async Task<IActionResult> AddRemoveCart([FromBody] AddRemoveCartForm form)
         {
@@ -75,7 +75,7 @@ namespace tyenda_backend.App.Models._Store_.Controllers
             }
         }
         
-        [Authorize(Policy = "CustomerPolicy")]
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpPost("Search()")]
         public async Task<IActionResult> StoresSearch([FromBody] ItemStoreSearchForm form)
         {
