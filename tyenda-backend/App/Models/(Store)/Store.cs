@@ -34,6 +34,8 @@ namespace tyenda_backend.App.Models._Store_
         public string Description { get; set; } = "";
         public string? BackgroundImage { get; set; } = "";
         public bool OnOrder { get; set; }
+        public string? VideoUrl { get; set; }
+        public string? VideoPosterUrl { get; set; }
         public virtual Account? Account { get; set; }
         public Guid AccountId { get; set; }
 
