@@ -79,6 +79,17 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.IsAddedToCart, map => map.MapFrom(src => src.Carts.Count > 0 ? true : false))
                 .ForMember(dest => dest.CreatedAt, map => map.MapFrom(src => src.Account!.CreatedAt));
 
+            CreateMap<Store, StoreAdvancedView>()
+                .ForMember(dest => dest.ProfileImage, map => map.MapFrom(src => src.Account!.ProfileImage))
+                .ForMember(dest => dest.Email, map => map.MapFrom(src => src.Account!.Email))
+                .ForMember(dest => dest.Phone, map => map.MapFrom(src => src.Account!.PhoneNumber))
+                .ForMember(dest => dest.Categories, map => map.MapFrom(src => src.Categories.Select(category => category.Category!.Value)))
+                .ForMember(dest => dest.Branches, map => map.MapFrom(src => src.Branches.Select(branch => new BranchView(){Country = branch.City!.Country!.Value, City = branch.City.Value, AddressDetails = branch.AddressDetails, Latitude = branch.Latitude, Longitude = branch.Longitude})))
+                .ForMember(dest => dest.DisplayedBranch, map => map.MapFrom(src => new decimal[2] {src.Branches.First().Latitude, src.Branches.First().Longitude}))
+                .ForMember(dest => dest.CountOrders, map => map.MapFrom(src => GenerateOrdersCount(src.Items)))
+                .ForMember(dest => dest.CountFollowers, map => map.MapFrom(src => src.Followers.Count))
+                .ForMember(dest => dest.CountItems, map => map.MapFrom(src => src.Items.Count));
+            
             CreateMap<Order, OrderBasicView>()
                 .ForMember(dest => dest.City, map => map.MapFrom(src => src.City!.Value))
                 .ForMember(dest => dest.Country, map => map.MapFrom(src => src.City!.Country!.Value))

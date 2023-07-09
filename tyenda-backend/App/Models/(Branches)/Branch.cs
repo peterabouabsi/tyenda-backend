@@ -17,7 +17,7 @@ namespace tyenda_backend.App.Models._Branches_
 
         public string AddressDetails { get; set; } = "";
 
-        public decimal Latitude { get; set; }
-        public decimal Longitude { get; set; }
+        public decimal Latitude { get; set; } = 0;
+        public decimal Longitude { get; set; } = 0;
     }
 }
