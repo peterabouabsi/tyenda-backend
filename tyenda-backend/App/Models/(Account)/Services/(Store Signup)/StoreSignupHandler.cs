@@ -92,7 +92,9 @@ namespace tyenda_backend.App.Models._Account_.Services._Store_Signup_
                     {
                         StoreId = newStore.Id,
                         CityId = Guid.Parse(branch.CityId),
-                        AddressDetails = branch.AddressDetails
+                        AddressDetails = branch.AddressDetails,
+                        Latitude = branch.Latitude,
+                        Longitude = branch.Longitude
                     };
 
                     await _context.Branches.AddAsync(newBranch, cancellationToken);

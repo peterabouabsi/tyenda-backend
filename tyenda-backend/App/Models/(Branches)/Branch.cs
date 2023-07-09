@@ -16,5 +16,8 @@ namespace tyenda_backend.App.Models._Branches_
         public virtual City? City { get; set; }
 
         public string AddressDetails { get; set; } = "";
+
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
     }
 }

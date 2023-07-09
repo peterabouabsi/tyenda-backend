@@ -21,5 +21,7 @@ namespace tyenda_backend.App.Models._Account_.Services._Store_Signup_.Form
     {
         public string CityId { get; set; } = "";
         public string AddressDetails { get; set; } = "";
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
     }
 }
