@@ -71,6 +71,13 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.Sizes, map => map.MapFrom(src => src.Sizes.Select(size => size.SizeCode != null? (ValueType) size.SizeCode : size.SizeNumber)))
                 .ForMember(dest => dest.Categories, map => map.MapFrom(src => src.Categories.Select(category => category.Category!.Value)));
 
+            CreateMap<Item, StoreTopItemBasicView>()
+                .ForMember(dest => dest.ImageUrl, map => map.MapFrom(src => src.Images.Count > 0 ? src.Images.First().Url : null))
+                .ForMember(dest => dest.Price, map => map.MapFrom(src => src.Discount == 0 ? src.Price : src.Price - (src.Price * ((decimal) src.Discount / 100))))
+                .ForMember(dest => dest.CountLikes, map => map.MapFrom(src => src.Likes!.Count > 0 ? src.Likes!.Count : 0))
+                .ForMember(dest => dest.CountOrders, map => map.MapFrom(src => src.Orders!.Count > 0 ? src.Orders!.Count : 0))
+                .ForMember(dest => dest.Rate, map => map.MapFrom(src => GenerateItemRate(src.Rates)));
+
             CreateMap<Store, StoreModerateView>()
                 .ForMember(dest => dest.ProfileImage, map => map.MapFrom(src => src.Account!.ProfileImage))
                 .ForMember(dest => dest.Email, map => map.MapFrom(src => src.Account!.Email))
@@ -85,7 +92,7 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.Phone, map => map.MapFrom(src => src.Account!.PhoneNumber))
                 .ForMember(dest => dest.Categories, map => map.MapFrom(src => src.Categories.Select(category => category.Category!.Value)))
                 .ForMember(dest => dest.Branches, map => map.MapFrom(src => src.Branches.Select(branch => new BranchView(){Country = branch.City!.Country!.Value, City = branch.City.Value, AddressDetails = branch.AddressDetails, Latitude = branch.Latitude, Longitude = branch.Longitude})))
-                .ForMember(dest => dest.DisplayedBranch, map => map.MapFrom(src => new decimal[2] {src.Branches.First().Latitude, src.Branches.First().Longitude}))
+                .ForMember(dest => dest.DisplayedBranch, map => map.MapFrom(src =>src.Branches.Count > 0? new decimal[2] {src.Branches.First().Latitude, src.Branches.First().Longitude}: new decimal[2] {0,0}))
                 .ForMember(dest => dest.CountOrders, map => map.MapFrom(src => GenerateOrdersCount(src.Items)))
                 .ForMember(dest => dest.CountFollowers, map => map.MapFrom(src => src.Followers.Count))
                 .ForMember(dest => dest.CountItems, map => map.MapFrom(src => src.Items.Count));

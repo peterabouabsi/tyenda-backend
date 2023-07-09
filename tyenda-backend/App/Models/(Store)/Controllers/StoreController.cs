@@ -11,6 +11,7 @@ using tyenda_backend.App.Models._Store_.Services._Follow_;
 using tyenda_backend.App.Models._Store_.Services._Follow_.Form;
 using tyenda_backend.App.Models._Store_.Services._Get_Random_Stores_;
 using tyenda_backend.App.Models._Store_.Services._Stores_Search_;
+using tyenda_backend.App.Models._Store_.Services._Top_Selling_Items_;
 using tyenda_backend.App.Models._Store_.Services._View_Profile_;
 using tyenda_backend.App.Models._Store_.Views;
 using tyenda_backend.App.Models.Form;
@@ -108,6 +109,21 @@ namespace tyenda_backend.App.Models._Store_.Controllers
                 return Ok(new {error = true, message = error.Message});
             }
         }
-        
+
+        [HttpGet("TopItems/{storeId}")]
+        public async Task<IActionResult> GetStoreTopSellingItems([FromRoute] string storeId)
+        {
+            try
+            {
+                var req = new TopSellingItems(storeId);
+                var res = await _mediator.Send(req);
+                var result = _mapper.Map<ICollection<StoreTopItemBasicView>>(res);
+                return Ok(result);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
     }
 }

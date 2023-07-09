@@ -100,15 +100,14 @@ namespace tyenda_backend.App.Context
                 .WithOne(account => account.Store)
                 .HasForeignKey<Store>(store => store.AccountId);
 
-            modelBuilder.Entity<Branch>().HasKey(branch => new {branch.StoreId, branch.CityId});
             modelBuilder.Entity<Branch>()
                 .HasOne(branch => branch.Store)
                 .WithMany(store => store.Branches)
                 .HasForeignKey(branch => branch.StoreId);
             modelBuilder.Entity<Branch>()
-                .HasOne(branch => branch.City)
-                .WithMany(city => city.Branches)
-                .HasForeignKey(branch => branch.CityId);
+                .HasOne(branch => branch.Store)
+                .WithMany(store => store.Branches)
+                .HasForeignKey(branch => branch.StoreId);
 
             modelBuilder.Entity<StoreCategory>().HasKey(prop => new {prop.StoreId, prop.CategoryId});
             modelBuilder.Entity<StoreCategory>()
