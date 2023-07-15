@@ -14,5 +14,7 @@ namespace tyenda_backend.App.Models._ItemColor_
         [Key]
         public Guid ColorId { get; set; }
         public Color? Color { get; set; }
+
+        public int Quantity { get; set; }
     }
 }

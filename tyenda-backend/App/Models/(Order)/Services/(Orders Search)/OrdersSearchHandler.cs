@@ -54,7 +54,7 @@ namespace tyenda_backend.App.Models._Order_.Services._Orders_Search_
                         order.Item!.Value.ToLower().Contains(keyword.ToLower()) || order.Note.ToLower().Contains(keyword.ToLower()) ||
                         order.Customer!.Firstname.ToLower().Contains(keyword.ToLower()) || order.Customer!.Lastname.ToLower().Contains(keyword.ToLower()) ||
                         order.Item!.Store!.Name.ToLower().Contains(keyword.ToLower()) || order.City!.Value.ToLower().Contains(keyword.ToLower()) ||
-                        order.Receiver.ToLower().Contains(keyword.ToLower()) || order.City!.Country!.Value.ToLower().Contains(keyword.ToLower()));
+                        order.Receiver!.ToLower().Contains(keyword.ToLower()) || order.City!.Country!.Value.ToLower().Contains(keyword.ToLower()));
                 }
 
                 // Apply reference filter if provided

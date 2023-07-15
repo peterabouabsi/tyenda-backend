@@ -15,5 +15,7 @@ namespace tyenda_backend.App.Models._Size_
 
         public Guid ItemId { get; set; }
         public virtual Item? Item { get; set; }
+
+        public int Quantity { get; set; }
     }
 }

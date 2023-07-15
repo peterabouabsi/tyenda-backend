@@ -1,14 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using tyenda_backend.App.Models._City_;
 using tyenda_backend.App.Models._Customer_;
 using tyenda_backend.App.Models._Item_;
+using tyenda_backend.App.Models._OrderItem_;
 using tyenda_backend.App.Models.Enums;
 
 namespace tyenda_backend.App.Models._Order_
 {
     public class Order
     {
+
+        public Order()
+        {
+            OrderItems = new HashSet<OrderItem>();
+        }
+        
         [Key]
         public Guid Id { get; set; }
         public string Reference { get; set; } = "";
@@ -16,7 +24,7 @@ namespace tyenda_backend.App.Models._Order_
         public OrderStatus OrderStatus { get; set; }
         public DateTime CreatedAt { get; set; }
         public string? Receiver { get; set; } = "";
-        public int Quantity { get; set; }
+        public int? Quantity { get; set; }
         public string AddressDetails { get; set; } = "";
         public decimal Latitude {get; set;}
         public decimal Longitude {get; set;}
@@ -30,5 +38,7 @@ namespace tyenda_backend.App.Models._Order_
 
         public Guid ItemId { get; set; }
         public virtual Item? Item { get; set; }
+
+        public virtual ICollection<OrderItem> OrderItems { get; set; }
     }
 }

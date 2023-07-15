@@ -19,6 +19,7 @@ using tyenda_backend.App.Models._Comment_;
 using tyenda_backend.App.Models._ItemCategory_;
 using tyenda_backend.App.Models._ItemNote_;
 using tyenda_backend.App.Models._ItemRate_;
+using tyenda_backend.App.Models._OrderItem_;
 using tyenda_backend.App.Models._Role_;
 using tyenda_backend.App.Models._Session_;
 using tyenda_backend.App.Models._Size_;
@@ -242,6 +243,19 @@ namespace tyenda_backend.App.Context
                 .HasOne(itemNote => itemNote.Item)
                 .WithMany(item => item.Notes)
                 .HasForeignKey(itemNote => itemNote.ItemId);
+            
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(orderItem => orderItem.Order)
+                .WithMany(order => order.OrderItems)
+                .HasForeignKey(orderItem => orderItem.OrderId);
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(orderItem => orderItem.Item)
+                .WithMany(item => item.OrderItems)
+                .HasForeignKey(orderItem => orderItem.ItemId);
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(orderItem => orderItem.Color)
+                .WithMany(color => color.OrderItems)
+                .HasForeignKey(orderItem => orderItem.ColorId);
 
         }
         

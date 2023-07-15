@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using tyenda_backend.App.Models._ItemColor_;
+using tyenda_backend.App.Models._OrderItem_;
 
 namespace tyenda_backend.App.Models._Color_
 {
@@ -10,6 +11,7 @@ namespace tyenda_backend.App.Models._Color_
         public Color()
         {
             ItemColors = new HashSet<ItemColor>();
+            OrderItems = new HashSet<OrderItem>();
         }
         
         [Key]
@@ -17,5 +19,6 @@ namespace tyenda_backend.App.Models._Color_
         public string Value { get; set; } = "";
 
         public virtual ICollection<ItemColor> ItemColors { get; set; }
+        public virtual ICollection<OrderItem> OrderItems { get; set; }
     }
 }
