@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
@@ -8,8 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using tyenda_backend.App.Base_Controllers;
 using tyenda_backend.App.Models._Cart_.Services._Get_Items_;
 using tyenda_backend.App.Models._Cart_.Services._Get_Stores_;
-using tyenda_backend.App.Models._Cart_.Services._Item_Cart_Update_;
-using tyenda_backend.App.Models._Cart_.Services._Item_Cart_Update_.Form;
 using tyenda_backend.App.Models._Cart_.Views;
 
 namespace tyenda_backend.App.Models._Cart_.Controllers
@@ -43,22 +40,6 @@ namespace tyenda_backend.App.Models._Cart_.Controllers
             var res = await _mediator.Send(req);
             var result = _mapper.Map<ICollection<CartItemModerateView>>(res);
             return Ok(result);
-        }
-
-        [Authorize(Policy = Constants.CustomerPolicy)]
-        [HttpPost("Update()")]
-        public async Task<IActionResult> UpdateItemCart([FromBody] ItemCartUpdateForm form)
-        {
-            try
-            {
-                var req = new ItemCartUpdate(form);
-                var quantity = await _mediator.Send(req);
-                return Ok(new {Quantity = quantity});
-            }
-            catch (Exception error)
-            {
-                return Ok(new {error = true, message = error.Message});
-            }
         }
     }
 }

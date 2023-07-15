@@ -71,6 +71,13 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.Sizes, map => map.MapFrom(src => src.Sizes.Select(size => size.SizeCode != null? (ValueType) size.SizeCode : size.SizeNumber)))
                 .ForMember(dest => dest.Categories, map => map.MapFrom(src => src.Categories.Select(category => category.Category!.Value)));
 
+            CreateMap<Item, ItemEntryView>()
+                .ForMember(dest => dest.ImageUrl, map => map.MapFrom(src => src.Images.Count > 0 ? src.Images.First().Url : null))
+                .ForMember(dest => dest.Price, map => map.MapFrom(src => src.Discount == 0 ? src.Price : src.Price - (src.Price * ((decimal) src.Discount / 100))))
+                .ForMember(dest => dest.Rate, map => map.MapFrom(src => GenerateItemRate(src.Rates)))
+                .ForMember(dest => dest.Colors, map => map.MapFrom(src => src.Colors.Select(color => new ColorView() {Id = color.Color!.Id.ToString(), Value = color.Color.Value, Quantity = color.Quantity})))
+                .ForMember(dest => dest.Sizes, map => map.MapFrom(src => src.Sizes.Select(size => new SizeView() {Id = size.Id.ToString(), Code = size.SizeCode.ToString(), Number = size.SizeNumber, Quantity = size.Quantity})));
+
             CreateMap<Item, StoreTopItemBasicView>()
                 .ForMember(dest => dest.ImageUrl, map => map.MapFrom(src => src.Images.Count > 0 ? src.Images.First().Url : null))
                 .ForMember(dest => dest.Price, map => map.MapFrom(src => src.Discount == 0 ? src.Price : src.Price - (src.Price * ((decimal) src.Discount / 100))))

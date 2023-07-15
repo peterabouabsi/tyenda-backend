@@ -48,8 +48,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Remove_Cart_
                     {
                         Id = Guid.NewGuid(),
                         ItemId = itemId,
-                        CustomerId = customerId,
-                        Quantity = 1
+                        CustomerId = customerId
                     };
                     await _context.Carts.AddAsync(newCart, cancellationToken);
                     isAddedToCart = true;

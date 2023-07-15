@@ -2,11 +2,11 @@
 {
     public enum SizeCode
     {
-        Xs, //0
-        S,  //1
-        M,  //2
-        L,  //4
-        Xl, //5
-        Xxl //6
+        XSmall, //0
+        Small,  //1
+        Medium,  //2
+        Large,  //4
+        XLarge, //5
+        XxLarge //6
     }
 }

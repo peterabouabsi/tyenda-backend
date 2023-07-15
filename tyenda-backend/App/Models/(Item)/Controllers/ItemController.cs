@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using tyenda_backend.App.Base_Controllers;
 using tyenda_backend.App.Models._Item_.Services._Add_Remove_Cart_;
 using tyenda_backend.App.Models._Item_.Services._Get_Item_;
+using tyenda_backend.App.Models._Item_.Services._Get_Item_For_Request_;
 using tyenda_backend.App.Models._Item_.Services._Get_Random_Items_;
 using tyenda_backend.App.Models._Item_.Services._Items_Search_;
 using tyenda_backend.App.Models._Item_.Services._Like_Item_;
@@ -161,6 +162,22 @@ namespace tyenda_backend.App.Models._Item_.Controllers
             catch (Exception error)
             {
                 throw new Exception(error.Message);
+            }
+        }
+
+        [HttpGet("OrderRequest/{itemId}")]
+        public async Task<IActionResult> GetItemForRequest([FromRoute] string itemId)
+        {
+            try
+            {
+                var req = new GetItemForRequest(itemId);
+                var res = await _mediator.Send(req);
+                var result = _mapper.Map<ItemEntryView>(res);
+                return Ok(result);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
             }
         }
     }

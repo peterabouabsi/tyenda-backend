@@ -16,7 +16,6 @@ namespace tyenda_backend.App.Models._Cart_
         
         public Guid? ItemId { get; set; }
         public virtual Item? Item { get; set; }
-        public int? Quantity { get; set; }
 
         public Guid? StoreId { get; set; }
         public virtual Store? Store { get; set; }
