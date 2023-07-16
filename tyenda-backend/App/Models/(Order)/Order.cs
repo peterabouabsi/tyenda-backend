@@ -23,6 +23,7 @@ namespace tyenda_backend.App.Models._Order_
         public string Note { get; set; } = "";
         public OrderStatus OrderStatus { get; set; }
         public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public string? Receiver { get; set; } = "";
         public int? Quantity { get; set; }
         public string AddressDetails { get; set; } = "";

@@ -19,7 +19,7 @@ namespace tyenda_backend.App.Models._Item_.Views
     {
         public string Id { get; set; } = "";
         public string Value { get; set; } = "";
-        public int Quantity { get; set; } = 0;
+        public int Quantity { get; set; } = 1;
     }
 
     public class SizeView
@@ -27,6 +27,7 @@ namespace tyenda_backend.App.Models._Item_.Views
         public string Id { get; set; } = "";
         public string? Code { get; set; } = "";
         public int? Number { get; set; } = 0;
-        public int Quantity { get; set; } = 0;
+        public int Quantity { get; set; } = 1;
     }
+
 }

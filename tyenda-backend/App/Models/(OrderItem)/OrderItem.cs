@@ -18,9 +18,12 @@ namespace tyenda_backend.App.Models._OrderItem_
         public Guid OrderId { get; set; }
         public virtual Order? Order { get; set; }
 
+        public int Quantity { get; set; } = 1;
+        
         public Guid? ColorId { get; set; }
         public virtual Color? Color { get; set; }
 
+        
         public SizeCode? SizeCode { get; set; }
         
         public int? SizeNumber { get; set; }

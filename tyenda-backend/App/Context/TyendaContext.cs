@@ -50,9 +50,10 @@ namespace tyenda_backend.App.Context
         public DbSet<Item> Items { get; set; }
         public DbSet<ItemRate> ItemRates { get; set; }
         public DbSet<ItemCategory> ItemCategories { get; set; }
-        public DbSet<Size> Sizes { get; set; }
-        public DbSet<ItemImage> ItemImages { get; set; }
-        public DbSet<ItemColor> ItemColors { get; set; }
+        public DbSet<ItemImage> ItemImages { get; set; } // Item has at least 1 image
+        public DbSet<Size> Sizes { get; set; } //Item has only size(s)
+        public DbSet<ItemColor> ItemColors { get; set; } //Item has only color(s) OR Item has colors with sizes each
+        
         public DbSet<Like> Likes { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Follower> Followers { get; set; }
@@ -155,16 +156,15 @@ namespace tyenda_backend.App.Context
                 .WithMany(item => item.Images)
                 .HasForeignKey(itemImage => itemImage.ItemId);
 
-            modelBuilder.Entity<ItemColor>().HasKey(itemColor => new {itemColor.ItemId, itemColor.ColorId});
             modelBuilder.Entity<ItemColor>()
                 .HasOne(itemColor => itemColor.Item)
                 .WithMany(item => item.Colors)
                 .HasForeignKey(itemColor => itemColor.ItemId);
             modelBuilder.Entity<ItemColor>()
                 .HasOne(itemColor => itemColor.Color)
-                .WithMany(color => color.ItemColors)
+                .WithMany(color => color.Items)
                 .HasForeignKey(itemColor => itemColor.ColorId);
-
+            
             modelBuilder.Entity<Order>()
                 .HasOne(order => order.City)
                 .WithMany(city => city.Orders)

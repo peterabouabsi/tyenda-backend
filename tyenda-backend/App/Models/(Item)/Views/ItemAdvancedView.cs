@@ -22,6 +22,7 @@ namespace tyenda_backend.App.Models._Item_.Views
         public List<string> Categories { get; set; } = new List<string>();
         public List<string> Colors { get; set; } = new List<string>();
         public List<string> Sizes { get; set; } = new List<string>();
+        public List<ColorSizeView> ColorSizes { get; set; } = new List<ColorSizeView>();
         public int CountLikes { get; set; } = 0;
         public int CountOrders { get; set; } = 0;
         public int CountComments { get; set; } = 0;
@@ -29,5 +30,11 @@ namespace tyenda_backend.App.Models._Item_.Views
         public bool IsAddedToCart { get; set; } = false;
         public bool IsLiked { get; set; } = false;
         
+    }
+
+    public class ColorSizeView
+    {
+        public string Value { get; set; } = "";
+        public List<string> Sizes { get; set; } = new List<string>();
     }
 }

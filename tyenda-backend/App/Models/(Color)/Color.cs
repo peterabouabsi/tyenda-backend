@@ -10,7 +10,7 @@ namespace tyenda_backend.App.Models._Color_
     {
         public Color()
         {
-            ItemColors = new HashSet<ItemColor>();
+            Items = new HashSet<ItemColor>();
             OrderItems = new HashSet<OrderItem>();
         }
         
@@ -18,7 +18,7 @@ namespace tyenda_backend.App.Models._Color_
         public Guid Id { get; set; }
         public string Value { get; set; } = "";
 
-        public virtual ICollection<ItemColor> ItemColors { get; set; }
+        public virtual ICollection<ItemColor> Items { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
     }
 }
