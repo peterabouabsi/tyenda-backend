@@ -9,8 +9,6 @@
         public int Discount { get; set; } = 0;
         public double Price { get; set; } = 0;
         public double Rate { get; set; } = 0;
-        public int Quantity { get; set; } = 0;
-        public int Stock { get; set; } = 0;
         public string ProfileImage { get; set; } = "";
         public string StoreName { get; set; } = "";
         public int LikesCount { get; set; } = 0;

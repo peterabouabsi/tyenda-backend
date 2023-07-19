@@ -134,7 +134,6 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.Discount, map => map.MapFrom(src => src.Item!.Discount))
                 .ForMember(dest => dest.Price, map => map.MapFrom(src => src.Item!.Discount > 0? src.Item!.Price - (src.Item!.Price * ((decimal) src.Item!.Discount / 100)) : src.Item!.Price))
                 .ForMember(dest => dest.Rate, map => map.MapFrom(src => src.Item!.Rates.Count > 0? src.Item!.Rates.Average(itemRate => itemRate.Rate) : 0))
-                .ForMember(dest => dest.Stock, map => map.MapFrom(src => src.Item!.Stock))
                 .ForMember(dest => dest.StoreName, map => map.MapFrom(src => src.Item!.Store!.Name))
                 .ForMember(dest => dest.ProfileImage, map => map.MapFrom(src => src.Item!.Store!.Account!.ProfileImage))
                 .ForMember(dest => dest.LikesCount, map => map.MapFrom(src => src.Item!.Likes.Count))
