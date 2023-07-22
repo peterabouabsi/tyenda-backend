@@ -34,6 +34,7 @@ namespace tyenda_backend.App.Models._Order_.Services._Orders_Search_
 
                 var customerId = customer.Id;
                 IQueryable<Order> query = _context.Orders
+                    .Include(order => order.OrderItems)
                     .Include(order => order.Item)
                     .ThenInclude(item => item!.Store)
                     .ThenInclude(item => item!.Account)

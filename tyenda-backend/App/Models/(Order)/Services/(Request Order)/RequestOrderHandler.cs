@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using tyenda_backend.App.Context;
+using tyenda_backend.App.Models.Enums;
 using tyenda_backend.App.Services.Token_Service;
 
 namespace tyenda_backend.App.Models._Order_.Services._Request_Order_
@@ -35,9 +36,9 @@ namespace tyenda_backend.App.Models._Order_.Services._Request_Order_
                     Id = Guid.NewGuid(),
                     ItemId = Guid.Parse(request.RequestOrderForm.ItemId),
                     CustomerId = customer.Id,
-                    ReceiverName = string.IsNullOrEmpty(request.RequestOrderForm.ReceiverName)? request.RequestOrderForm.ReceiverName : null,
-                    ReceiverEmail = string.IsNullOrEmpty(request.RequestOrderForm.ReceiverEmail)? request.RequestOrderForm.ReceiverEmail : null,
-                    ReceiverPhone = string.IsNullOrEmpty(request.RequestOrderForm.ReceiverPhone)? request.RequestOrderForm.ReceiverPhone : null,
+                    ReceiverName = !string.IsNullOrEmpty(request.RequestOrderForm.ReceiverName.Trim())? request.RequestOrderForm.ReceiverName : null,
+                    ReceiverEmail = !string.IsNullOrEmpty(request.RequestOrderForm.ReceiverEmail.Trim())? request.RequestOrderForm.ReceiverEmail : null,
+                    ReceiverPhone = !string.IsNullOrEmpty(request.RequestOrderForm.ReceiverPhone.Trim())? request.RequestOrderForm.ReceiverPhone : null,
                     CityId = Guid.Parse(request.RequestOrderForm.CityId),
                     AddressDetails = request.RequestOrderForm.AddressDetails,
                     Note = request.RequestOrderForm.Note,
@@ -45,7 +46,8 @@ namespace tyenda_backend.App.Models._Order_.Services._Request_Order_
                     UpdatedAt = DateTime.UtcNow,
                     Reference = "OR-"+DateTime.Now.Ticks,
                     Latitude = request.RequestOrderForm.Latitude,
-                    Longitude = request.RequestOrderForm.Longitude
+                    Longitude = request.RequestOrderForm.Longitude,
+                    OrderStatus = OrderStatus.Submitted
                 };
 
                 await _context.Orders.AddAsync(newOrder, cancellationToken);

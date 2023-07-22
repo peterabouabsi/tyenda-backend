@@ -110,7 +110,7 @@ namespace tyenda_backend.App.Profile
             CreateMap<Order, OrderBasicView>()
                 .ForMember(dest => dest.City, map => map.MapFrom(src => src.City!.Value))
                 .ForMember(dest => dest.Country, map => map.MapFrom(src => src.City!.Country!.Value))
-                .ForMember(dest => dest.Price, map => map.MapFrom(src => src.Item!.Discount == 0? src.Item!.Price * src.Quantity : (src.Item!.Price - (src.Item!.Price * ((decimal) src.Item!.Discount / 100))) * src.Quantity))
+                .ForMember(dest => dest.Price, map => map.MapFrom(src => src.Item!.Discount == 0? src.Item!.Price * src.OrderItems.Sum(orderItem => orderItem.Quantity) : (src.Item!.Price - (src.Item!.Price * ((decimal) src.Item!.Discount / 100))) * src.OrderItems.Sum(orderItem => orderItem.Quantity)))
                 .ForMember(dest => dest.CustomerName, map => map.MapFrom(src => src.Customer!.Firstname + " " + src.Customer!.Lastname))
                 .ForMember(dest => dest.ItemName, map => map.MapFrom(src => src.Item!.Value))
                 .ForMember(dest => dest.ProfileImage, map => map.MapFrom(src => src.Item!.Store!.Account!.ProfileImage))
