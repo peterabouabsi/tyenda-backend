@@ -62,6 +62,7 @@ namespace tyenda_backend.App.Context
         public DbSet<Alert> Alerts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<ItemNote> ItemNotes { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         public TyendaContext(DbContextOptions<TyendaContext> opt, IConfiguration configuration) : base(opt)
         {

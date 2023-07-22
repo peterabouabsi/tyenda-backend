@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using tyenda_backend.App.Context;
+using tyenda_backend.App.Models._OrderItem_;
 using tyenda_backend.App.Models.Enums;
 using tyenda_backend.App.Services.Token_Service;
 
@@ -51,6 +52,52 @@ namespace tyenda_backend.App.Models._Order_.Services._Request_Order_
                 };
 
                 await _context.Orders.AddAsync(newOrder, cancellationToken);
+
+                var colors = request.RequestOrderForm.Colors;
+                var sizes = request.RequestOrderForm.Sizes;
+                var colorSizes = request.RequestOrderForm.ColorSizes;
+                
+                if (colors.Count > 0)
+                {
+                    foreach (var color in colors)
+                    {
+                        var newOrderItem = new OrderItem()
+                        {
+                            Id = Guid.NewGuid(),
+                            ColorId = Guid.Parse(color.Id),
+                            OrderId = newOrder.Id,
+                            SizeCode = null,
+                            SizeNumber = null,
+                            ItemId = Guid.Parse(request.RequestOrderForm.ItemId),
+                            Quantity = color.Quantity
+                        };
+                        await _context.OrderItems.AddAsync(newOrderItem, cancellationToken);
+                    }
+                }
+
+                if (sizes.Count > 0)
+                {
+                    foreach (var size in sizes)
+                    {
+                        var newOrderItem = new OrderItem()
+                        {
+                            Id = Guid.NewGuid(),
+                            ColorId = null,
+                            OrderId = newOrder.Id,
+                            SizeCode = size.Code,
+                            SizeNumber = size.Number,
+                            ItemId = Guid.Parse(request.RequestOrderForm.ItemId),
+                            Quantity = size.Quantity
+                        };
+                        await _context.OrderItems.AddAsync(newOrderItem, cancellationToken);
+                    }
+                }
+
+                if (colorSizes.Count > 0)
+                {
+                    
+                }
+
                 await _context.SaveChangesAsync(cancellationToken);
 
                 return true;
