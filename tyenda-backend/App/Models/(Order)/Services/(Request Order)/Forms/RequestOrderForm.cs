@@ -2,6 +2,7 @@
 {
     public class RequestOrderForm
     {
+        public string ItemId { get; set; } = "";
         public string ReceiverName { get; set; } = "";
         public string ReceiverEmail { get; set; } = "";
         public string ReceiverPhone { get; set; } = "";

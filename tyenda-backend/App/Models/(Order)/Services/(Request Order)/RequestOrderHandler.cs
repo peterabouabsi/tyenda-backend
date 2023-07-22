@@ -29,9 +29,29 @@ namespace tyenda_backend.App.Models._Order_.Services._Request_Order_
                 {
                     throw new UnauthorizedAccessException("Customer not found");
                 }
-                
-                
-                
+
+                var newOrder = new Order()
+                {
+                    Id = Guid.NewGuid(),
+                    ItemId = Guid.Parse(request.RequestOrderForm.ItemId),
+                    CustomerId = customer.Id,
+                    ReceiverName = string.IsNullOrEmpty(request.RequestOrderForm.ReceiverName)? request.RequestOrderForm.ReceiverName : null,
+                    ReceiverEmail = string.IsNullOrEmpty(request.RequestOrderForm.ReceiverEmail)? request.RequestOrderForm.ReceiverEmail : null,
+                    ReceiverPhone = string.IsNullOrEmpty(request.RequestOrderForm.ReceiverPhone)? request.RequestOrderForm.ReceiverPhone : null,
+                    CityId = Guid.Parse(request.RequestOrderForm.CityId),
+                    AddressDetails = request.RequestOrderForm.AddressDetails,
+                    Note = request.RequestOrderForm.Note,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow,
+                    Reference = "OR-"+DateTime.Now.Ticks,
+                    Latitude = request.RequestOrderForm.Latitude,
+                    Longitude = request.RequestOrderForm.Longitude
+                };
+
+                await _context.Orders.AddAsync(newOrder, cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return true;
             }
             catch (Exception error)
             {

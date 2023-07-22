@@ -24,8 +24,7 @@ namespace tyenda_backend.App.Models._Order_
         public OrderStatus OrderStatus { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public string? Receiver { get; set; } = "";
-        public int? Quantity { get; set; }
+        public string? ReceiverName { get; set; } = "";
         public string AddressDetails { get; set; } = "";
         public decimal Latitude {get; set;}
         public decimal Longitude {get; set;}

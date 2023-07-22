@@ -10,6 +10,8 @@ using tyenda_backend.App.Models._Order_.Services._Get_Orders_Overview_;
 using tyenda_backend.App.Models._Order_.Services._Get_Recent_Orders_;
 using tyenda_backend.App.Models._Order_.Services._Orders_Search_;
 using tyenda_backend.App.Models._Order_.Services._Orders_Search_.Form;
+using tyenda_backend.App.Models._Order_.Services._Request_Order_;
+using tyenda_backend.App.Models._Order_.Services._Request_Order_.Forms;
 using tyenda_backend.App.Models._Order_.Views;
 
 namespace tyenda_backend.App.Models._Order_.Controllers
@@ -56,7 +58,8 @@ namespace tyenda_backend.App.Models._Order_.Controllers
                 return Ok(new {error = true, message = error.Message});
             }
         }
-
+        
+        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpPost("Search()")]
         public async Task<IActionResult> SearchOrders([FromBody] SearchForm form)
         {
@@ -66,6 +69,21 @@ namespace tyenda_backend.App.Models._Order_.Controllers
                 var res = await _mediator.Send(req);
                 var result = _mapper.Map<ICollection<OrderBasicView>>(res);
                 return Ok(result);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [HttpPost("Request()")]
+        public async Task<IActionResult> RequestOrder([FromBody] RequestOrderForm form)
+        {
+            try
+            {
+                var req = new RequestOrder(form);
+                await _mediator.Send(req);
+                return Ok(new {error = false, message = "Your request has been successfully sent."});
             }
             catch (Exception error)
             {
