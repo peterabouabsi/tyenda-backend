@@ -1,9 +1,10 @@
-﻿using MediatR;
+﻿using System;
+using MediatR;
 using tyenda_backend.App.Models._Order_.Services._Request_Order_.Forms;
 
 namespace tyenda_backend.App.Models._Order_.Services._Request_Order_
 {
-    public class RequestOrder : IRequest<bool>
+    public class RequestOrder : IRequest<Guid>
     {
         public RequestOrder(RequestOrderForm requestOrderForm)
         {

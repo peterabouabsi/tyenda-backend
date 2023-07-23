@@ -14,9 +14,9 @@ namespace tyenda_backend.App.Models._Order_.Services._Request_Order_.Forms
         public string Note { get; set; } = "";
         public decimal Longitude { get; set; } = 0;
         public decimal Latitude { get; set; } = 0;
-        public List<ColorForm> Colors { get; set; } = new List<ColorForm>();
-        public List<SizeForm> Sizes { get; set; } = new List<SizeForm>();
-        public List<ColorSizeForm> ColorSizes { get; set; } = new List<ColorSizeForm>();
+        public List<ColorForm>? Colors { get; set; } = new List<ColorForm>();
+        public List<SizeForm>? Sizes { get; set; } = new List<SizeForm>();
+        public List<ColorSizeForm>? ColorSizes { get; set; } = new List<ColorSizeForm>();
     }
 
     public class ColorForm
@@ -28,8 +28,8 @@ namespace tyenda_backend.App.Models._Order_.Services._Request_Order_.Forms
     
     public class SizeForm
     {
-        public SizeCode Code { get; set; }
-        public int Number { get; set; } = 0;
+        public SizeCode? Code { get; set; }
+        public int? Number { get; set; } = 0;
         public int Quantity { get; set; } = 0;
     }
     

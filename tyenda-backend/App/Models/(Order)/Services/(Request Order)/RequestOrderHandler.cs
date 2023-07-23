@@ -10,7 +10,7 @@ using tyenda_backend.App.Services.Token_Service;
 
 namespace tyenda_backend.App.Models._Order_.Services._Request_Order_
 {
-    public class RequestOrderHandler : IRequestHandler<RequestOrder, bool>
+    public class RequestOrderHandler : IRequestHandler<RequestOrder, Guid>
     {
         private readonly TyendaContext _context;
         private readonly ITokenService _tokenService;
@@ -21,7 +21,7 @@ namespace tyenda_backend.App.Models._Order_.Services._Request_Order_
             _tokenService = tokenService;
         }
 
-        public async Task<bool> Handle(RequestOrder request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(RequestOrder request, CancellationToken cancellationToken)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace tyenda_backend.App.Models._Order_.Services._Request_Order_
                 var sizes = request.RequestOrderForm.Sizes;
                 var colorSizes = request.RequestOrderForm.ColorSizes;
                 
-                if (colors.Count > 0)
+                if (colors!.Count > 0)
                 {
                     foreach (var color in colors)
                     {
@@ -75,7 +75,7 @@ namespace tyenda_backend.App.Models._Order_.Services._Request_Order_
                     }
                 }
 
-                if (sizes.Count > 0)
+                if (sizes!.Count > 0)
                 {
                     foreach (var size in sizes)
                     {
@@ -93,14 +93,30 @@ namespace tyenda_backend.App.Models._Order_.Services._Request_Order_
                     }
                 }
 
-                if (colorSizes.Count > 0)
+                if (colorSizes!.Count > 0)
                 {
-                    
+                    foreach(var colorSize in colorSizes)
+                    {
+                        foreach(var size in colorSize.Sizes)
+                        {
+                            var newOrderItem = new OrderItem()
+                            {
+                                Id = Guid.NewGuid(),
+                                ColorId = Guid.Parse(colorSize.Id),
+                                OrderId = newOrder.Id,
+                                SizeCode = size.Code,
+                                SizeNumber = size.Number,
+                                ItemId = Guid.Parse(request.RequestOrderForm.ItemId),
+                                Quantity = size.Quantity
+                            };   
+                            await _context.OrderItems.AddAsync(newOrderItem, cancellationToken);
+                        }
+                    }
                 }
 
                 await _context.SaveChangesAsync(cancellationToken);
 
-                return true;
+                return newOrder.Id;
             }
             catch (Exception error)
             {

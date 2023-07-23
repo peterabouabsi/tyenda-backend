@@ -111,10 +111,12 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.City, map => map.MapFrom(src => src.City!.Value))
                 .ForMember(dest => dest.Country, map => map.MapFrom(src => src.City!.Country!.Value))
                 .ForMember(dest => dest.Price, map => map.MapFrom(src => src.Item!.Discount == 0? src.Item!.Price * src.OrderItems.Sum(orderItem => orderItem.Quantity) : (src.Item!.Price - (src.Item!.Price * ((decimal) src.Item!.Discount / 100))) * src.OrderItems.Sum(orderItem => orderItem.Quantity)))
+                .ForMember(dest => dest.Quantity, map => map.MapFrom(src => src.OrderItems.Sum(orderItem => orderItem.Quantity)))
                 .ForMember(dest => dest.CustomerName, map => map.MapFrom(src => src.Customer!.Firstname + " " + src.Customer!.Lastname))
                 .ForMember(dest => dest.ItemName, map => map.MapFrom(src => src.Item!.Value))
                 .ForMember(dest => dest.ProfileImage, map => map.MapFrom(src => src.Item!.Store!.Account!.ProfileImage))
-                .ForMember(dest => dest.StoreName, map => map.MapFrom(src => src.Item!.Store!.Name));
+                .ForMember(dest => dest.StoreName, map => map.MapFrom(src => src.Item!.Store!.Name))
+                .ForMember(dest => dest.Receiver, map => map.MapFrom(src => string.IsNullOrEmpty(src.ReceiverName)? src.Customer!.Firstname + " " + src.Customer!.Lastname : src.ReceiverName));
 
             CreateMap<Cart, CartStoreBasicView>()
                 .ForMember(dest => dest.StoreId, map => map.MapFrom(src => src.Store!.Id))

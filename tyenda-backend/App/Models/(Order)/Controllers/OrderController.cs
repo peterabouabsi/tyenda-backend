@@ -82,8 +82,8 @@ namespace tyenda_backend.App.Models._Order_.Controllers
             try
             {
                 var req = new RequestOrder(form);
-                await _mediator.Send(req);
-                return Ok(new {error = false, message = "Your request has been successfully sent."});
+                var orderId = await _mediator.Send(req);
+                return Ok(new {error = false, message = "Your request has been successfully sent.", orderId = orderId});
             }
             catch (Exception error)
             {
