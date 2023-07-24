@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using tyenda_backend.App.Base_Controllers;
 using tyenda_backend.App.Models._Item_.Services._Get_Item_Name_;
+using tyenda_backend.App.Models._Order_.Services._Get_Order_Reference_;
 using tyenda_backend.App.Models._Store_.Services._Get_Store_Name_;
 
 namespace tyenda_backend.App.Tab_Controller
@@ -16,7 +17,7 @@ namespace tyenda_backend.App.Tab_Controller
         {
             _mediator = mediator;
         }
-
+        
         [HttpGet("Store/{id}")]
         public async Task<IActionResult> GetStoreName([FromRoute] string id)
         {
@@ -40,6 +41,21 @@ namespace tyenda_backend.App.Tab_Controller
                 var req = new GetItemName(id);
                 var res = await _mediator.Send(req);
                 return Ok(new {value = res});
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [HttpGet("Order/{id}")]
+        public async Task<IActionResult> GetOrderReference([FromRoute] string id)
+        {
+            try
+            {
+                var req = new GetOrderReference(id);
+                var reference = await _mediator.Send(req);
+                return Ok(new {error = false, value = reference});
             }
             catch (Exception error)
             {
