@@ -118,6 +118,18 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.StoreName, map => map.MapFrom(src => src.Item!.Store!.Name))
                 .ForMember(dest => dest.Receiver, map => map.MapFrom(src => string.IsNullOrEmpty(src.ReceiverName)? src.Customer!.Firstname + " " + src.Customer!.Lastname : src.ReceiverName));
 
+            CreateMap<Order, OrderAdvancedView>()
+                .ForMember(dest => dest.City, map => map.MapFrom(src => src.City!.Value))
+                .ForMember(dest => dest.Country, map => map.MapFrom(src => src.City!.Country!.Value))
+                .ForMember(dest => dest.Price, map => map.MapFrom(src => src.Item!.Discount == 0? src.Item!.Price * src.OrderItems.Sum(orderItem => orderItem.Quantity) : (src.Item!.Price - (src.Item!.Price * ((decimal) src.Item!.Discount / 100))) * src.OrderItems.Sum(orderItem => orderItem.Quantity)))
+                .ForMember(dest => dest.ItemName, map => map.MapFrom(src => src.Item!.Value))
+                .ForMember(dest => dest.StoreName, map => map.MapFrom(src => src.Item!.Store!.Name))
+                .ForMember(dest => dest.StoreProfileImage, map => map.MapFrom(src => src.Item!.Store!.Account!.ProfileImage))
+                .ForMember(dest => dest.ItemImage, map => map.MapFrom(src => src.Item!.Images.First().Url))
+                .ForMember(dest => dest.ReceiverName, map => map.MapFrom(src => !String.IsNullOrEmpty(src.ReceiverName)? src.ReceiverName : src.Customer!.Firstname + " " + src.Customer!.Lastname))
+                .ForMember(dest => dest.ReceiverEmail, map => map.MapFrom(src => !String.IsNullOrEmpty(src.ReceiverEmail)? src.ReceiverEmail : src.Customer!.Account!.Email))
+                .ForMember(dest => dest.ReceiverPhone, map => map.MapFrom(src => !String.IsNullOrEmpty(src.ReceiverPhone)? src.ReceiverPhone : src.Customer!.Account!.PhoneNumber));
+
             CreateMap<Cart, CartStoreBasicView>()
                 .ForMember(dest => dest.StoreId, map => map.MapFrom(src => src.Store!.Id))
                 .ForMember(dest => dest.StoreName, map => map.MapFrom(src => src.Store!.Name))

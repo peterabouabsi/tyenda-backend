@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using tyenda_backend.App.Base_Controllers;
+using tyenda_backend.App.Models._Order_.Services._Get_Order_;
 using tyenda_backend.App.Models._Order_.Services._Get_Orders_Overview_;
 using tyenda_backend.App.Models._Order_.Services._Get_Recent_Orders_;
 using tyenda_backend.App.Models._Order_.Services._Orders_Search_;
@@ -84,6 +85,22 @@ namespace tyenda_backend.App.Models._Order_.Controllers
                 var req = new RequestOrder(form);
                 var orderId = await _mediator.Send(req);
                 return Ok(new {error = false, message = "Your request has been successfully sent.", orderId = orderId});
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [HttpGet("{orderId}")]
+        public async Task<IActionResult> GetOrder([FromRoute] string orderId)
+        {
+            try
+            {
+                var req = new GetOrder(orderId);
+                var res = await _mediator.Send(req);
+                var result = _mapper.Map<OrderAdvancedView>(res);
+                return Ok(result);
             }
             catch (Exception error)
             {

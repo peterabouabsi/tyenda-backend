@@ -44,6 +44,7 @@ namespace tyenda_backend.App.Models._Order_.Services._Request_Order_
                     AddressDetails = request.RequestOrderForm.AddressDetails,
                     Note = request.RequestOrderForm.Note,
                     CreatedAt = DateTime.UtcNow,
+                    RejectDescription = null,
                     UpdatedAt = DateTime.UtcNow,
                     Reference = "OR-"+DateTime.Now.Ticks,
                     Latitude = request.RequestOrderForm.Latitude,
