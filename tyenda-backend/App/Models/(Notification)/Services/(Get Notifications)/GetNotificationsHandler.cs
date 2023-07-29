@@ -41,6 +41,8 @@ namespace tyenda_backend.App.Models._Notification_.Services._Get_Notifications_
                     .ThenInclude(item => item!.Images)
                     .Include(alert => alert.Notification!.Store)
                     .ThenInclude(store => store!.Account)
+                    .Include(alert => alert.Notification!.Customer)
+                    .ThenInclude(store => store!.Account)
                     .ToArrayAsync(cancellationToken);
 
                 

@@ -41,7 +41,7 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.CreatedAt, map => map.MapFrom(src => src.Notification!.CreatedAt))
                 .ForMember(dest => dest.Link, map => map.MapFrom(src => src.Notification!.Link))
                 .ForMember(dest => dest.ItemImageUrl, map => map.MapFrom(src => src.Notification!.Item!.Images.First().Url))
-                .ForMember(dest => dest.StoreImageUrl, map => map.MapFrom(src => src.Notification!.Store!.Account!.ProfileImage))
+                .ForMember(dest => dest.ProfileImageUrl, map => map.MapFrom(src => src.Notification!.StoreId != null? src.Notification!.Store!.Account!.ProfileImage : src.Notification!.Customer!.Account!.ProfileImage))
                 .ForMember(dest => dest.IsViewed, map => map.MapFrom(src => src.IsViewed));
 
             CreateMap<Item, ItemBasicView>()

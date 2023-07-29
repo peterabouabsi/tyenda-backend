@@ -11,6 +11,7 @@ using tyenda_backend.App.Models._Account_.Services._Change_Password_.Form;
 using tyenda_backend.App.Models._Account_.Services._Customer_Signup_;
 using tyenda_backend.App.Models._Account_.Services._Customer_Signup_.Forms;
 using tyenda_backend.App.Models._Account_.Services._Forget_Password_;
+using tyenda_backend.App.Models._Account_.Services._Get_Profile_Image_;
 using tyenda_backend.App.Models._Account_.Services._Login_;
 using tyenda_backend.App.Models._Account_.Services._Logout_;
 using tyenda_backend.App.Models._Account_.Services._Logout_.Form;
@@ -203,6 +204,21 @@ namespace tyenda_backend.App.Models._Account_.Controllers
                 var req = new ChangePassword(form);
                 await _mediator.Send(req);
                 return Ok(new {error = false, message = "Password changed"});
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [HttpGet("Profile/Image")]
+        public async Task<IActionResult> GetProfileImage()
+        {
+            try
+            {
+                var req = new GetProfileImage();
+                var res = await _mediator.Send(req);
+                return Ok(new {profileImage = res});
             }
             catch (Exception error)
             {

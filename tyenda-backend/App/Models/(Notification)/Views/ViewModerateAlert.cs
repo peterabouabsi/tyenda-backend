@@ -9,7 +9,7 @@ namespace tyenda_backend.App.Models._Notification_.Views
         public string Description { get; set; } = "";
         public string Link { get; set; } = "";
         public string ItemImageUrl { get; set; } = "";
-        public string StoreImageUrl { get; set; } = "";
+        public string ProfileImageUrl { get; set; } = "";
         public DateTime CreatedAt { get; set; }
         public bool IsViewed { get; set; } = false;
     }

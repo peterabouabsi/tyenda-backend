@@ -220,7 +220,11 @@ namespace tyenda_backend.App.Context
                 .HasOne(notification => notification.Store)
                 .WithMany(item => item.Notifications)
                 .HasForeignKey(notification => notification.StoreId);
-            
+            modelBuilder.Entity<Notification>()
+                .HasOne(notification => notification.Customer)
+                .WithMany(item => item.Notifications)
+                .HasForeignKey(notification => notification.CustomerId);
+
             modelBuilder.Entity<Alert>().HasKey(receiver => new {receiver.AccountId, receiver.NotificationId});
             modelBuilder.Entity<Alert>()
                 .HasOne(alert => alert.Account)
