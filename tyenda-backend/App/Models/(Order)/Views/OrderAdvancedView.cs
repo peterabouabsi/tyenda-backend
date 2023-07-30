@@ -1,4 +1,6 @@
-﻿namespace tyenda_backend.App.Models._Order_.Views
+﻿using System.Collections.Generic;
+
+namespace tyenda_backend.App.Models._Order_.Views
 {
     public class OrderAdvancedView
     {
@@ -22,5 +24,8 @@
         public string Note { get; set; } = "";
         public decimal Price { get; set; }
         public int Discount { get; set; }
+        public List<object>? Colors { get; set; } = new List<object>();
+        public List<object>? Sizes { get; set; } = new List<object>();
+        public List<object>? ColorSizes { get; set; } = new List<object>();
     }
 }

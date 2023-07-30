@@ -128,7 +128,19 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.ItemImage, map => map.MapFrom(src => src.Item!.Images.First().Url))
                 .ForMember(dest => dest.ReceiverName, map => map.MapFrom(src => !String.IsNullOrEmpty(src.ReceiverName)? src.ReceiverName : src.Customer!.Firstname + " " + src.Customer!.Lastname))
                 .ForMember(dest => dest.ReceiverEmail, map => map.MapFrom(src => !String.IsNullOrEmpty(src.ReceiverEmail)? src.ReceiverEmail : src.Customer!.Account!.Email))
-                .ForMember(dest => dest.ReceiverPhone, map => map.MapFrom(src => !String.IsNullOrEmpty(src.ReceiverPhone)? src.ReceiverPhone : src.Customer!.Account!.PhoneNumber));
+                .ForMember(dest => dest.ReceiverPhone, map => map.MapFrom(src => !String.IsNullOrEmpty(src.ReceiverPhone)? src.ReceiverPhone : src.Customer!.Account!.PhoneNumber))
+                .ForMember(dest => dest.Colors, map => map.MapFrom(src => src.OrderItems.Any(orderItem => String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)? src.OrderItems.Select(prop => new {
+                    Id = prop.Id,
+                    ColorId = prop.ColorId,
+                    Color = prop.Color!.Value,
+                    Quantity = prop.Quantity
+                }) : null))
+                .ForMember(dest => dest.Sizes, map => map.MapFrom(src => src.OrderItems.Any(orderItem => String.IsNullOrEmpty(orderItem.ColorId.ToString()))? src.OrderItems.Select(prop => new {
+                    Id = prop.Id,
+                    SizeNumber = prop.SizeNumber,
+                    SizeCode = prop.SizeCode,
+                    Quantity = prop.Quantity
+                }) : null));;
 
             CreateMap<Cart, CartStoreBasicView>()
                 .ForMember(dest => dest.StoreId, map => map.MapFrom(src => src.Store!.Id))
