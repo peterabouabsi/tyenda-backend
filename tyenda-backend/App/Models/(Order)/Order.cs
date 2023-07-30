@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using tyenda_backend.App.Models._City_;
 using tyenda_backend.App.Models._Customer_;
 using tyenda_backend.App.Models._Item_;
+using tyenda_backend.App.Models._OrderFeedback_;
 using tyenda_backend.App.Models._OrderItem_;
 using tyenda_backend.App.Models.Enums;
 
@@ -15,6 +16,7 @@ namespace tyenda_backend.App.Models._Order_
         public Order()
         {
             OrderItems = new HashSet<OrderItem>();
+            Feedbacks = new HashSet<OrderFeedback>();
         }
         
         [Key]
@@ -41,5 +43,6 @@ namespace tyenda_backend.App.Models._Order_
         public virtual Item? Item { get; set; }
 
         public virtual ICollection<OrderItem> OrderItems { get; set; }
+        public virtual ICollection<OrderFeedback> Feedbacks { get; set; }
     }
 }

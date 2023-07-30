@@ -9,6 +9,7 @@ using tyenda_backend.App.Models._ItemRate_;
 using tyenda_backend.App.Models._Like_;
 using tyenda_backend.App.Models._Notification_;
 using tyenda_backend.App.Models._Order_;
+using tyenda_backend.App.Models._OrderFeedback_;
 using TyendaBackend.App.Models._Account_;
 
 namespace tyenda_backend.App.Models._Customer_
@@ -25,6 +26,7 @@ namespace tyenda_backend.App.Models._Customer_
             ItemRates = new HashSet<ItemRate>();
             Comments = new HashSet<Comment>();
             Notifications = new HashSet<Notification>();
+            OrderFeedbacks = new HashSet<OrderFeedback>();
         }
         
         [Key]
@@ -43,5 +45,6 @@ namespace tyenda_backend.App.Models._Customer_
         public virtual ICollection<ItemRate> ItemRates { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
+        public virtual ICollection<OrderFeedback> OrderFeedbacks { get; set; }
     }
 }

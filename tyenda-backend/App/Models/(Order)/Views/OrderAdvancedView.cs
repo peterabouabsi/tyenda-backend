@@ -22,6 +22,7 @@ namespace tyenda_backend.App.Models._Order_.Views
         public string Country { get; set; } = "";
         public string AddressDetails { get; set; } = "";
         public string Note { get; set; } = "";
+        public List<object> Feedbacks { get; set; } = new List<object>();
         public decimal Price { get; set; }
         public int Discount { get; set; }
         public List<object>? Colors { get; set; } = new List<object>();

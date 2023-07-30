@@ -6,6 +6,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using tyenda_backend.App.Base_Controllers;
+using tyenda_backend.App.Models._Order_.Services._Add_Feedback_;
+using tyenda_backend.App.Models._Order_.Services._Add_Feedback_.Form;
 using tyenda_backend.App.Models._Order_.Services._Get_Order_;
 using tyenda_backend.App.Models._Order_.Services._Get_Orders_Overview_;
 using tyenda_backend.App.Models._Order_.Services._Get_Recent_Orders_;
@@ -101,6 +103,22 @@ namespace tyenda_backend.App.Models._Order_.Controllers
                 var res = await _mediator.Send(req);
                 var result = _mapper.Map<OrderAdvancedView>(res);
                 return Ok(result);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [Authorize(Policy = Constants.CustomerPolicy)]
+        [HttpPost("Feedback/Add()")]
+        public async Task<IActionResult> AddFeedback([FromBody] AddFeedbackForm form)
+        {
+            try
+            {
+                var req = new AddFeedback(form);
+                await _mediator.Send(req);
+                return Ok(new {error = false, message = "Feedback added successfully"});
             }
             catch (Exception error)
             {

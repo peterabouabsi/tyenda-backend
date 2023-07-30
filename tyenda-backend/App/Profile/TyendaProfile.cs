@@ -129,6 +129,7 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.ReceiverName, map => map.MapFrom(src => !String.IsNullOrEmpty(src.ReceiverName)? src.ReceiverName : src.Customer!.Firstname + " " + src.Customer!.Lastname))
                 .ForMember(dest => dest.ReceiverEmail, map => map.MapFrom(src => !String.IsNullOrEmpty(src.ReceiverEmail)? src.ReceiverEmail : src.Customer!.Account!.Email))
                 .ForMember(dest => dest.ReceiverPhone, map => map.MapFrom(src => !String.IsNullOrEmpty(src.ReceiverPhone)? src.ReceiverPhone : src.Customer!.Account!.PhoneNumber))
+                .ForMember(dest => dest.Feedbacks, map => map.MapFrom(src => src.Feedbacks.Select(feedback => new {Id = feedback.Id, Value = feedback.Value, CreatedAt = feedback.CreatedAt, CustomerProfileImage = feedback.Customer!.Account!.ProfileImage})))
                 .ForMember(dest => dest.Colors, map => map.MapFrom(src => src.OrderItems.Any(orderItem => String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)? src.OrderItems.Select(prop => new {
                     Id = prop.Id,
                     ColorId = prop.ColorId,
@@ -137,11 +138,20 @@ namespace tyenda_backend.App.Profile
                 }) : null))
                 .ForMember(dest => dest.Sizes, map => map.MapFrom(src => src.OrderItems.Any(orderItem => String.IsNullOrEmpty(orderItem.ColorId.ToString()))? src.OrderItems.Select(prop => new {
                     Id = prop.Id,
-                    SizeNumber = prop.SizeNumber,
-                    SizeCode = prop.SizeCode,
+                    Number = prop.SizeNumber,
+                    Code = prop.SizeCode.ToString(),
                     Quantity = prop.Quantity
-                }) : null));;
-
+                }) : null))
+                .ForMember(dest => dest.ColorSizes, map => map.MapFrom(src => src.OrderItems.Any(orderItem => !String.IsNullOrEmpty(orderItem.ColorId.ToString())) ? src.OrderItems.GroupBy(prop => prop.ColorId).Select(group => new {
+                            ColorId = group.Key,
+                            Color = group.First().Color!.Value,
+                            Sizes = group.Select(prop => new {
+                                Number = prop.SizeNumber,
+                                Code = prop.SizeCode.ToString(),
+                                Quantity = prop.Quantity
+                            }).ToList()
+                        }).ToList() : null));
+            
             CreateMap<Cart, CartStoreBasicView>()
                 .ForMember(dest => dest.StoreId, map => map.MapFrom(src => src.Store!.Id))
                 .ForMember(dest => dest.StoreName, map => map.MapFrom(src => src.Store!.Name))

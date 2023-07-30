@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -44,6 +45,9 @@ namespace tyenda_backend.App.Models._Order_.Services._Get_Order_
                     .ThenInclude(city => city!.Country)
                     .Include(order => order.Customer)
                     .ThenInclude(city => city!.Account)
+                    .Include(order => order.Feedbacks.OrderByDescending(feedback => feedback.CreatedAt))
+                    .ThenInclude(feedback => feedback.Customer)
+                    .ThenInclude(customer => customer!.Account)
                     .SingleOrDefaultAsync(order => order.Id == Guid.Parse(request.OrderId), cancellationToken);
                 
                 return order!;

@@ -19,6 +19,7 @@ using tyenda_backend.App.Models._Comment_;
 using tyenda_backend.App.Models._ItemCategory_;
 using tyenda_backend.App.Models._ItemNote_;
 using tyenda_backend.App.Models._ItemRate_;
+using tyenda_backend.App.Models._OrderFeedback_;
 using tyenda_backend.App.Models._OrderItem_;
 using tyenda_backend.App.Models._Role_;
 using tyenda_backend.App.Models._Session_;
@@ -63,6 +64,7 @@ namespace tyenda_backend.App.Context
         public DbSet<Comment> Comments { get; set; }
         public DbSet<ItemNote> ItemNotes { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<OrderFeedback> OrderFeedbacks { get; set; }
 
         public TyendaContext(DbContextOptions<TyendaContext> opt, IConfiguration configuration) : base(opt)
         {
@@ -262,6 +264,15 @@ namespace tyenda_backend.App.Context
                 .WithMany(color => color.OrderItems)
                 .HasForeignKey(orderItem => orderItem.ColorId);
 
+            modelBuilder.Entity<OrderFeedback>()
+                .HasOne(orderFeedback => orderFeedback.Customer)
+                .WithMany(customer => customer.OrderFeedbacks)
+                .HasForeignKey(orderFeedback => orderFeedback.CustomerId);
+            
+            modelBuilder.Entity<OrderFeedback>()
+                .HasOne(orderFeedback => orderFeedback.Order)
+                .WithMany(order => order.Feedbacks)
+                .HasForeignKey(orderFeedback => orderFeedback.OrderId);
         }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
