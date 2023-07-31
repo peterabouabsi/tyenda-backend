@@ -8,6 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using tyenda_backend.App.Base_Controllers;
 using tyenda_backend.App.Models._Order_.Services._Add_Feedback_;
 using tyenda_backend.App.Models._Order_.Services._Add_Feedback_.Form;
+using tyenda_backend.App.Models._Order_.Services._Approve_Reject_Order_;
+using tyenda_backend.App.Models._Order_.Services._Approve_Reject_Order_.Form;
+using tyenda_backend.App.Models._Order_.Services._Confirm_Order_;
+using tyenda_backend.App.Models._Order_.Services._Confirm_Order_.Form;
+using tyenda_backend.App.Models._Order_.Services._Delete_Order_;
 using tyenda_backend.App.Models._Order_.Services._Get_Order_;
 using tyenda_backend.App.Models._Order_.Services._Get_Orders_Overview_;
 using tyenda_backend.App.Models._Order_.Services._Get_Recent_Orders_;
@@ -119,6 +124,56 @@ namespace tyenda_backend.App.Models._Order_.Controllers
                 var req = new AddFeedback(form);
                 await _mediator.Send(req);
                 return Ok(new {error = false, message = "Feedback added successfully"});
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [Authorize(Policy = Constants.StorePolicy)]
+        [HttpPost("ApproveReject()")]
+        public async Task<IActionResult> ApproveRejectOrder([FromBody] ApproveRejectOrderForm form)
+        {
+            try
+            {
+                var req = new ApproveRejectOrder(form);
+                var res = await _mediator.Send(req);
+                var result = _mapper.Map<OrderAdvancedView>(res);
+                return Ok(result);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+        
+        [Authorize(Policy = Constants.CustomerPolicy)]
+        [HttpPost("Confirm()")]
+        public async Task<IActionResult> ConfirmOrder([FromBody] ConfirmOrderForm form)
+        {
+            try
+            {
+                var req = new ConfirmOrder(form);
+                var res = await _mediator.Send(req);
+                var result = _mapper.Map<OrderAdvancedView>(res);
+                return Ok(result);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [HttpDelete("Delete/{orderId}")]
+        public async Task<IActionResult> DeleteOrder([FromRoute] string orderId)
+        {
+            try
+            {
+                var req = new DeleteOrder(orderId);
+                var res = await _mediator.Send(req);
+                var result = _mapper.Map<OrderAdvancedView>(res);
+                return Ok(result);
             }
             catch (Exception error)
             {
