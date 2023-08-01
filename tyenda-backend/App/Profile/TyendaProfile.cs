@@ -122,6 +122,7 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.City, map => map.MapFrom(src => src.City!.Value))
                 .ForMember(dest => dest.Country, map => map.MapFrom(src => src.City!.Country!.Value))
                 .ForMember(dest => dest.Price, map => map.MapFrom(src => src.Item!.Discount == 0? src.Item!.Price * src.OrderItems.Sum(orderItem => orderItem.Quantity) : (src.Item!.Price - (src.Item!.Price * ((decimal) src.Item!.Discount / 100))) * src.OrderItems.Sum(orderItem => orderItem.Quantity)))
+                .ForMember(dest => dest.Discount, map => map.MapFrom(src => src.Item!.Discount))
                 .ForMember(dest => dest.ItemName, map => map.MapFrom(src => src.Item!.Value))
                 .ForMember(dest => dest.StoreName, map => map.MapFrom(src => src.Item!.Store!.Name))
                 .ForMember(dest => dest.StoreProfileImage, map => map.MapFrom(src => src.Item!.Store!.Account!.ProfileImage))
