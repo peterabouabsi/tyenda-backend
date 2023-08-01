@@ -45,13 +45,21 @@ namespace tyenda_backend.App.Models._Order_.Services._Approve_Reject_Order_
                     .Include(order => order.Feedbacks.OrderByDescending(feedback => feedback.CreatedAt))
                     .ThenInclude(feedback => feedback.Customer)
                     .ThenInclude(orderCustomer => orderCustomer!.Account)
-                    .SingleOrDefaultAsync(order => order.Id == Guid.Parse(request.ApproveRejectOrderForm.OrderId) && order.Item!.StoreId == store.Id, cancellationToken);
-                if (order == null) throw new Exception("Order not found");
+                    .SingleOrDefaultAsync(order => order.Id == Guid.Parse(request.ApproveRejectOrderForm.OrderId), cancellationToken);
 
+                if (order == null) throw new Exception("Order not found");
+                if (order.Item!.StoreId != store.Id) throw new Exception("You don't have permission on this order.");
+                
                 if (order.OrderStatus == OrderStatus.Submitted)
                 {
-                    if (request.ApproveRejectOrderForm.IsApproved) order.OrderStatus = OrderStatus.Approved;
-                    if (request.ApproveRejectOrderForm.IsRejected) order.OrderStatus = OrderStatus.Rejected;
+                    if (request.ApproveRejectOrderForm.IsApproved) 
+                        order.OrderStatus = OrderStatus.Approved;
+
+                    if (request.ApproveRejectOrderForm.IsRejected)
+                    {
+                        order.RejectDescription = request.ApproveRejectOrderForm.RejectDescription;
+                        order.OrderStatus = OrderStatus.Rejected;
+                    }
                 }
                 else
                 {
