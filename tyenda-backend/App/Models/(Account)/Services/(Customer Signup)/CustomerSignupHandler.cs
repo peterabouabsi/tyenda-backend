@@ -57,7 +57,7 @@ namespace tyenda_backend.App.Models._Account_.Services._Customer_Signup_
                     RoleId = customerRole.Id,
                     CreatedAt = DateTime.UtcNow,
                     Active = false,
-                    PhoneNumber = request.CustomerSignupForm.PhoneNumber.Trim(),
+                    PhoneNumber = request.CustomerSignupForm.PhoneNumber!.Trim(),
                     ProfileImage = null
                 };
 
@@ -78,7 +78,7 @@ namespace tyenda_backend.App.Models._Account_.Services._Customer_Signup_
 
                 var sendActivationEmail = new SendActivationEmail(new SendActivationEmailForm(){Email = request.CustomerSignupForm.Email});
                 await _mediator.Send(sendActivationEmail, cancellationToken);
-                
+
                 return true;
             }
             catch (Exception error)

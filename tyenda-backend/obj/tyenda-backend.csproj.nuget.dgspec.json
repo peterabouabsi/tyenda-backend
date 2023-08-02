@@ -49,6 +49,10 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.57.0, )"
+            },
             "MailKit": {
               "target": "Package",
               "version": "[4.0.0, )"

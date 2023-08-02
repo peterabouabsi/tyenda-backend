@@ -13,6 +13,8 @@ using tyenda_backend.App.Models._Account_.Services._Customer_Signup_.Forms;
 using tyenda_backend.App.Models._Account_.Services._Forget_Password_;
 using tyenda_backend.App.Models._Account_.Services._Get_Profile_Image_;
 using tyenda_backend.App.Models._Account_.Services._Login_;
+using tyenda_backend.App.Models._Account_.Services._Login_Google_;
+using tyenda_backend.App.Models._Account_.Services._Login_Google_.Form;
 using tyenda_backend.App.Models._Account_.Services._Logout_;
 using tyenda_backend.App.Models._Account_.Services._Logout_.Form;
 using tyenda_backend.App.Models._Account_.Services._My_Role_;
@@ -45,6 +47,22 @@ namespace tyenda_backend.App.Models._Account_.Controllers
             try
             {
                 var req = new Login(form);
+                var res = await _mediator.Send(req);
+                return Ok(res);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+        
+        [HttpPost("LoginGoogle()")]
+        [AllowAnonymous]
+        public async Task<IActionResult> LoginWithGoogle([FromBody] LoginGoogleForm form)
+        {
+            try
+            {
+                var req = new LoginGoogle(form);
                 var res = await _mediator.Send(req);
                 return Ok(res);
             }

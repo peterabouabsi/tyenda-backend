@@ -122,3 +122,7 @@ C:\Users\User\Desktop\MyProjects Tyenda\tyenda-backend\tyenda-backend\obj\Debug\
 C:\Users\User\Desktop\MyProjects Tyenda\tyenda-backend\tyenda-backend\obj\Debug\net7.0\tyenda-backend.pdb
 C:\Users\User\Desktop\MyProjects Tyenda\tyenda-backend\tyenda-backend\obj\Debug\net7.0\tyenda-backend.genruntimeconfig.cache
 C:\Users\User\Desktop\MyProjects Tyenda\tyenda-backend\tyenda-backend\obj\Debug\net7.0\ref\tyenda-backend.dll
+C:\Users\User\Desktop\MyProjects Tyenda\tyenda-backend\tyenda-backend\bin\Debug\net7.0\Google.Apis.dll
+C:\Users\User\Desktop\MyProjects Tyenda\tyenda-backend\tyenda-backend\bin\Debug\net7.0\Google.Apis.Auth.PlatformServices.dll
+C:\Users\User\Desktop\MyProjects Tyenda\tyenda-backend\tyenda-backend\bin\Debug\net7.0\Google.Apis.Auth.dll
+C:\Users\User\Desktop\MyProjects Tyenda\tyenda-backend\tyenda-backend\bin\Debug\net7.0\Google.Apis.Core.dll
