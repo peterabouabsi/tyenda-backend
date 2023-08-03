@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using tyenda_backend.App.Context;
 using tyenda_backend.App.Services.Email_Service;
+using tyenda_backend.App.Services.File_Service;
 using tyenda_backend.App.Services.Token_Service;
 
 namespace tyenda_backend
@@ -34,7 +35,8 @@ namespace tyenda_backend
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "[My Projects] Tyenda", Version = "v1"});
-                
+
+                c.OperationFilter<SwaggerFileUploadFilter>();
                 //Authorize scheme
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -76,7 +78,8 @@ namespace tyenda_backend
             //Services
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IEmailService, EmailService>();
-            
+            services.AddTransient<IFileService, FileService>();
+
             //Cors
             services.AddCors(options =>
             {
@@ -131,7 +134,7 @@ namespace tyenda_backend
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "www")),
+                    Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
                 RequestPath = "/files"
             });
 

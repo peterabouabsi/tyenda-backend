@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using tyenda_backend.App.Base_Controllers;
 using tyenda_backend.App.Models._Account_.Services._Activate_Account_;
@@ -29,6 +30,7 @@ using tyenda_backend.App.Models._Account_.Services._Store_Signup_;
 using tyenda_backend.App.Models._Account_.Services._Store_Signup_.Form;
 using tyenda_backend.App.Models._Account_.Services._Update_Profile_;
 using tyenda_backend.App.Models._Account_.Services._Update_Profile_.Forms;
+using tyenda_backend.App.Models._Account_.Services._Upload_Profile_;
 using TyendaBackend.App.Models._Account_.Services._Forget_Password_.Form;
 using TyendaBackend.App.Models._Account_.Services._Login_.Form;
 
@@ -269,6 +271,21 @@ namespace tyenda_backend.App.Models._Account_.Controllers
                 var req = new UpdateProfile(updateProfileForm);
                 var res = await _mediator.Send(req);
                 return Ok(res);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [HttpPost("Profile/Upload")]
+        public async Task<IActionResult> UploadProfile([FromForm] IFormFile file)
+        {
+            try
+            {
+                var req = new UploadProfile(file);
+                var res = await _mediator.Send(req);
+                return Ok(new {error = false, profileImage = res});
             }
             catch (Exception error)
             {
