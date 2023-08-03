@@ -27,6 +27,8 @@ using tyenda_backend.App.Models._Account_.Services._Send_Activation_Email_;
 using tyenda_backend.App.Models._Account_.Services._Send_Activation_Email_.Form;
 using tyenda_backend.App.Models._Account_.Services._Store_Signup_;
 using tyenda_backend.App.Models._Account_.Services._Store_Signup_.Form;
+using tyenda_backend.App.Models._Account_.Services._Update_Profile_;
+using tyenda_backend.App.Models._Account_.Services._Update_Profile_.Forms;
 using TyendaBackend.App.Models._Account_.Services._Forget_Password_.Form;
 using TyendaBackend.App.Models._Account_.Services._Login_.Form;
 
@@ -251,6 +253,20 @@ namespace tyenda_backend.App.Models._Account_.Controllers
             try
             {
                 var req = new GetProfile();
+                var res = await _mediator.Send(req);
+                return Ok(res);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [HttpPost("Update()")]
+        public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileForm updateProfileForm)
+        {
+            try{
+                var req = new UpdateProfile(updateProfileForm);
                 var res = await _mediator.Send(req);
                 return Ok(res);
             }

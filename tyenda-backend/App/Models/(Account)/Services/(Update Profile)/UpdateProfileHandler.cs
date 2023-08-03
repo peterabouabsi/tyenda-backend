@@ -6,20 +6,20 @@ using Microsoft.EntityFrameworkCore;
 using tyenda_backend.App.Context;
 using tyenda_backend.App.Services.Token_Service;
 
-namespace tyenda_backend.App.Models._Account_.Services._Get_Profile_
+namespace tyenda_backend.App.Models._Account_.Services._Update_Profile_
 {
-    public class GetProfileHandler : IRequestHandler<GetProfile, object>
+    public class UpdateProfileHandler : IRequestHandler<UpdateProfile, object>
     {
         private readonly TyendaContext _context;
         private readonly ITokenService _tokenService;
 
-        public GetProfileHandler(TyendaContext context, ITokenService tokenService)
+        public UpdateProfileHandler(TyendaContext context, ITokenService tokenService)
         {
             _context = context;
             _tokenService = tokenService;
         }
 
-        public async Task<object> Handle(GetProfile request, CancellationToken cancellationToken)
+        public async Task<object> Handle(UpdateProfile request, CancellationToken cancellationToken)
         {
             try
             {
@@ -36,6 +36,19 @@ namespace tyenda_backend.App.Models._Account_.Services._Get_Profile_
                 var profileData = new object();
                 if (account.Role!.Value == Constants.CustomerRole)
                 {
+                    var customer = account.Customer;
+                    if (customer == null)
+                    {
+                        throw new UnauthorizedAccessException("Customer not found");
+                    }
+                    
+                    account.Username = request.UpdateProfileForm!.UpdateCustomerForm!.Username;
+                    account.PhoneNumber = request.UpdateProfileForm!.UpdateCustomerForm!.Phone;
+                    account.Email = request.UpdateProfileForm!.UpdateCustomerForm!.Email;
+
+                    customer.Firstname = request.UpdateProfileForm!.UpdateCustomerForm.Firstname;
+                    customer.Lastname = request.UpdateProfileForm!.UpdateCustomerForm.Lastname;
+                    
                     profileData = new
                     {
                         Firstname = account.Customer!.Firstname,
@@ -46,14 +59,14 @@ namespace tyenda_backend.App.Models._Account_.Services._Get_Profile_
                         ProfileImage = account.ProfileImage
                     };
                 }
-                
+
                 if (account.Role!.Value == Constants.StoreRole)
                 {
                     
                 }
-
+                
+                await _context.SaveChangesAsync(cancellationToken);
                 return profileData;
-
 
             }
             catch (Exception error)
