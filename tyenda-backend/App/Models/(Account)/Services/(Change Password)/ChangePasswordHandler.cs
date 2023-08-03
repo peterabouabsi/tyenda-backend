@@ -32,16 +32,17 @@ namespace tyenda_backend.App.Models._Account_.Services._Change_Password_
                 {
                     throw new Exception("Account not found");
                 }
-
-                var pwdMatch = BCrypt.Net.BCrypt.Verify(request.ChangePasswordForm.OldPassword, account.Password);
-                if (pwdMatch == false)
-                {
-                    throw new Exception("Incorrect old password entered. Please ensure that you have entered your current password correctly.");
-                }
-
-                if (request.ChangePasswordForm.NewPassword == request.ChangePasswordForm.OldPassword)
-                {
-                    throw new Exception("New password cannot be the same as the old password. Please choose a different password.");
+                
+                if(account.Password != null){
+                    var pwdMatch = BCrypt.Net.BCrypt.Verify(request.ChangePasswordForm.OldPassword, account.Password);
+                    if (pwdMatch == false)
+                    {
+                        throw new Exception("Incorrect old password entered. Please ensure that you have entered your current password correctly.");
+                    }             
+                    if (request.ChangePasswordForm.NewPassword == request.ChangePasswordForm.OldPassword)
+                    {
+                        throw new Exception("New password cannot be the same as the old password. Please choose a different password.");
+                    }
                 }
 
                 if (request.ChangePasswordForm.NewPassword != request.ChangePasswordForm.ConfirmPassword)

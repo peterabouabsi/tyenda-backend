@@ -221,7 +221,7 @@ namespace tyenda_backend.App.Models._Account_.Controllers
             {
                 var req = new ChangePassword(form);
                 await _mediator.Send(req);
-                return Ok(new {error = false, message = "Password changed"});
+                return Ok(new {error = false, message = "Password changed successfully"});
             }
             catch (Exception error)
             {
