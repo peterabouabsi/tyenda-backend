@@ -34,7 +34,6 @@ namespace tyenda_backend.App.Models._Order_.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpGet("Recent()")]
         public async Task<IActionResult> GetCustomerRecentOrders()
         {
