@@ -32,5 +32,53 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Backgrounds\38482123-tesla.jpg))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Profiles\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1.jpeg))">
+      <SourceType>Package</SourceType>
+      <SourceId>tyenda-backend</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/tyenda-backend</BasePath>
+      <RelativePath>Profiles/33e87db1-1aec-43e0-bb17-ca4a6d9d50e1/33e87db1-1aec-43e0-bb17-ca4a6d9d50e1.jpeg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Profiles\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1.jpeg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Profiles\6c78fe9d-1b9a-4794-a2e7-5ae57282e443\6c78fe9d-1b9a-4794-a2e7-5ae57282e443.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>tyenda-backend</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/tyenda-backend</BasePath>
+      <RelativePath>Profiles/6c78fe9d-1b9a-4794-a2e7-5ae57282e443/6c78fe9d-1b9a-4794-a2e7-5ae57282e443.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Profiles\6c78fe9d-1b9a-4794-a2e7-5ae57282e443\6c78fe9d-1b9a-4794-a2e7-5ae57282e443.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Profiles\aefbdddc-e293-49d5-9f2c-947fd93e33ea\aefbdddc-e293-49d5-9f2c-947fd93e33ea.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>tyenda-backend</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/tyenda-backend</BasePath>
+      <RelativePath>Profiles/aefbdddc-e293-49d5-9f2c-947fd93e33ea/aefbdddc-e293-49d5-9f2c-947fd93e33ea.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Profiles\aefbdddc-e293-49d5-9f2c-947fd93e33ea\aefbdddc-e293-49d5-9f2c-947fd93e33ea.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
   </ItemGroup>
 </Project>

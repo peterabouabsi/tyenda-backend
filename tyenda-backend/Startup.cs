@@ -130,11 +130,11 @@ namespace tyenda_backend
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
+            //app.UseStaticFiles() all files and folders in wwwroot are accessed ..../{files or folders}
+            //The above code app.UseStaticFiles() all files and folders in wwwroot are accessed ..../files/{files or folders}
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
                 RequestPath = "/files"
             });
 

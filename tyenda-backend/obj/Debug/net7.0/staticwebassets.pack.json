@@ -9,6 +9,18 @@
       "PackagePath": "staticwebassets\\Backgrounds\\38482123-tesla.jpg"
     },
     {
+      "Id": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Profiles\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1.jpeg",
+      "PackagePath": "staticwebassets\\Profiles\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Profiles\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443.png",
+      "PackagePath": "staticwebassets\\Profiles\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443.png"
+    },
+    {
+      "Id": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Profiles\\aefbdddc-e293-49d5-9f2c-947fd93e33ea\\aefbdddc-e293-49d5-9f2c-947fd93e33ea.jpg",
+      "PackagePath": "staticwebassets\\Profiles\\aefbdddc-e293-49d5-9f2c-947fd93e33ea\\aefbdddc-e293-49d5-9f2c-947fd93e33ea.jpg"
+    },
+    {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.tyenda-backend.props",
       "PackagePath": "build\\tyenda-backend.props"
     },
