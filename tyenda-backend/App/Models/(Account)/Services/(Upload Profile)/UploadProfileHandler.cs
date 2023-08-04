@@ -33,7 +33,7 @@ namespace tyenda_backend.App.Models._Account_.Services._Upload_Profile_
                     throw new UnauthorizedAccessException("Account not found");
                 }
 
-                var fileUrl = _fileService.UploadFile(request.File, "Profiles");
+                var fileUrl = _fileService.UploadFile(request.File, "Profiles", accountId);
                 account.ProfileImage = fileUrl;
                 account.CreatedAt = account.CreatedAt.ToUniversalTime(); 
                 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
@@ -18,7 +19,7 @@ namespace tyenda_backend.App.Services.File_Service
         }
 
         //folderType: Profiles, Backgrounds, Items
-        public string UploadFile(IFormFile file, string folderType)
+        public string UploadFile(IFormFile file, string folderType, string id)
         {
             var original = _hostingEnvironment.ContentRootPath;//current project path
             var wwwroot = Path.Combine(original, "wwwroot");//combine it with /wwwroot
@@ -28,22 +29,38 @@ namespace tyenda_backend.App.Services.File_Service
                 Directory.CreateDirectory(wwwroot);
             }
             
-            var fileDirectory = Path.Combine(wwwroot, folderType);//Combine root & desired path
-            if (!Directory.Exists(fileDirectory))//create if it doesn’t exist
+            var profilesDirectory = Path.Combine(wwwroot, folderType);//Combine root & desired path
+            if (!Directory.Exists(profilesDirectory))//create if it doesn’t exist
             {
-                Directory.CreateDirectory(fileDirectory);
+                Directory.CreateDirectory(profilesDirectory);
             }
 
-            int uniqueUtcTime = (int)(DateTime.UtcNow.Ticks & 0xFFFFFFFF) * (-1);
-            var fileName = uniqueUtcTime+"-"+file.FileName;
-            var fileUrl = Path.Combine(fileDirectory, fileName);
+            var profileDirectory = Path.Combine(profilesDirectory, id);
+            if (Directory.Exists(profileDirectory))
+            {
+                // Delete all files in the directory
+                DirectoryInfo directoryInfo = new DirectoryInfo(profileDirectory);
+                foreach (FileInfo innerFile in directoryInfo.GetFiles())
+                {
+                    innerFile.Delete();
+                }
+                
+                Directory.Delete(profileDirectory);
+            }
+            
+            //Create Directory /Profiles/{id}
+            Directory.CreateDirectory(profileDirectory);
+
+            //Upload file /Profiles/{id}/{fileName}
+            var fileName = id+Path.GetExtension(file.FileName);
+            var fileUrl = Path.Combine(profileDirectory, fileName);
+
             using (FileStream fileStream = new FileStream(fileUrl, FileMode.Create, FileAccess.Write))
             {
                 file.CopyTo(fileStream); //Copy the file to the location: 
             }
 
-            return folderType + "/" + fileName;
-
+            return folderType + "/" + id + "/" + fileName;
         }
     }
 }
