@@ -48,7 +48,9 @@ namespace tyenda_backend.App.Models._Account_.Services._Update_Profile_
 
                     customer.Firstname = request.UpdateProfileForm!.UpdateCustomerForm.Firstname;
                     customer.Lastname = request.UpdateProfileForm!.UpdateCustomerForm.Lastname;
-                    
+                    customer.OnItem = request.UpdateProfileForm!.UpdateCustomerForm.OnItem;
+                    customer.OnReminder = request.UpdateProfileForm!.UpdateCustomerForm.OnReminder;
+
                     profileData = new
                     {
                         Firstname = account.Customer!.Firstname,
@@ -56,7 +58,9 @@ namespace tyenda_backend.App.Models._Account_.Services._Update_Profile_
                         Username = account.Username,
                         Email = account.Email,
                         Phone = account.PhoneNumber,
-                        ProfileImage = account.ProfileImage
+                        ProfileImage = account.ProfileImage,
+                        OnItem = account.Customer.OnItem,
+                        OnReminder = account.Customer.OnReminder
                     };
                 }
 

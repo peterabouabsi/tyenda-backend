@@ -13,6 +13,8 @@
         public string Username { get; set; } = "";
         public string Email { get; set; } = "";
         public string Phone { get; set; } = "";
+        public bool OnItem { get; set; } = false;
+        public bool OnReminder { get; set; } = false;
     }
     
     public class UpdateStoreForm

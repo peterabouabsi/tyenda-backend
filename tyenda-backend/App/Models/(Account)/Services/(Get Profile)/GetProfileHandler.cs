@@ -43,7 +43,9 @@ namespace tyenda_backend.App.Models._Account_.Services._Get_Profile_
                         Username = account.Username,
                         Email = account.Email,
                         Phone = account.PhoneNumber,
-                        ProfileImage = account.ProfileImage
+                        ProfileImage = account.ProfileImage,
+                        OnItem = account.Customer.OnItem,
+                        OnReminder = account.Customer.OnReminder
                     };
                 }
                 
