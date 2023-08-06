@@ -8,23 +8,23 @@ using tyenda_backend.App.Context;
 using tyenda_backend.App.Models.Enums;
 using tyenda_backend.App.Services.Token_Service;
 
-namespace tyenda_backend.App.Models._Order_.Services._Approve_Reject_Order_
+namespace tyenda_backend.App.Models._Order_.Services._Complete_Order_
 {
-    public class ApproveRejectOrderHandler : IRequestHandler<ApproveRejectOrder, Order>
+    public class CompleteOrderHandler : IRequestHandler<CompleteOrder, Order>
     {
         private readonly TyendaContext _context;
         private readonly ITokenService _tokenService;
 
-        public ApproveRejectOrderHandler(TyendaContext context, ITokenService tokenService)
+        public CompleteOrderHandler(TyendaContext context, ITokenService tokenService)
         {
             _context = context;
             _tokenService = tokenService;
         }
 
-        public async Task<Order> Handle(ApproveRejectOrder request, CancellationToken cancellationToken)
+        public async Task<Order> Handle(CompleteOrder request, CancellationToken cancellationToken)
         {
             try
-            {
+            { 
                 var accountId = _tokenService.GetHeaderTokenClaim(Constants.AccountId);
                 
                 var store = await _context.Stores.SingleOrDefaultAsync(store => store.AccountId == Guid.Parse(accountId), cancellationToken);
@@ -45,32 +45,26 @@ namespace tyenda_backend.App.Models._Order_.Services._Approve_Reject_Order_
                     .Include(order => order.Feedbacks.OrderByDescending(feedback => feedback.CreatedAt))
                     .ThenInclude(feedback => feedback.Customer)
                     .ThenInclude(orderCustomer => orderCustomer!.Account)
-                    .SingleOrDefaultAsync(order => order.Id == Guid.Parse(request.ApproveRejectOrderForm.OrderId), cancellationToken);
+                    .SingleOrDefaultAsync(order => order.Id == Guid.Parse(request.CompleteOrderForm.OrderId), cancellationToken);
 
                 if (order == null) throw new Exception("Order not found");
                 if (order.Item!.StoreId != store.Id) throw new Exception("You don't have permission on this order.");
                 
-                if (order.OrderStatus == OrderStatus.Submitted)
-                {
-                    if (request.ApproveRejectOrderForm.IsApproved) 
-                        order.OrderStatus = OrderStatus.Approved;
-
-                    if (request.ApproveRejectOrderForm.IsRejected)
-                    {
-                        order.RejectDescription = request.ApproveRejectOrderForm.RejectDescription;
-                        order.OrderStatus = OrderStatus.Rejected;
-                    }
-
-                    order.UpdatedAt = DateTime.UtcNow;
+                if (order.OrderStatus == OrderStatus.OnGoing)
+                { 
+                    order.OrderStatus = OrderStatus.Completed;
                 }
                 else
                 {
                     throw new Exception("Only Submitted orders can be approved or rejected");
                 }
-
+                
+                order.UpdatedAt = DateTime.UtcNow;
+                
                 await Task.FromResult(_context.Orders.Update(order));
                 await _context.SaveChangesAsync(cancellationToken);
                 return order;
+            
             }
             catch (Exception error)
             {

@@ -52,6 +52,7 @@ namespace tyenda_backend.App.Models._Order_.Services._Confirm_Order_
                 order.OrderStatus = OrderStatus.OnGoing;
                 order.UpdatedAt = DateTime.UtcNow;
 
+                await Task.FromResult(_context.Orders.Update(order));
                 await _context.SaveChangesAsync(cancellationToken);
                 return order;
             }

@@ -10,6 +10,8 @@ using tyenda_backend.App.Models._Order_.Services._Add_Feedback_;
 using tyenda_backend.App.Models._Order_.Services._Add_Feedback_.Form;
 using tyenda_backend.App.Models._Order_.Services._Approve_Reject_Order_;
 using tyenda_backend.App.Models._Order_.Services._Approve_Reject_Order_.Form;
+using tyenda_backend.App.Models._Order_.Services._Complete_Order_;
+using tyenda_backend.App.Models._Order_.Services._Complete_Order_.Form;
 using tyenda_backend.App.Models._Order_.Services._Confirm_Order_;
 using tyenda_backend.App.Models._Order_.Services._Confirm_Order_.Form;
 using tyenda_backend.App.Models._Order_.Services._Delete_Order_;
@@ -170,6 +172,23 @@ namespace tyenda_backend.App.Models._Order_.Controllers
             try
             {
                 var req = new DeleteOrder(orderId);
+                var res = await _mediator.Send(req);
+                var result = _mapper.Map<OrderAdvancedView>(res);
+                return Ok(result);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [Authorize(Policy = Constants.StorePolicy)]
+        [HttpPost("Complete()")]
+        public async Task<IActionResult> CompleteOrder([FromBody] CompleteOrderForm form)
+        {
+            try
+            {
+                var req = new CompleteOrder(form);
                 var res = await _mediator.Send(req);
                 var result = _mapper.Map<OrderAdvancedView>(res);
                 return Ok(result);
