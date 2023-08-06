@@ -65,30 +65,34 @@ namespace tyenda_backend.App.Models._Store_.Services._Get_Monthly_Incomes_
                     .ToListAsync(cancellationToken);
                 
                 List<MonthlyIncomeView> formattedOrders = new List<MonthlyIncomeView>();
+                int index = 0;
                 foreach (var keyValue in orders)
                 {
+                    
                     var monthlyIncome = new MonthlyIncomeView()
                     {
                         Month = keyValue.Key,
-                        Price = 0
+                        Price = 0,
+                        IsUp = false
                     };
+                    
                     foreach (var order in keyValue.Value)
                     {
                         if (order.Item!.Discount == 0)
                         {
-                            monthlyIncome.Price += order.Item!.Price * order.OrderItems.Sum(orderItem => orderItem.Quantity); 
-                            
+                            monthlyIncome.Price += order.Item!.Price * order.OrderItems.Sum(orderItem => orderItem.Quantity);
                         }
                         else
                         {
                             monthlyIncome.Price += (order.Item!.Price -
                                                    (order.Item!.Price * ((decimal) order.Item!.Discount / 100))) *
                                                    (order.OrderItems.Sum(orderItem => orderItem.Quantity));
-                            Console.WriteLine(monthlyIncome.Price);
-                            
                         }
                     }
+                    
+                    monthlyIncome.IsUp = index > 0? formattedOrders[index-1].Price < monthlyIncome.Price : true;
                     formattedOrders.Add(monthlyIncome);
+                    index++;
                 }
 
                 var monthlyIncomePerYear = new MonthlyIncomePerYearView()

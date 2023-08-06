@@ -17,6 +17,7 @@ namespace tyenda_backend.App.Models._Store_.Services._Get_Monthly_Incomes_.View
     public class MonthlyIncomeView{
         public string Month { get; set; } = "";
         public decimal Price { get; set; } = 0;
+        public bool IsUp { get; set; } = false;
     }
 
 }
