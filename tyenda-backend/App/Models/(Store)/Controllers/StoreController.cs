@@ -11,6 +11,7 @@ using tyenda_backend.App.Models._Store_.Services._Follow_;
 using tyenda_backend.App.Models._Store_.Services._Follow_.Form;
 using tyenda_backend.App.Models._Store_.Services._Get_Monthly_Incomes_;
 using tyenda_backend.App.Models._Store_.Services._Get_Random_Stores_;
+using tyenda_backend.App.Models._Store_.Services._Get_Top_Customers_;
 using tyenda_backend.App.Models._Store_.Services._Stores_Search_;
 using tyenda_backend.App.Models._Store_.Services._Top_Selling_Items_;
 using tyenda_backend.App.Models._Store_.Services._View_Profile_;
@@ -142,5 +143,22 @@ namespace tyenda_backend.App.Models._Store_.Controllers
                 return Ok(new {error = true, message = error.Message});
             }
         }
+
+        [Authorize(Policy = Constants.StorePolicy)]
+        [HttpGet("TopCustomers()")]
+        public async Task<IActionResult> GetTopCustomers()
+        {
+            try
+            {
+                var req = new GetTopCustomers();
+                var res = await _mediator.Send(req);
+                return Ok(res);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
     }
 }
