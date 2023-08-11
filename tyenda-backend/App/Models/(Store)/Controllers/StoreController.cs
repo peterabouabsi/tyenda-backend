@@ -11,6 +11,7 @@ using tyenda_backend.App.Models._Store_.Services._Follow_;
 using tyenda_backend.App.Models._Store_.Services._Follow_.Form;
 using tyenda_backend.App.Models._Store_.Services._Get_Monthly_Incomes_;
 using tyenda_backend.App.Models._Store_.Services._Get_Random_Stores_;
+using tyenda_backend.App.Models._Store_.Services._Get_Similar_Stores_;
 using tyenda_backend.App.Models._Store_.Services._Get_Top_Customers_;
 using tyenda_backend.App.Models._Store_.Services._Stores_Search_;
 using tyenda_backend.App.Models._Store_.Services._Top_Selling_Items_;
@@ -153,6 +154,23 @@ namespace tyenda_backend.App.Models._Store_.Controllers
                 var req = new GetTopCustomers();
                 var res = await _mediator.Send(req);
                 return Ok(res);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [Authorize(Policy = Constants.StorePolicy)]
+        [HttpGet("SimilarStores()")]
+        public async Task<IActionResult> GetSimilarStores([FromQuery] int? take)
+        {
+            try
+            {
+                var req = new GetSimilarStores(take);
+                var res = await _mediator.Send(req);
+                var result = _mapper.Map<ICollection<StoreModerateView>>(res);
+                return Ok(result);
             }
             catch (Exception error)
             {

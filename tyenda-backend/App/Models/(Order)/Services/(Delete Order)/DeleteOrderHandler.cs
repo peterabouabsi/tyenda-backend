@@ -82,9 +82,6 @@ namespace tyenda_backend.App.Models._Order_.Services._Delete_Order_
                     }
                 }
                 
-                order.UpdatedAt = DateTime.UtcNow;
-                
-                await Task.FromResult(_context.Orders.Update(order));
                 await _context.SaveChangesAsync(cancellationToken);
                 return order;
             }
