@@ -67,7 +67,7 @@ namespace tyenda_backend.App.Models._Order_.Services._Approve_Reject_Order_
                 {
                     throw new Exception("Only Submitted orders can be approved or rejected");
                 }
-
+                
                 await Task.FromResult(_context.Orders.Update(order));
                 await _context.SaveChangesAsync(cancellationToken);
                 return order;
