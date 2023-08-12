@@ -68,7 +68,6 @@ namespace tyenda_backend.App.Models._Order_.Controllers
             }
         }
         
-        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpPost("Search()")]
         public async Task<IActionResult> SearchOrders([FromBody] SearchForm form)
         {

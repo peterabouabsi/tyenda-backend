@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "B28Ib2s4epwAroqYZ4zh1furOltc4Jh9ZPRGw0i2B8I=",
+  "Hash": "kV5Ahp56h9xflf2KMkk/9QzWwGV1rVSxY1sAuH6gRfo=",
   "Source": "tyenda-backend",
   "BasePath": "_content/tyenda-backend",
   "Mode": "Default",
@@ -17,12 +17,12 @@
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Backgrounds\\21948323-amazon.png",
+      "Identity": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Backgrounds\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1.jpg",
       "SourceId": "tyenda-backend",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\",
       "BasePath": "_content/tyenda-backend",
-      "RelativePath": "Backgrounds/21948323-amazon.png",
+      "RelativePath": "Backgrounds/33e87db1-1aec-43e0-bb17-ca4a6d9d50e1/33e87db1-1aec-43e0-bb17-ca4a6d9d50e1.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -31,15 +31,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Backgrounds\\21948323-amazon.png"
+      "OriginalItemSpec": "wwwroot\\Backgrounds\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1.jpg"
     },
     {
-      "Identity": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Backgrounds\\38482123-tesla.jpg",
+      "Identity": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Backgrounds\\7f278e15-34cc-475c-b9da-4aa05fa45627\\7f278e15-34cc-475c-b9da-4aa05fa45627.png",
       "SourceId": "tyenda-backend",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\",
       "BasePath": "_content/tyenda-backend",
-      "RelativePath": "Backgrounds/38482123-tesla.jpg",
+      "RelativePath": "Backgrounds/7f278e15-34cc-475c-b9da-4aa05fa45627/7f278e15-34cc-475c-b9da-4aa05fa45627.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -48,7 +48,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Backgrounds\\38482123-tesla.jpg"
+      "OriginalItemSpec": "wwwroot\\Backgrounds\\7f278e15-34cc-475c-b9da-4aa05fa45627\\7f278e15-34cc-475c-b9da-4aa05fa45627.png"
     },
     {
       "Identity": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Profiles\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1.jpeg",
