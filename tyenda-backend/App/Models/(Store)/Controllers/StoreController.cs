@@ -97,7 +97,6 @@ namespace tyenda_backend.App.Models._Store_.Controllers
             }
         }
         
-        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpGet("Profile/{storeId}")]
         public async Task<IActionResult> ViewStoreProfile([FromRoute] string storeId)
         {
