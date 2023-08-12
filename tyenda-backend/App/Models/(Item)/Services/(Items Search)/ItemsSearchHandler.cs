@@ -14,7 +14,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Items_Search_
     {
         private readonly TyendaContext _context;
         private readonly ITokenService _tokenService;
-
+        
         public ItemsSearchHandler(TyendaContext context, ITokenService tokenService)
         {
             _context = context;
@@ -26,19 +26,45 @@ namespace tyenda_backend.App.Models._Item_.Services._Items_Search_
             try
             {
                 var accountId = _tokenService.GetHeaderTokenClaim(Constants.AccountId);
-                var customer = await _context.Customers.SingleOrDefaultAsync(customer => customer.AccountId == Guid.Parse(accountId), cancellationToken);
-                if (customer == null)
-                {
-                    throw new UnauthorizedAccessException("Customer not found");
-                }
+                var account = await _context.Accounts
+                    .Include(account => account.Role)
+                    .SingleOrDefaultAsync(account => account.Id == Guid.Parse(accountId), cancellationToken);
+                if (account == null) throw new UnauthorizedAccessException("Account not found");
 
-                IQueryable<Item> query = _context.Items
+                IQueryable<Item> query = _context.Items;
+                if (account.Role!.Value == Constants.CustomerRole)
+                {
+                    var customer = await _context.Customers.SingleOrDefaultAsync(customer => customer.AccountId == Guid.Parse(accountId), cancellationToken);
+                    if (customer == null)
+                    {
+                        throw new UnauthorizedAccessException("Customer not found");
+                    }
+                    
+                    query = query
                         .Include(item => item.Images)
                         .Include(item => item.Rates)
                         .Include(item => item.Carts.Where(cart => cart.CustomerId == customer.Id))
                         .Include(item => item.Store)
                         .ThenInclude(store => store!.Account)
                         .Include(item => item.Likes.Where(like => like.CustomerId == customer.Id));
+                }
+                if (account.Role!.Value == Constants.StoreRole)
+                {
+                    var store = await _context.Stores.SingleOrDefaultAsync(
+                        store => store.AccountId == Guid.Parse(accountId), cancellationToken);
+                   
+                    if (store == null)
+                    {
+                        throw new UnauthorizedAccessException("Store not found");
+                    }
+
+                    query = query
+                        .Where(item => item.StoreId == store.Id)
+                        .Include(item => item.Images)
+                        .Include(item => item.Rates)
+                        .Include(item => item.Store)
+                        .ThenInclude(prop => prop!.Account);
+                }
 
                 var name = request.SearchForm.Name;
                 var createdAt = request.SearchForm.CreatedAt;

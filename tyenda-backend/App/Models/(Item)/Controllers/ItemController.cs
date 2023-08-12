@@ -99,7 +99,6 @@ namespace tyenda_backend.App.Models._Item_.Controllers
             }
         }
         
-        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpPost("Search()")]
         public async Task<IActionResult> ItemsSearch([FromBody] ItemStoreSearchForm form)
         {
