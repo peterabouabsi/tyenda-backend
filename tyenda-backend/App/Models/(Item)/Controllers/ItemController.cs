@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using tyenda_backend.App.Base_Controllers;
 using tyenda_backend.App.Models._Item_.Services._Add_Remove_Cart_;
+using tyenda_backend.App.Models._Item_.Services._Delete_Item_;
 using tyenda_backend.App.Models._Item_.Services._Get_Item_;
 using tyenda_backend.App.Models._Item_.Services._Get_Item_For_Request_;
 using tyenda_backend.App.Models._Item_.Services._Get_Random_Items_;
@@ -172,6 +173,22 @@ namespace tyenda_backend.App.Models._Item_.Controllers
                 var res = await _mediator.Send(req);
                 var result = _mapper.Map<ItemEntryView>(res);
                 return Ok(result);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [Authorize(Policy = Constants.StorePolicy)]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteItem([FromRoute] string id)
+        {
+            try
+            {
+                var req = new DeleteItem(id);
+                var res = await _mediator.Send(req);
+                return Ok(new {error = false, message = "Item deleted successfully"});
             }
             catch (Exception error)
             {

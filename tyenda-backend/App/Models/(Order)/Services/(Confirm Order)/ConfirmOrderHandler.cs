@@ -50,6 +50,8 @@ namespace tyenda_backend.App.Models._Order_.Services._Confirm_Order_
                 if (order == null) throw new Exception("Order not found");
 
                 order.OrderStatus = OrderStatus.OnGoing;
+                
+                order.CreatedAt = order.CreatedAt.ToUniversalTime();
                 order.UpdatedAt = DateTime.UtcNow;
 
                 await Task.FromResult(_context.Orders.Update(order));

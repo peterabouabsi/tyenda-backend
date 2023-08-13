@@ -60,7 +60,8 @@ namespace tyenda_backend.App.Models._Order_.Services._Approve_Reject_Order_
                         order.RejectDescription = request.ApproveRejectOrderForm.RejectDescription;
                         order.OrderStatus = OrderStatus.Rejected;
                     }
-
+                    
+                    order.CreatedAt = order.CreatedAt.ToUniversalTime();
                     order.UpdatedAt = DateTime.UtcNow;
                     
                 }
