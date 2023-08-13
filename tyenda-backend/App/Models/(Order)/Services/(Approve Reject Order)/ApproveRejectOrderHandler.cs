@@ -62,6 +62,7 @@ namespace tyenda_backend.App.Models._Order_.Services._Approve_Reject_Order_
                     }
 
                     order.UpdatedAt = DateTime.UtcNow;
+                    
                 }
                 else
                 {

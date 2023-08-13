@@ -115,7 +115,6 @@ namespace tyenda_backend.App.Models._Item_.Controllers
             }
         }
 
-        [Authorize(Policy = Constants.CustomerPolicy)]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetItem([FromRoute] string id)
         {
