@@ -40,6 +40,12 @@ namespace tyenda_backend.App.Models._Account_.Services._Refresh_Token_
                     throw new UnauthorizedAccessException("Session is no longer valid");
                 }
                 
+                var account = await _context.Accounts.SingleOrDefaultAsync(account => account.Id == Guid.Parse(accountId), cancellationToken);
+                if (account == null)
+                {
+                    throw new UnauthorizedAccessException("Account not found");
+                }
+                
                 await Task.FromResult(_context.Sessions.Remove(session));
                 
                 //Generate Tokens
@@ -49,11 +55,6 @@ namespace tyenda_backend.App.Models._Account_.Services._Refresh_Token_
                     new Claim("Role", role)
                 };
                 
-                var account = await _context.Accounts.SingleOrDefaultAsync(account => account.Id == Guid.Parse(accountId), cancellationToken);
-                if (account == null)
-                {
-                    throw new UnauthorizedAccessException("Account not found");
-                }
                 var newAccessToken = _tokenService.GenerateAccessToken(claims);
                 var newRefreshToken = _tokenService.GenerateRefreshToken(claims);
 
