@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using tyenda_backend.App.Models.Enums;
 
 namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_.Forms
 {
@@ -23,7 +24,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_.Forms
 
     public class Size
     {
-        public string? Code { get; set; } = "";
+        public SizeCode? Code { get; set; }
         public int? Number { get; set; } = 0;
         public int Quantity { get; set; } = 0;
     }

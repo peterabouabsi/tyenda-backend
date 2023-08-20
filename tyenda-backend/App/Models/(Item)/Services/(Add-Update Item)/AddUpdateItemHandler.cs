@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using tyenda_backend.App.Context;
+using tyenda_backend.App.Models._Color_;
 using tyenda_backend.App.Models._ItemCategory_;
+using tyenda_backend.App.Models._ItemColor_;
 using tyenda_backend.App.Services.Token_Service;
 
 namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
@@ -56,23 +58,87 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
 
                     if (request.AddUpdateItemForm.Colors!.Count > 0)
                     {
+                        foreach (var colorForm in request.AddUpdateItemForm.Colors)
+                        {
+                            var color = await _context.Colors.SingleOrDefaultAsync(color => color.Value == colorForm.Value, cancellationToken);
+                            
+                            var newColor = new Color() {Id = Guid.NewGuid(), Value = colorForm.Value};
+                            if (color == null)
+                            {
+                                await _context.Colors.AddAsync(newColor, cancellationToken);
+                            }
+
+                            var newItemColor = new ItemColor()
+                            {
+                                Id = Guid.NewGuid(),
+                                ColorId = color?.Id ?? newColor.Id,
+                                ItemId = newItem.Id,
+                                Quantity = colorForm.Quantity
+                            };
+
+                            await _context.ItemColors.AddAsync(newItemColor, cancellationToken);
+                        }
                     }
                     
                     if (request.AddUpdateItemForm.Sizes!.Count > 0)
                     {
+                        foreach (var sizeForm in request.AddUpdateItemForm.Sizes)
+                        {
+
+                            var newItemColor = new ItemColor()
+                            {
+                                Id = Guid.NewGuid(),
+                                ItemId = newItem.Id,
+                                Quantity = sizeForm.Quantity,
+                                SizeCode = sizeForm.Code,
+                                SizeNumber = sizeForm.Number
+                            };
+
+                            await _context.ItemColors.AddAsync(newItemColor, cancellationToken);
+                        }
                     }
                     
                     if (request.AddUpdateItemForm.ColorSizes!.Count > 0)
                     {
+                        foreach (var colorForm in request.AddUpdateItemForm.Colors)
+                        {
+                            var color = await _context.Colors.SingleOrDefaultAsync(color => color.Value == colorForm.Value, cancellationToken);
+                            
+                            var newColor = new Color() {Id = Guid.NewGuid(), Value = colorForm.Value};
+                            if (color == null)
+                            {
+                                await _context.Colors.AddAsync(newColor, cancellationToken);
+                            }
+
+                            foreach (var sizeForm in request.AddUpdateItemForm.Sizes)
+                            {
+
+                                var newItemColor = new ItemColor()
+                                {
+                                    Id = Guid.NewGuid(),
+                                    ItemId = newItem.Id,
+                                    ColorId = color?.Id ?? newColor.Id,
+                                    Quantity = sizeForm.Quantity,
+                                    SizeCode = sizeForm.Code,
+                                    SizeNumber = sizeForm.Number
+                                };
+
+                                await _context.ItemColors.AddAsync(newItemColor, cancellationToken);
+                            }
+ 
+                        }
                     }
-                    
+
+                    await _context.SaveChangesAsync(cancellationToken);
+
+                    return newItem;
                 }
                 else
                 {
                     //Update
+                    return null;
                 }
                 
-                return null;
             }
             catch (Exception error)
             {
