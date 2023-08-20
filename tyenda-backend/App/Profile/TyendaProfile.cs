@@ -55,8 +55,8 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.Rate, map => map.MapFrom(src => GenerateItemRate(src.Rates)));
             
             CreateMap<Item, ItemAdvancedView>()
-                .ForMember(dest => dest.DisplayedImage, map => map.MapFrom(src => src.Images.First().Url))
-                .ForMember(dest => dest.OtherImages, map => map.MapFrom(src => src.Images.Select(image => image.Url)))
+                .ForMember(dest => dest.DisplayedImage, map => map.MapFrom(src => src.Images.Count > 0? src.Images.First().Url : ""))
+                .ForMember(dest => dest.OtherImages, map => map.MapFrom(src => src.Images.Count > 0? src.Images.Select(image => image.Url) : new List<string>()))
                 .ForMember(dest => dest.StoreName, map => map.MapFrom(src => src.Store!.Name))
                 .ForMember(dest => dest.StoreImage, map => map.MapFrom(src => src.Store!.Account!.ProfileImage))
                 .ForMember(dest => dest.CountComments, map => map.MapFrom(src => src.Comments.Count))
