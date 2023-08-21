@@ -6,5 +6,6 @@ namespace tyenda_backend.App.Services.File_Service
     public interface IFileService
     {
         public abstract string UploadFile(IFormFile file, string folderType, string id);
+        public abstract string UploadItemImageFile(IFormFile file, string folderType, string id, string itemId);
     }
 }

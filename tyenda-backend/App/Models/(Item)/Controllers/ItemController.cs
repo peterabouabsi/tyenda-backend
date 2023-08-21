@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using tyenda_backend.App.Base_Controllers;
 using tyenda_backend.App.Models._Item_.Services._Add_Remove_Cart_;
+using tyenda_backend.App.Models._Item_.Services._Add_Update_Image_;
+using tyenda_backend.App.Models._Item_.Services._Add_Update_Image_.Form;
 using tyenda_backend.App.Models._Item_.Services._Add_Update_Item_;
 using tyenda_backend.App.Models._Item_.Services._Add_Update_Item_.Forms;
 using tyenda_backend.App.Models._Item_.Services._Delete_Item_;
@@ -189,7 +191,7 @@ namespace tyenda_backend.App.Models._Item_.Controllers
             try
             {
                 var req = new DeleteItem(id);
-                var res = await _mediator.Send(req);
+                await _mediator.Send(req);
                 return Ok(new {error = false, message = "Item deleted successfully"});
             }
             catch (Exception error)
@@ -205,6 +207,22 @@ namespace tyenda_backend.App.Models._Item_.Controllers
             try
             {
                 var req = new AddUpdateItem(form);
+                var res = await _mediator.Send(req);
+                return Ok(res);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+        
+        [Authorize(Policy = Constants.StorePolicy)]
+        [HttpPost("Image/AddUpdate")]
+        public async Task<IActionResult> AddUpdateImage([FromForm] AddUpdateImageForm form)
+        {
+            try
+            {
+                var req = new AddUpdateImage(form);
                 var res = await _mediator.Send(req);
                 return Ok(res);
             }

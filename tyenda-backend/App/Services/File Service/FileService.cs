@@ -62,5 +62,44 @@ namespace tyenda_backend.App.Services.File_Service
 
             return folderType + "/" + id + "/" + fileName;
         }
+
+        public string UploadItemImageFile(IFormFile file, string folderType, string imageId, string itemId)
+        {
+            var original = _hostingEnvironment.ContentRootPath;//current project path
+            var wwwroot = Path.Combine(original, "wwwroot");//combine it with /wwwroot
+            
+            if (!Directory.Exists(wwwroot))//if the path doesn’t exist, then create folder
+            {
+                Directory.CreateDirectory(wwwroot);
+            }
+            
+            var itemsDirectory = Path.Combine(wwwroot, folderType);//Combine root & desired path
+            if (!Directory.Exists(itemsDirectory))//create if it doesn’t exist
+            {
+                Directory.CreateDirectory(itemsDirectory);
+            }
+            
+            var itemDirectory = Path.Combine(itemsDirectory, itemId);
+            if (!Directory.Exists(itemDirectory))//create if it doesn’t exist
+            {
+                Directory.CreateDirectory(itemDirectory);
+            }
+            
+            //Upload file /Images/{itemId}/{fileName}
+            var fileName = imageId+Path.GetExtension(file.FileName);
+            var fileUrl = Path.Combine(itemDirectory, fileName);
+            if (File.Exists(fileUrl))
+            {
+                File.Delete(fileUrl);
+            }
+
+            using (FileStream fileStream = new FileStream(fileUrl, FileMode.Create, FileAccess.Write))
+            {
+                file.CopyTo(fileStream); //Copy the file to the location: 
+            }
+
+            return folderType + "/" + itemId + "/" + fileName;
+            
+        }
     }
 }

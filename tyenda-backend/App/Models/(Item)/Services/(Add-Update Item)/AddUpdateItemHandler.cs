@@ -7,6 +7,7 @@ using tyenda_backend.App.Context;
 using tyenda_backend.App.Models._Color_;
 using tyenda_backend.App.Models._ItemCategory_;
 using tyenda_backend.App.Models._ItemColor_;
+using tyenda_backend.App.Models._Size_;
 using tyenda_backend.App.Services.Token_Service;
 
 namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
@@ -84,8 +85,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                     {
                         foreach (var sizeForm in request.AddUpdateItemForm.Sizes)
                         {
-
-                            var newItemColor = new ItemColor()
+                            var newItemSize = new Size()
                             {
                                 Id = Guid.NewGuid(),
                                 ItemId = newItem.Id,
@@ -94,7 +94,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                                 SizeNumber = sizeForm.Number
                             };
 
-                            await _context.ItemColors.AddAsync(newItemColor, cancellationToken);
+                            await _context.Sizes.AddAsync(newItemSize, cancellationToken);
                         }
                     }
                     
