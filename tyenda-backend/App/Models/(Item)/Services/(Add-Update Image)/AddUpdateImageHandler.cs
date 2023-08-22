@@ -53,10 +53,10 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Image_
                 else
                 {
                     //update
-                    var itemImageCheck = await _context.ItemImages.SingleOrDefaultAsync(image => image.Id == Guid.Parse(request.AddUpdateImageForm.Id), cancellationToken);
+                    var itemImageCheck = await _context.ItemImages.SingleOrDefaultAsync(image => image.Id == Guid.Parse(request.AddUpdateImageForm.Id!), cancellationToken);
                     if (itemImageCheck == null) throw new Exception("Image not found");
 
-                    var itemUrl = _fileService.UploadItemImageFile(request.AddUpdateImageForm.File!, "Items", itemImageCheck.Id.ToString(), request.AddUpdateImageForm.ItemId);
+                    var itemUrl = _fileService.UploadItemImageFile(request.AddUpdateImageForm.File, "Items", itemImageCheck.Id.ToString(), request.AddUpdateImageForm.ItemId);
 
                     itemImageCheck.Url = itemUrl;
                     await Task.FromResult(_context.ItemImages.Update(itemImageCheck));
