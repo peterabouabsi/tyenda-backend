@@ -29,7 +29,6 @@ namespace tyenda_backend.App.Models._Item_.Views
         public string Description { get; set; } = "";
         public bool IsAddedToCart { get; set; } = false;
         public bool IsLiked { get; set; } = false;
-        
     }
 
     public class ColorSizeView

@@ -14,6 +14,7 @@ using tyenda_backend.App.Models._Item_.Services._Add_Update_Item_.Forms;
 using tyenda_backend.App.Models._Item_.Services._Delete_Item_;
 using tyenda_backend.App.Models._Item_.Services._Get_Item_;
 using tyenda_backend.App.Models._Item_.Services._Get_Item_For_Request_;
+using tyenda_backend.App.Models._Item_.Services._Get_Item_For_Update_;
 using tyenda_backend.App.Models._Item_.Services._Get_Random_Items_;
 using tyenda_backend.App.Models._Item_.Services._Items_Search_;
 using tyenda_backend.App.Models._Item_.Services._Like_Item_;
@@ -177,6 +178,22 @@ namespace tyenda_backend.App.Models._Item_.Controllers
                 var res = await _mediator.Send(req);
                 var result = _mapper.Map<ItemEntryView>(res);
                 return Ok(result);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+        
+        [Authorize(Policy = Constants.StorePolicy)]
+        [HttpGet("Update/{itemId}")]
+        public async Task<IActionResult> GetItemForUpdate([FromRoute] string itemId)
+        {
+            try
+            {
+                var req = new GetItemForUpdate(itemId);
+                var res = await _mediator.Send(req);
+                return Ok(res);
             }
             catch (Exception error)
             {
