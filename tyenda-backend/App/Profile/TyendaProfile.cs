@@ -143,7 +143,7 @@ namespace tyenda_backend.App.Profile
                     Code = prop.SizeCode.ToString(),
                     Quantity = prop.Quantity
                 }) : null))
-                .ForMember(dest => dest.ColorSizes, map => map.MapFrom(src => src.OrderItems.Any(orderItem => !String.IsNullOrEmpty(orderItem.ColorId.ToString())) ? src.OrderItems.GroupBy(prop => prop.ColorId).Select(group => new {
+                .ForMember(dest => dest.ColorSizes, map => map.MapFrom(src => src.OrderItems.Any(orderItem => !String.IsNullOrEmpty(orderItem.ColorId.ToString()) && (!String.IsNullOrEmpty(orderItem.SizeCode.ToString()) || orderItem.SizeNumber != null )) ? src.OrderItems.GroupBy(prop => prop.ColorId).Select(group => new {
                             ColorId = group.Key,
                             Color = group.First().Color!.Value,
                             Sizes = group.Select(prop => new {
