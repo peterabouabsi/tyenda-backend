@@ -89,39 +89,6 @@ namespace tyenda_backend.App.Services.File_Service
             //Upload file /Images/{itemId}/{fileName}
             var fileName = imageId+Path.GetExtension(file.FileName);
             var fileUrl = Path.Combine(itemDirectory, fileName);
-            
-            if(!String.IsNullOrEmpty(imageId)){
-                //Delete and Upload a new image
-                try
-                {
-                    
-                    FileInfo fileInfo = new FileInfo(fileUrl);
-                    if (fileInfo.Exists)
-                    {
-                        // Ensure the file attributes allow modification
-                        File.SetAttributes(fileUrl, FileAttributes.Normal);
-
-                        try
-                        {
-                            File.Delete(fileUrl);
-                            Console.WriteLine("File deleted successfully.");
-                        }
-                        catch (IOException deleteEx)
-                        {
-                            Console.WriteLine($"An error occurred while deleting the file: {deleteEx.Message}");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("File does not exist at the specified path.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"An error occurred: {ex.Message}");
-                }
-
-            }
 
             using (FileStream fileStream = new FileStream(fileUrl, FileMode.Create, FileAccess.Write))
             {
