@@ -158,13 +158,23 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                         await _context.ItemCategories.AddAsync(newItemCategory, cancellationToken);
                     }
 
-                    if (request.AddUpdateItemForm.Colors!.Count > 0)
-{
-    // Remove existing colors associated with the item
-    var existingColors = _context.ItemColors.Where(ic => ic.ItemId == item.Id);
-    _context.ItemColors.RemoveRange(existingColors);
+                    // Remove existing colors associated with the item
+                    var existingColors = _context.ItemColors.Where(ic => ic.ItemId == item.Id);
+                    _context.ItemColors.RemoveRange(existingColors);
+                    
+                    // Remove existing sizes associated with the item
+                    var existingSizes = _context.Sizes.Where(s => s.ItemId == item.Id);
+                    _context.Sizes.RemoveRange(existingSizes);
 
-    foreach (var colorForm in request.AddUpdateItemForm.Colors)
+                    // Remove existing color sizes associated with the item
+                    var existingColorSizes = await _context.ItemColors
+                        .Where(ic => ic.ItemId == item.Id)
+                        .ToArrayAsync(cancellationToken);
+                    _context.ItemColors.RemoveRange(existingColorSizes);
+
+                    if (request.AddUpdateItemForm.Colors!.Count > 0) 
+                    { 
+                        foreach (var colorForm in request.AddUpdateItemForm.Colors)
     {
         var color = await _context.Colors.SingleOrDefaultAsync(c => c.Value == colorForm.Value, cancellationToken);
 
@@ -183,16 +193,11 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
         };
 
         await _context.ItemColors.AddAsync(newItemColor, cancellationToken);
-    }
-}
+    } 
+                    }
 
-if (request.AddUpdateItemForm.Sizes!.Count > 0)
-{
-    // Remove existing sizes associated with the item
-    var existingSizes = _context.Sizes.Where(s => s.ItemId == item.Id);
-    _context.Sizes.RemoveRange(existingSizes);
-
-    foreach (var sizeForm in request.AddUpdateItemForm.Sizes)
+                    if (request.AddUpdateItemForm.Sizes!.Count > 0) { 
+                        foreach (var sizeForm in request.AddUpdateItemForm.Sizes)
     {
         var newItemSize = new Size()
         {
@@ -204,42 +209,36 @@ if (request.AddUpdateItemForm.Sizes!.Count > 0)
         };
 
         await _context.Sizes.AddAsync(newItemSize, cancellationToken);
-    }
-}
+    } 
+                    }
 
-if (request.AddUpdateItemForm.ColorSizes!.Count > 0)
-{
-    // Remove existing color sizes associated with the item
-    var existingColorSizes = await _context.ItemColors
-        .Where(ic => ic.ItemId == item.Id)
-        .ToArrayAsync(cancellationToken);
-    _context.ItemColors.RemoveRange(existingColorSizes);
+                    if (request.AddUpdateItemForm.ColorSizes!.Count > 0) 
+                    { 
+                        foreach (var colorForm in request.AddUpdateItemForm.Colors) 
+                        {
+                            var color = await _context.Colors.SingleOrDefaultAsync(c => c.Value == colorForm.Value, cancellationToken);
 
-    foreach (var colorForm in request.AddUpdateItemForm.Colors)
-    {
-        var color = await _context.Colors.SingleOrDefaultAsync(c => c.Value == colorForm.Value, cancellationToken);
+                            var newColor = new Color() { Id = Guid.NewGuid(), Value = colorForm.Value };
+                            if (color == null)
+                            {
+                                await _context.Colors.AddAsync(newColor, cancellationToken);
+                            }
 
-        var newColor = new Color() { Id = Guid.NewGuid(), Value = colorForm.Value };
-        if (color == null)
-        {
-            await _context.Colors.AddAsync(newColor, cancellationToken);
-        }
+                            foreach (var sizeForm in request.AddUpdateItemForm.Sizes)
+                            {
+                                var newItemColor = new ItemColor()
+                                {
+                                    Id = Guid.NewGuid(),
+                                    ColorId = color?.Id ?? newColor.Id,
+                                    ItemId = item.Id,
+                                    Quantity = sizeForm.Quantity,
+                                    SizeCode = sizeForm.Code,
+                                    SizeNumber = sizeForm.Number
+                                };
 
-        foreach (var sizeForm in request.AddUpdateItemForm.Sizes)
-        {
-            var newItemColor = new ItemColor()
-            {
-                Id = Guid.NewGuid(),
-                ColorId = color?.Id ?? newColor.Id,
-                ItemId = item.Id,
-                Quantity = sizeForm.Quantity,
-                SizeCode = sizeForm.Code,
-                SizeNumber = sizeForm.Number
-            };
-
-            await _context.ItemColors.AddAsync(newItemColor, cancellationToken);
-        }
-    }
+                                await _context.ItemColors.AddAsync(newItemColor, cancellationToken);
+                            }
+                        }
 }
 
 await _context.SaveChangesAsync(cancellationToken);
