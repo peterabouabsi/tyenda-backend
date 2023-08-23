@@ -137,7 +137,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                 else
                 {
                     //Update
-                    var item = await _context.Items.SingleOrDefaultAsync(item => item.StoreId == store.Id , cancellationToken);
+                    var item = await _context.Items.SingleOrDefaultAsync(item => item.Id == Guid.Parse(request.AddUpdateItemForm.Id) && item.StoreId == store.Id , cancellationToken);
                     if (item == null) throw new Exception("Item not found");
                     
                     item.Value = request.AddUpdateItemForm.Value;
