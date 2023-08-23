@@ -214,7 +214,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
 
                     if (request.AddUpdateItemForm.ColorSizes!.Count > 0) 
                     { 
-                        foreach (var colorForm in request.AddUpdateItemForm.Colors) 
+                        foreach (var colorForm in request.AddUpdateItemForm.ColorSizes) 
                         {
                             var color = await _context.Colors.SingleOrDefaultAsync(c => c.Value == colorForm.Value, cancellationToken);
 
@@ -224,7 +224,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                                 await _context.Colors.AddAsync(newColor, cancellationToken);
                             }
 
-                            foreach (var sizeForm in request.AddUpdateItemForm.Sizes)
+                            foreach (var sizeForm in colorForm.Sizes)
                             {
                                 var newItemColor = new ItemColor()
                                 {
@@ -241,7 +241,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                         }
 }
 
-await _context.SaveChangesAsync(cancellationToken);
+                    await _context.SaveChangesAsync(cancellationToken);
 
                     return item;
                 }
