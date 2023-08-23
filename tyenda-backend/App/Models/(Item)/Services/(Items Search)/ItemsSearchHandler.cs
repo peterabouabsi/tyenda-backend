@@ -41,7 +41,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Items_Search_
                     }
                     
                     query = query
-                        .Include(item => item.Images)
+                        .Include(item => item.Images.OrderBy(image => image.CreatedAt))
                         .Include(item => item.Rates)
                         .Include(item => item.Carts.Where(cart => cart.CustomerId == customer.Id))
                         .Include(item => item.Store)
@@ -60,7 +60,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Items_Search_
 
                     query = query
                         .Where(item => item.StoreId == store.Id)
-                        .Include(item => item.Images)
+                        .Include(item => item.Images.OrderBy(image => image.CreatedAt))
                         .Include(item => item.Rates)
                         .Include(item => item.Store)
                         .ThenInclude(prop => prop!.Account);

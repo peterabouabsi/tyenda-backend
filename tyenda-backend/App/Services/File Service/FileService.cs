@@ -19,11 +19,13 @@ namespace tyenda_backend.App.Services.File_Service
         }
 
         //folderType: Profiles, Backgrounds, Items
-        public string UploadFile(IFormFile file, string folderType, string id)
+        public string UploadFile(IFormFile file, string folderName, string id)
         {
 
-            var wwwroot = "wwwroot";
-            var profilesDirectory = "Profiles";
+            var wwwroot = "wwwroot"; //Root Directory -> /wwwrooot
+            var profilesDirectory = Path.Combine(wwwroot, folderName); //Profiles Directory -> /wwwroot/Profiles
+            
+            
             if (!Directory.Exists(wwwroot))//if the path doesn’t exist, then create folder
             {
                 Directory.CreateDirectory(wwwroot);
@@ -59,15 +61,14 @@ namespace tyenda_backend.App.Services.File_Service
                 file.CopyTo(fileStream); //Copy the file to the location: 
             }
 
-            return folderType + "/" + id + "/" + fileName;
+            return folderName + "/" + id + "/" + fileName;
         }
 
-        public string UploadItemImageFile(IFormFile file, string folderType, string imageId, string itemId)
+        public string UploadItemImageFile(IFormFile file, string folderName, string imageId, string itemId)
         {
             var wwwroot = "wwwroot";
-            var itemsSubdirectory = "Items";
     
-            var itemsDirectory = Path.Combine(wwwroot, itemsSubdirectory);
+            var itemsDirectory = Path.Combine(wwwroot, folderName);
             var itemDirectory = Path.Combine(itemsDirectory, itemId);
             
             if (!Directory.Exists(wwwroot))//if the path doesn’t exist, then create folder
@@ -127,7 +128,7 @@ namespace tyenda_backend.App.Services.File_Service
                 file.CopyTo(fileStream); //Copy the file to the location: 
             }
 
-            return folderType + "/" + itemId + "/" + fileName;
+            return folderName + "/" + itemId + "/" + fileName;
             
         }
     }

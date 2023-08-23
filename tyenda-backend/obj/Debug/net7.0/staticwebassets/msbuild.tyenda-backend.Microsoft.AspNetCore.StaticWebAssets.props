@@ -32,12 +32,12 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Backgrounds\7f278e15-34cc-475c-b9da-4aa05fa45627\7f278e15-34cc-475c-b9da-4aa05fa45627.png))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Items\d0ef9e32-dbd2-4ffd-89c0-6be5123a0a11\8fbe80da-98cd-42b7-82c6-1a67fcef421d.jpg))">
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Items\d0ef9e32-dbd2-4ffd-89c0-6be5123a0a11\8fbe80da-98cd-42b7-82c6-1a67fcef421d.png))">
       <SourceType>Package</SourceType>
       <SourceId>tyenda-backend</SourceId>
       <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
       <BasePath>_content/tyenda-backend</BasePath>
-      <RelativePath>Items/d0ef9e32-dbd2-4ffd-89c0-6be5123a0a11/8fbe80da-98cd-42b7-82c6-1a67fcef421d.jpg</RelativePath>
+      <RelativePath>Items/d0ef9e32-dbd2-4ffd-89c0-6be5123a0a11/8fbe80da-98cd-42b7-82c6-1a67fcef421d.png</RelativePath>
       <AssetKind>All</AssetKind>
       <AssetMode>All</AssetMode>
       <AssetRole>Primary</AssetRole>
@@ -46,7 +46,23 @@
       <AssetTraitValue></AssetTraitValue>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Items\d0ef9e32-dbd2-4ffd-89c0-6be5123a0a11\8fbe80da-98cd-42b7-82c6-1a67fcef421d.jpg))</OriginalItemSpec>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Items\d0ef9e32-dbd2-4ffd-89c0-6be5123a0a11\8fbe80da-98cd-42b7-82c6-1a67fcef421d.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Items\d0ef9e32-dbd2-4ffd-89c0-6be5123a0a11\e5cc51a9-008e-44f6-b28b-2e3a2bcc87c0.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>tyenda-backend</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/tyenda-backend</BasePath>
+      <RelativePath>Items/d0ef9e32-dbd2-4ffd-89c0-6be5123a0a11/e5cc51a9-008e-44f6-b28b-2e3a2bcc87c0.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Items\d0ef9e32-dbd2-4ffd-89c0-6be5123a0a11\e5cc51a9-008e-44f6-b28b-2e3a2bcc87c0.png))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Items\d0ef9e32-dbd2-4ffd-89c0-6be5123a0a11\e7863997-8b16-4169-a3b3-bcf7b3c489a6.png))">
       <SourceType>Package</SourceType>
@@ -63,6 +79,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Items\d0ef9e32-dbd2-4ffd-89c0-6be5123a0a11\e7863997-8b16-4169-a3b3-bcf7b3c489a6.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Items\d0ef9e32-dbd2-4ffd-89c0-6be5123a0a11\fd7e5e21-9817-4b0b-b1b5-4e0195175f92.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>tyenda-backend</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/tyenda-backend</BasePath>
+      <RelativePath>Items/d0ef9e32-dbd2-4ffd-89c0-6be5123a0a11/fd7e5e21-9817-4b0b-b1b5-4e0195175f92.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Items\d0ef9e32-dbd2-4ffd-89c0-6be5123a0a11\fd7e5e21-9817-4b0b-b1b5-4e0195175f92.png))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Profiles\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1.jpeg))">
       <SourceType>Package</SourceType>
