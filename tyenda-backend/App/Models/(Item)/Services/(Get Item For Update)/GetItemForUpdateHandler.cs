@@ -35,6 +35,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Get_Item_For_Update_
                 if (store == null) throw new Exception("Store not found");
                 
                 var item = await _context.Items
+                    .Include(item => item.Notes)
                     .Include(item => item.Categories).ThenInclude(category => category.Category)
                     .Include(item => item.Images)
                     .Include(item => item.Colors).ThenInclude(color => color.Color)
@@ -49,6 +50,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Get_Item_For_Update_
                     Description = item.Description,
                     Discount = item.Discount,
                     Price = item.Price,
+                    Notes = item.Notes.Select(note => note.Value),
                     Categories = item.Categories.Select(category => new {Id = category.Category!.Id, Value = category.Category.Value}),
                     Images = item.Images.Select(image => new {Id = image.Id, Url = image.Url}),
                     Colors = item.Colors.Where(color => color.SizeNumber == null && color.SizeCode == null).Select(color => new ColorView(){Id = color.Color!.Id.ToString(), Value = color.Color.Value, Quantity = color.Quantity}),

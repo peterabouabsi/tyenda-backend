@@ -44,9 +44,16 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Image_
                         Url = "",
                         ItemId = Guid.Parse(request.AddUpdateImageForm.ItemId)
                     };
-                    var itemUrl = _fileService.UploadItemImageFile(request.AddUpdateImageForm.File!, "Items", itemImage.Id.ToString(), request.AddUpdateImageForm.ItemId);
-                    
-                    itemImage.Url = itemUrl;
+
+                    if (request.AddUpdateImageForm.File != null)
+                    {
+                        var itemUrl = _fileService.UploadItemImageFile(request.AddUpdateImageForm.File, "Items", itemImage.Id.ToString(), request.AddUpdateImageForm.ItemId);
+                        itemImage.Url = itemUrl;   
+                    }
+                    else
+                    {
+                        itemImage.Url = null;
+                    }
                     
                     await _context.ItemImages.AddAsync(itemImage, cancellationToken);
                 }
@@ -56,9 +63,16 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Image_
                     var itemImageCheck = await _context.ItemImages.SingleOrDefaultAsync(image => image.Id == Guid.Parse(request.AddUpdateImageForm.Id!), cancellationToken);
                     if (itemImageCheck == null) throw new Exception("Image not found");
 
-                    var itemUrl = _fileService.UploadItemImageFile(request.AddUpdateImageForm.File, "Items", itemImageCheck.Id.ToString(), request.AddUpdateImageForm.ItemId);
+                    if (request.AddUpdateImageForm.File != null)
+                    {
+                        var itemUrl = _fileService.UploadItemImageFile(request.AddUpdateImageForm.File, "Items", itemImageCheck.Id.ToString(), request.AddUpdateImageForm.ItemId);
+                        itemImageCheck.Url = itemUrl;
+                    }
+                    else
+                    {
+                        itemImageCheck.Url = null;
+                    }
 
-                    itemImageCheck.Url = itemUrl;
                     await Task.FromResult(_context.ItemImages.Update(itemImageCheck));
 
                     itemImage = itemImageCheck;

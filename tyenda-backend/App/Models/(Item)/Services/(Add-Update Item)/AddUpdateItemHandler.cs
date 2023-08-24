@@ -8,6 +8,7 @@ using tyenda_backend.App.Context;
 using tyenda_backend.App.Models._Color_;
 using tyenda_backend.App.Models._ItemCategory_;
 using tyenda_backend.App.Models._ItemColor_;
+using tyenda_backend.App.Models._ItemNote_;
 using tyenda_backend.App.Models._Size_;
 using tyenda_backend.App.Services.Token_Service;
 
@@ -145,7 +146,20 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                     item.StoreId = store.Id;
                     item.Price = request.AddUpdateItemForm.Price;
                     item.Discount = request.AddUpdateItemForm.Discount;
-                    
+
+                    var existingNotes = await _context.ItemNotes.Where(ic => ic.ItemId == item.Id).ToArrayAsync(cancellationToken);
+                    _context.ItemNotes.RemoveRange(existingNotes);
+                    foreach (var note in request.AddUpdateItemForm.Notes)
+                    {
+                        var newNote = new ItemNote()
+                        {
+                            Id = Guid.NewGuid(),
+                            Value = note,
+                            ItemId = item.Id
+                        };
+                        await _context.ItemNotes.AddAsync(newNote, cancellationToken);
+                    }
+
                     var existingCategories = await _context.ItemCategories.Where(ic => ic.ItemId == item.Id).ToArrayAsync(cancellationToken);
                     _context.ItemCategories.RemoveRange(existingCategories);
                     foreach (var categoryId in request.AddUpdateItemForm.Categories)

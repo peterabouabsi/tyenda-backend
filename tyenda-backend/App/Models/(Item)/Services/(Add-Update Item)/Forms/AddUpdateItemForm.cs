@@ -8,6 +8,8 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_.Forms
         public string? Id { get; set; }
         public string Value { get; set; } = "";
         public string Description { get; set; } = "";
+
+        public List<string> Notes { get; set; } = new List<string>();
         public List<string> Categories { get; set; } = new List<string>();
         public decimal Price { get; set; } = 0;
         public int Discount { get; set; } = 0;
