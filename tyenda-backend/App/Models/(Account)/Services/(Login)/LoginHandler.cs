@@ -70,7 +70,8 @@ namespace tyenda_backend.App.Models._Account_.Services._Login_
                     var loginResponse = new
                     {
                         AccessToken = accessToken,
-                        RefreshToken = refreshToken
+                        RefreshToken = refreshToken,
+                        AccountId = account.Id
                     };
                 
                     account.CreatedAt = DateTime.SpecifyKind(account.CreatedAt, DateTimeKind.Utc);
