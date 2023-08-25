@@ -28,6 +28,7 @@ namespace tyenda_backend.App.Models._Account_
         public string Username { get; set; } = "";
         public string? Password { get; set; }
         public bool Active { get; set; } = false;
+        public bool OnOrder { get; set; } = false;
 
         public virtual Role? Role { get; set; }
         public Guid RoleId { get; set; }

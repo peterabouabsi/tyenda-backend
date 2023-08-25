@@ -45,11 +45,11 @@ namespace tyenda_backend.App.Models._Account_.Services._Update_Profile_
                     account.Username = request.UpdateProfileForm!.UpdateCustomerForm!.Username;
                     account.PhoneNumber = request.UpdateProfileForm!.UpdateCustomerForm!.Phone;
                     account.Email = request.UpdateProfileForm!.UpdateCustomerForm!.Email;
+                    account.OnOrder = request.UpdateProfileForm!.UpdateCustomerForm!.OnOrder;
 
                     customer.Firstname = request.UpdateProfileForm!.UpdateCustomerForm.Firstname;
                     customer.Lastname = request.UpdateProfileForm!.UpdateCustomerForm.Lastname;
                     customer.OnItem = request.UpdateProfileForm!.UpdateCustomerForm.OnItem;
-                    customer.OnReminder = request.UpdateProfileForm!.UpdateCustomerForm.OnReminder;
 
                     profileData = new
                     {
@@ -60,7 +60,7 @@ namespace tyenda_backend.App.Models._Account_.Services._Update_Profile_
                         Phone = account.PhoneNumber,
                         ProfileImage = account.ProfileImage,
                         OnItem = account.Customer.OnItem,
-                        OnReminder = account.Customer.OnReminder
+                        OnOrder = account.OnOrder
                     };
                 }
 

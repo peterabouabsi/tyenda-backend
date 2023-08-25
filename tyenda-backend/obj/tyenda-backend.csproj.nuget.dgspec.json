@@ -109,6 +109,10 @@
               "target": "Package",
               "version": "[7.0.0, )"
             },
+            "OneSignal.RestAPIv3.Client": {
+              "target": "Package",
+              "version": "[1.2.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"

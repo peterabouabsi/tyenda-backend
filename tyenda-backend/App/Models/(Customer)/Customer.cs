@@ -34,7 +34,6 @@ namespace tyenda_backend.App.Models._Customer_
         public string Firstname { get; set; } = "";
         public string Lastname { get; set; } = "";
         public bool OnItem { get; set; }
-        public bool OnReminder { get; set; }
         public virtual Account? Account { get; set; }
         public Guid AccountId { get; set; }
 

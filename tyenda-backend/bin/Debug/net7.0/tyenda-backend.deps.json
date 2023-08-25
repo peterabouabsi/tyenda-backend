@@ -24,6 +24,7 @@
           "Newtonsoft.Json": "13.0.1",
           "Npgsql": "7.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.0",
+          "OneSignal.RestAPIv3.Client": "1.2.0",
           "Swashbuckle.AspNetCore": "6.4.0"
         },
         "runtime": {
@@ -437,6 +438,26 @@
           "lib/net7.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
             "assemblyVersion": "7.0.0.0",
             "fileVersion": "7.0.0.0"
+          }
+        }
+      },
+      "OneSignal.RestAPIv3.Client/1.2.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1",
+          "RestSharp": "106.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/OneSignal.RestAPIv3.Client.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "RestSharp/106.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/RestSharp.dll": {
+            "assemblyVersion": "106.0.1.0",
+            "fileVersion": "106.0.1.6"
           }
         }
       },
@@ -914,6 +935,20 @@
       "sha512": "sha512-CyUNlFZmtX2Kmw8XK5Tlx5eVUCzWJ+zJHErxZiMo2Y8zCRuH9+/OMGwG+9Mmp5zD5p3Ifbi5Pp3btsqoDDkSZQ==",
       "path": "npgsql.entityframeworkcore.postgresql/7.0.0",
       "hashPath": "npgsql.entityframeworkcore.postgresql.7.0.0.nupkg.sha512"
+    },
+    "OneSignal.RestAPIv3.Client/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sZATL4u8Os7bsv9b1SQAjE+XdrjYNXhP5zCyqXdSKa+bHLCXHBSzWD3+Pm4xh/h8hDHW6nVD2QvEjP/QQ3g0qA==",
+      "path": "onesignal.restapiv3.client/1.2.0",
+      "hashPath": "onesignal.restapiv3.client.1.2.0.nupkg.sha512"
+    },
+    "RestSharp/106.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2LJ9mrB2R2voFt29O6bMXPE7UjIIEO/z1+oLbdre7H87odPbhJQVtyVgC9mpA2BMxktVvXf5ioL4oyZq8kcoMw==",
+      "path": "restsharp/106.0.1",
+      "hashPath": "restsharp.106.0.1.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.4.0": {
       "type": "package",

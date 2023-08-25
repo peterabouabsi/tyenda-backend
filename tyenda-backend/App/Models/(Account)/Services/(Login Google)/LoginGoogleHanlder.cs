@@ -83,7 +83,6 @@ namespace tyenda_backend.App.Models._Account_.Services._Login_Google_
                             Firstname = firstName,
                             Lastname = payload.FamilyName,
                             OnItem = false,
-                            OnReminder = false,
                             AccountId = newAccount.Id
                         };
 
@@ -125,7 +124,7 @@ namespace tyenda_backend.App.Models._Account_.Services._Login_Google_
                     {
                         AccessToken = accessToken,
                         RefreshToken = refreshToken,
-                        AccountId = account.Id
+                        AccountId = account!.Id
                     };
                     
                     await _context.SaveChangesAsync(cancellationToken);

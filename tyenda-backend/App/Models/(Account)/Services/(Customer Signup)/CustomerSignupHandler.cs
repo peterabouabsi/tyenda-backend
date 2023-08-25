@@ -67,7 +67,6 @@ namespace tyenda_backend.App.Models._Account_.Services._Customer_Signup_
                     Firstname = request.CustomerSignupForm.Firstname.Trim(),
                     Lastname = request.CustomerSignupForm.Lastname.Trim(),
                     OnItem = false,
-                    OnReminder = false,
                     AccountId = newAccount.Id
                 };
 

@@ -17,6 +17,7 @@ using Microsoft.OpenApi.Models;
 using tyenda_backend.App.Context;
 using tyenda_backend.App.Services.Email_Service;
 using tyenda_backend.App.Services.File_Service;
+using tyenda_backend.App.Services.Notification_Service;
 using tyenda_backend.App.Services.Token_Service;
 
 namespace tyenda_backend
@@ -79,6 +80,7 @@ namespace tyenda_backend
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IFileService, FileService>();
+            services.AddTransient<INotificationService, NotificationService>();
 
             //Cors
             services.AddCors(options =>

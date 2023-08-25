@@ -69,7 +69,6 @@ namespace tyenda_backend.App.Models._Account_.Services._Store_Signup_
                     OwnerEmail = signupForm.OwnerEmail,
                     BackgroundImage = null,
                     Description = signupForm.Description,
-                    OnOrder = false,
                     AccountId = newAccount.Id
                 };
 

@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using tyenda_backend.App.Context;
+using tyenda_backend.App.Models._Alert_;
 using tyenda_backend.App.Models._Color_;
 using tyenda_backend.App.Models._ItemCategory_;
 using tyenda_backend.App.Models._ItemColor_;
 using tyenda_backend.App.Models._ItemNote_;
+using tyenda_backend.App.Models._Notification_;
 using tyenda_backend.App.Models._Size_;
+using tyenda_backend.App.Services.Notification_Service;
 using tyenda_backend.App.Services.Token_Service;
 
 namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
@@ -18,11 +21,13 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
     {
         private readonly TyendaContext _context;
         private readonly ITokenService _tokenService;
+        private readonly INotificationService _notificationService;
 
-        public AddUpdateItemHandler(TyendaContext context, ITokenService tokenService)
+        public AddUpdateItemHandler(TyendaContext context, ITokenService tokenService, INotificationService notificationService)
         {
             _context = context;
             _tokenService = tokenService;
+            _notificationService = notificationService;
         }
 
         public async Task<Item> Handle(AddUpdateItem request, CancellationToken cancellationToken)
@@ -131,8 +136,47 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                         }
                     }
 
-                    await _context.SaveChangesAsync(cancellationToken);
+                    //Send notification to customers (OnItem = true, follow the store)
+                    var recipients = await _context.Followers
+                        .Where(follower => follower.StoreId == store.Id)
+                        .Include(follower => follower.Customer)
+                        .ToArrayAsync(cancellationToken);
 
+                    var newNotification = new Notification()
+                    {
+                        Id = Guid.NewGuid(),
+                        CreatedAt = DateTime.UtcNow,
+                        Title = "<p><b>" + newItem.Value + "</b> from <b>" + store.Name + "</b> is out here!!!<p>",
+                        Description = "We\'ve just added a fantastic new product to our store. Introducing " + newItem.Value + "! is now available for purchase. Don't miss out – come and check it out in our store today!",
+                        ItemId = newItem.Id,
+                        StoreId = store.Id,
+                        Link = "/application/customer/item/" + newItem.Id
+                    };
+
+                    await _context.Notifications.AddAsync(newNotification, cancellationToken);
+
+                    foreach (var recipient in recipients)
+                    {
+                        if (recipient.Customer != null && recipient.Customer.OnItem)
+                        {
+                     
+                            var newAlert = new Alert()
+                            {
+                                NotificationId = newNotification.Id,
+                                AccountId = recipient.Customer.AccountId,
+                                IsViewed = false
+                            };
+                            await _context.Alerts.AddAsync(newAlert, cancellationToken);
+                            
+                            //Send notification
+                            var title = newItem.Value+" from "+store.Name+" is out here!!!";
+                            var message = "We\'ve just added a fantastic new product to our store. Introducing "+newItem.Value+"! is now available for purchase. Don't miss out – come and check it out in our store today!";
+                            var route = "/application/customer/item/" + newItem.Id;
+                            _notificationService.SendNotificationAsync(recipient.Customer.AccountId.ToString(), title, message, route);
+                        }
+                    }
+                    
+                    await _context.SaveChangesAsync(cancellationToken);
                     return newItem;
                 }
                 else

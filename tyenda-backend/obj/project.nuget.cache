@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "lq8sGeI3QSjsAUbS8ipDcdjD0IXJ24HNw7PwRHyeuWzC5wiNKEh1p+Ckr2tQsc/YKnP3F1dJU57bMDkz7CzBtA==",
+  "dgSpecHash": "T2gBcAwZNkQqX9ZMFcJrNMdcBx8BP86WZax2O3UDNWrmiVknv4g5ajnn9K4utOL8cQFgSARjMzA47NGGcX4lHg==",
   "success": true,
   "projectFilePath": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\tyenda-backend.csproj",
   "expectedPackageFiles": [
@@ -51,6 +51,8 @@
     "C:\\Users\\User\\.nuget\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\npgsql\\7.0.0\\npgsql.7.0.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\npgsql.entityframeworkcore.postgresql\\7.0.0\\npgsql.entityframeworkcore.postgresql.7.0.0.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\onesignal.restapiv3.client\\1.2.0\\onesignal.restapiv3.client.1.2.0.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\restsharp\\106.0.1\\restsharp.106.0.1.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
