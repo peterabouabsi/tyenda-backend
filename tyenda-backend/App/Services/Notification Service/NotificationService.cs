@@ -69,7 +69,7 @@ namespace tyenda_backend.App.Services.Notification_Service
                     Headings = new Dictionary<string, string?> { { "en", title } },
                     Contents = new Dictionary<string, string?> { { "en", message } },
                     Url = baseUrl+route,
-                    IncludedSegments = new List<string>() {"Subscribed Users"}
+                    IncludedSegments = new List<string>() {"Total Subscriptions"}
                 };
                 await client.Notifications.CreateAsync(options);
             }

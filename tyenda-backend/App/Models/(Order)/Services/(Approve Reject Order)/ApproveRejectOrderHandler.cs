@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using tyenda_backend.App.Context;
+using tyenda_backend.App.Models._Alert_;
+using tyenda_backend.App.Models._Notification_;
 using tyenda_backend.App.Models.Enums;
+using tyenda_backend.App.Services.Notification_Service;
 using tyenda_backend.App.Services.Token_Service;
 
 namespace tyenda_backend.App.Models._Order_.Services._Approve_Reject_Order_
@@ -14,11 +17,13 @@ namespace tyenda_backend.App.Models._Order_.Services._Approve_Reject_Order_
     {
         private readonly TyendaContext _context;
         private readonly ITokenService _tokenService;
+        private readonly INotificationService _notificationService;
 
-        public ApproveRejectOrderHandler(TyendaContext context, ITokenService tokenService)
+        public ApproveRejectOrderHandler(TyendaContext context, ITokenService tokenService, INotificationService notificationService)
         {
             _context = context;
             _tokenService = tokenService;
+            _notificationService = notificationService;
         }
 
         public async Task<Order> Handle(ApproveRejectOrder request, CancellationToken cancellationToken)
@@ -63,7 +68,40 @@ namespace tyenda_backend.App.Models._Order_.Services._Approve_Reject_Order_
                     
                     order.CreatedAt = order.CreatedAt.ToUniversalTime();
                     order.UpdatedAt = DateTime.UtcNow;
-                    
+
+                    var notificationMessage = "";
+                    if (request.ApproveRejectOrderForm.IsApproved) notificationMessage = "<p>Your order <b>" + order.Reference + "</b> has been approved. Please make sure to confirm the information in order to start working on your request</p>";
+                    if (request.ApproveRejectOrderForm.IsRejected) notificationMessage = "<p>Your order <b>" + order.Reference + "</b> has been rejected. Please check the rejection reason</p>";
+
+                    var newNotification = new Notification()
+                    {
+                        Id = Guid.NewGuid(),
+                        Title = "<p><b>Checkout Order</b></p>",
+                        Description = notificationMessage,
+                        CreatedAt = DateTime.UtcNow,
+                        StoreId = order.Item.StoreId,
+                        Link = "/application/customer/order/"+order.Id
+                    };
+
+                    var newAlert = new Alert()
+                    {
+                        NotificationId = newNotification.Id,
+                        AccountId = order.Customer!.AccountId 
+                    };
+
+                    await _context.Notifications.AddAsync(newNotification, cancellationToken);
+                    await _context.Alerts.AddAsync(newAlert, cancellationToken);
+
+                    var message = "";
+                    if (request.ApproveRejectOrderForm.IsApproved) message = "Your order " + order.Reference + " has been approved. Please make sure to confirm the information in order to start working on your request";
+                    if (request.ApproveRejectOrderForm.IsRejected) message = "Your order " + order.Reference + " has been rejected. Please check the rejection reason";
+
+                    if (order.Customer.Account!.OnOrder)
+                    {
+                        var title = "Checkout Order";
+                        var route = "/application/customer/order/" + order.Id;
+                        _notificationService.SendNotificationAsync(order.Customer!.AccountId.ToString(), title, message, route);
+                    }
                 }
                 else
                 {
