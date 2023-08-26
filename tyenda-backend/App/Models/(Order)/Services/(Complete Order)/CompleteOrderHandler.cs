@@ -59,6 +59,7 @@ namespace tyenda_backend.App.Models._Order_.Services._Complete_Order_
                     throw new Exception("Only Submitted orders can be approved or rejected");
                 }
                 
+                order.CreatedAt = order.CreatedAt.ToUniversalTime();
                 order.UpdatedAt = DateTime.UtcNow;
                 
                 await Task.FromResult(_context.Orders.Update(order));
