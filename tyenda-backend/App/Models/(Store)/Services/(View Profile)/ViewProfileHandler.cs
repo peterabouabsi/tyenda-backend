@@ -81,8 +81,8 @@ namespace tyenda_backend.App.Models._Store_.Services._View_Profile_
                                 
                     if (store == null) throw new Exception("Store not found");
                     
-                    mappedStore.IsMyProfile = true;
                     mappedStore = _mapper.Map<StoreAdvancedView>(store);
+                    mappedStore.IsMyProfile = request.StoreId == null;
                 }
 
                 return mappedStore;
