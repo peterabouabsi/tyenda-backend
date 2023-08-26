@@ -97,8 +97,8 @@ namespace tyenda_backend.App.Models._Store_.Controllers
             }
         }
         
-        [HttpGet("Profile/{storeId}")]
-        public async Task<IActionResult> ViewStoreProfile([FromRoute] string storeId)
+        [HttpGet("Profile")]
+        public async Task<IActionResult> ViewStoreProfile([FromQuery] string? storeId)
         {
             try
             {

@@ -23,6 +23,8 @@ namespace tyenda_backend.App.Models._Store_.Views
         public decimal[] DisplayedBranch { get; set; } = new decimal[2];
         public bool IsFollowed { get; set; }
         public bool IsAddedToCart { get; set; }
+
+        public bool IsMyProfile { get; set; } = false;
         public int CountOrders { get; set; }
         public int CountItems { get; set; }
         public int CountFollowers { get; set; }
