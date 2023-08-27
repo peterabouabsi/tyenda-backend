@@ -53,6 +53,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Get_Item_For_Update_
                     Notes = item.Notes.Select(note => note.Value),
                     Categories = item.Categories.Select(category => new {Id = category.Category!.Id, Value = category.Category.Value}),
                     Images = item.Images.Select(image => new {Id = image.Id, Url = image.Url}),
+                    Quantity = item.Quantity,
                     Colors = item.Colors.Where(color => color.SizeNumber == null && color.SizeCode == null).Select(color => new ColorView(){Id = color.Color!.Id.ToString(), Value = color.Color.Value, Quantity = color.Quantity}),
                     Sizes = item.Sizes.Select(size => new AdvancedSizeView(){Id = size.Id.ToString(), Code = size.SizeCode.ToString(), Number = size.SizeNumber, Quantity = size.Quantity}),
                     ColorSizes = GenerateColorsSizesWithQuantity(item.Colors)

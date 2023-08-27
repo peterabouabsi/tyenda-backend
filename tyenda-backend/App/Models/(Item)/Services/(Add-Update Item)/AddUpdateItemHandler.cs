@@ -63,6 +63,17 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                         };
                         await _context.ItemCategories.AddAsync(newItemCategory, cancellationToken);
                     }
+                    
+                    foreach (var note in request.AddUpdateItemForm.Notes)
+                    {
+                        var newNote = new ItemNote()
+                        {
+                            Id = Guid.NewGuid(),
+                            Value = note,
+                            ItemId = newItem.Id
+                        };
+                        await _context.ItemNotes.AddAsync(newNote, cancellationToken);
+                    }
 
                     if (request.AddUpdateItemForm.Colors!.Count > 0)
                     {
@@ -87,8 +98,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                             await _context.ItemColors.AddAsync(newItemColor, cancellationToken);
                         }
                     }
-                    
-                    if (request.AddUpdateItemForm.Sizes!.Count > 0)
+                    else if (request.AddUpdateItemForm.Sizes!.Count > 0)
                     {
                         foreach (var sizeForm in request.AddUpdateItemForm.Sizes)
                         {
@@ -104,8 +114,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                             await _context.Sizes.AddAsync(newItemSize, cancellationToken);
                         }
                     }
-                    
-                    if (request.AddUpdateItemForm.ColorSizes!.Count > 0)
+                    else if (request.AddUpdateItemForm.ColorSizes!.Count > 0)
                     {
                         foreach (var colorForm in request.AddUpdateItemForm.Colors)
                         {
@@ -135,6 +144,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
  
                         }
                     }
+                    else newItem.Quantity = request.AddUpdateItemForm.Quantity;
 
                     //Send notification to customers (OnItem = true, follow the store)
                     var recipients = await _context.Followers
@@ -157,9 +167,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
 
                     foreach (var recipient in recipients)
                     {
-                        if (recipient.Customer != null && recipient.Customer.OnItem)
-                        {
-                     
+                        if(recipient.Customer != null ){
                             var newAlert = new Alert()
                             {
                                 NotificationId = newNotification.Id,
@@ -168,12 +176,16 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                             };
                             await _context.Alerts.AddAsync(newAlert, cancellationToken);
                             
-                            //Send notification
-                            var title = newItem.Value+" from "+store.Name+" is out here!!!";
-                            var message = "We\'ve just added a fantastic new product to our store. Introducing "+newItem.Value+"! is now available for purchase. Don't miss out – come and check it out in our store today!";
-                            var route = "/application/customer/item/" + newItem.Id;
-                            _notificationService.SendNotificationAsync(recipient.Customer.AccountId.ToString(), title, message, route);
+                            if ( recipient.Customer.OnItem)
+                            {
+                                //Send notification
+                                var title = newItem.Value+" from "+store.Name+" is out here!!!";
+                                var message = "We\'ve just added a fantastic new product to our store. Introducing "+newItem.Value+"! is now available for purchase. Don't miss out – come and check it out in our store today!";
+                                var route = "/application/customer/item/" + newItem.Id;
+                                _notificationService.SendNotificationAsync(recipient.Customer.AccountId.ToString(), title, message, route);
+                            }
                         }
+                        
                     }
                     
                     await _context.SaveChangesAsync(cancellationToken);
@@ -191,7 +203,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                     item.Price = request.AddUpdateItemForm.Price;
                     item.Discount = request.AddUpdateItemForm.Discount;
 
-                    var existingNotes = await _context.ItemNotes.Where(ic => ic.ItemId == item.Id).ToArrayAsync(cancellationToken);
+                    var existingNotes = await _context.ItemNotes.Where(note => note.ItemId == item.Id).ToArrayAsync(cancellationToken);
                     _context.ItemNotes.RemoveRange(existingNotes);
                     foreach (var note in request.AddUpdateItemForm.Notes)
                     {
@@ -253,8 +265,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
         await _context.ItemColors.AddAsync(newItemColor, cancellationToken);
     } 
                     }
-
-                    if (request.AddUpdateItemForm.Sizes!.Count > 0) { 
+                    else if (request.AddUpdateItemForm.Sizes!.Count > 0) { 
                         foreach (var sizeForm in request.AddUpdateItemForm.Sizes)
     {
         var newItemSize = new Size()
@@ -269,14 +280,14 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
         await _context.Sizes.AddAsync(newItemSize, cancellationToken);
     } 
                     }
-
-                    if (request.AddUpdateItemForm.ColorSizes!.Count > 0) 
-                    { 
-                        foreach (var colorForm in request.AddUpdateItemForm.ColorSizes) 
+                    else if (request.AddUpdateItemForm.ColorSizes!.Count > 0)
+                    {
+                        foreach (var colorForm in request.AddUpdateItemForm.ColorSizes)
                         {
-                            var color = await _context.Colors.SingleOrDefaultAsync(c => c.Value == colorForm.Value, cancellationToken);
+                            var color = await _context.Colors.SingleOrDefaultAsync(c => c.Value == colorForm.Value,
+                                cancellationToken);
 
-                            var newColor = new Color() { Id = Guid.NewGuid(), Value = colorForm.Value };
+                            var newColor = new Color() {Id = Guid.NewGuid(), Value = colorForm.Value};
                             if (color == null)
                             {
                                 await _context.Colors.AddAsync(newColor, cancellationToken);
@@ -297,8 +308,9 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                                 await _context.ItemColors.AddAsync(newItemColor, cancellationToken);
                             }
                         }
-}
-
+                    }
+                    else item.Quantity = request.AddUpdateItemForm.Quantity;
+                    
                     await _context.SaveChangesAsync(cancellationToken);
 
                     return item;
