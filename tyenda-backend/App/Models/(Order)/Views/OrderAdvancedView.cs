@@ -25,6 +25,7 @@ namespace tyenda_backend.App.Models._Order_.Views
         public List<object> Feedbacks { get; set; } = new List<object>();
         public decimal Price { get; set; }
         public int Discount { get; set; }
+        public int? Quantity { get; set; }
         public List<object>? Colors { get; set; } = new List<object>();
         public List<object>? Sizes { get; set; } = new List<object>();
         public List<object>? ColorSizes { get; set; } = new List<object>();

@@ -85,8 +85,7 @@ namespace tyenda_backend.App.Models._Order_.Services._Request_Order_
                         await _context.OrderItems.AddAsync(newOrderItem, cancellationToken);
                     }
                 }
-
-                if (sizes!.Count > 0)
+                else if (sizes!.Count > 0)
                 {
                     foreach (var size in sizes)
                     {
@@ -103,8 +102,7 @@ namespace tyenda_backend.App.Models._Order_.Services._Request_Order_
                         await _context.OrderItems.AddAsync(newOrderItem, cancellationToken);
                     }
                 }
-
-                if (colorSizes!.Count > 0)
+                else if (colorSizes!.Count > 0)
                 {
                     foreach(var colorSize in colorSizes)
                     {
@@ -124,7 +122,21 @@ namespace tyenda_backend.App.Models._Order_.Services._Request_Order_
                         }
                     }
                 }
-
+                else
+                {
+                    var newOrderItem = new OrderItem()
+                    {
+                        Id = Guid.NewGuid(),
+                        ColorId = null,
+                        OrderId = newOrder.Id,
+                        SizeCode = null,
+                        SizeNumber = null,
+                        ItemId = Guid.Parse(request.RequestOrderForm.ItemId),
+                        Quantity = request.RequestOrderForm.Quantity
+                    };
+                    await _context.OrderItems.AddAsync(newOrderItem, cancellationToken);
+                }
+                
                 var newNotification = new Notification()
                 {
                     Id = Guid.NewGuid(),

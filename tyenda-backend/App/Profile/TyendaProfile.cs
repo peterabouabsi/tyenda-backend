@@ -139,13 +139,14 @@ namespace tyenda_backend.App.Profile
                 .ForMember(dest => dest.ReceiverEmail, map => map.MapFrom(src => !String.IsNullOrEmpty(src.ReceiverEmail)? src.ReceiverEmail : src.Customer!.Account!.Email))
                 .ForMember(dest => dest.ReceiverPhone, map => map.MapFrom(src => !String.IsNullOrEmpty(src.ReceiverPhone)? src.ReceiverPhone : src.Customer!.Account!.PhoneNumber))
                 .ForMember(dest => dest.Feedbacks, map => map.MapFrom(src => src.Feedbacks.Select(feedback => new {Id = feedback.Id, Value = feedback.Value, CreatedAt = feedback.CreatedAt, CustomerProfileImage = feedback.Customer!.Account!.ProfileImage})))
-                .ForMember(dest => dest.Colors, map => map.MapFrom(src => src.OrderItems.Any(orderItem => String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)? src.OrderItems.Select(prop => new {
+                .ForMember(dest => dest.Quantity, map => map.MapFrom(src => src.OrderItems.Any(orderItem => String.IsNullOrEmpty(orderItem.ColorId.ToString()) && String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null && orderItem.Quantity > 0)? src.OrderItems.Select(oi => oi.Quantity).Sum() : 0))
+                .ForMember(dest => dest.Colors, map => map.MapFrom(src => src.OrderItems.Any(orderItem => !String.IsNullOrEmpty(orderItem.ColorId.ToString()) && String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)? src.OrderItems.Select(prop => new {
                     Id = prop.Id,
                     ColorId = prop.ColorId,
                     Color = prop.Color!.Value,
                     Quantity = prop.Quantity
                 }) : null))
-                .ForMember(dest => dest.Sizes, map => map.MapFrom(src => src.OrderItems.Any(orderItem => String.IsNullOrEmpty(orderItem.ColorId.ToString()))? src.OrderItems.Select(prop => new {
+                .ForMember(dest => dest.Sizes, map => map.MapFrom(src => src.OrderItems.Any(orderItem => String.IsNullOrEmpty(orderItem.ColorId.ToString()) && (!String.IsNullOrEmpty(orderItem.SizeCode.ToString()) || orderItem.SizeNumber != null) )? src.OrderItems.Select(prop => new {
                     Id = prop.Id,
                     Number = prop.SizeNumber,
                     Code = prop.SizeCode.ToString(),

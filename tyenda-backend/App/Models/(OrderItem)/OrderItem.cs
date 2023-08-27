@@ -25,7 +25,6 @@ namespace tyenda_backend.App.Models._OrderItem_
 
         
         public SizeCode? SizeCode { get; set; }
-        
         public int? SizeNumber { get; set; }
     }
 }
