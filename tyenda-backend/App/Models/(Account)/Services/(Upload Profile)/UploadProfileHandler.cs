@@ -27,20 +27,60 @@ namespace tyenda_backend.App.Models._Account_.Services._Upload_Profile_
             try
             {
                 var accountId = _tokenService.GetHeaderTokenClaim(Constants.AccountId);
-                var account = await _context.Accounts.SingleOrDefaultAsync(account => account.Id == Guid.Parse(accountId), cancellationToken);
+                var account = await _context.Accounts
+                    .Include(account => account.Role)
+                    .Include(account => account.Store)
+                    .SingleOrDefaultAsync(account => account.Id == Guid.Parse(accountId), cancellationToken);
                 if (account == null)
                 {
                     throw new UnauthorizedAccessException("Account not found");
                 }
 
-                var fileUrl = _fileService.UploadFile(request.File, "Profiles", accountId);
-                account.ProfileImage = fileUrl;
-                account.CreatedAt = account.CreatedAt.ToUniversalTime(); 
                 
-                await Task.FromResult(_context.Accounts.Update(account));
-                await _context.SaveChangesAsync(cancellationToken);
+                if (account.Role!.Value == Constants.CustomerRole)
+                {
+                    var fileUrl = _fileService.UploadFile(request.File, "Profiles", accountId);
+                    
+                    account.ProfileImage = fileUrl;
+                    account.CreatedAt = account.CreatedAt.ToUniversalTime();
+                    await Task.FromResult(_context.Accounts.Update(account));
 
-                return fileUrl;
+                    await _context.SaveChangesAsync(cancellationToken);
+                    
+                    return fileUrl;
+
+                }
+                if (account.Role!.Value == Constants.StoreRole)
+                {
+                    if (request.Folder == "Profile")
+                    {
+                        var fileUrl = _fileService.UploadFile(request.File, "Profiles", accountId);
+
+                        account.ProfileImage = fileUrl;
+                        account.CreatedAt = account.CreatedAt.ToUniversalTime();
+                        await Task.FromResult(_context.Accounts.Update(account));
+                        
+                        await _context.SaveChangesAsync(cancellationToken);
+                        
+                        return fileUrl;
+
+                    }
+                    else if (request.Folder == "Background")
+                    {
+                        var fileUrl = _fileService.UploadFile(request.File, "Backgrounds", accountId);
+
+                        account.Store!.BackgroundImage = fileUrl;
+                        account.CreatedAt = account.CreatedAt.ToUniversalTime();
+                        
+                        await Task.FromResult(_context.Accounts.Update(account));
+                        
+                        await _context.SaveChangesAsync(cancellationToken);
+
+                        return fileUrl;
+                    }
+                }
+
+                throw new Exception("Invalid Folder");
             }
             catch (Exception error)
             {

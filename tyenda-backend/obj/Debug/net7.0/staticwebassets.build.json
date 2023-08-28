@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "RxW/IQr1XzUw0vH8Fa2n6eD54+cZYSXlRqf2vWySq8k=",
+  "Hash": "h3KaxM+d4pZ1S4LFOSiruE35q0Cq6kJvRunYN0jTws0=",
   "Source": "tyenda-backend",
   "BasePath": "_content/tyenda-backend",
   "Mode": "Default",
@@ -32,6 +32,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Backgrounds\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Backgrounds\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443.jpg",
+      "SourceId": "tyenda-backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\",
+      "BasePath": "_content/tyenda-backend",
+      "RelativePath": "Backgrounds/6c78fe9d-1b9a-4794-a2e7-5ae57282e443/6c78fe9d-1b9a-4794-a2e7-5ae57282e443.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Backgrounds\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Backgrounds\\7f278e15-34cc-475c-b9da-4aa05fa45627\\7f278e15-34cc-475c-b9da-4aa05fa45627.png",

@@ -248,22 +248,7 @@ namespace tyenda_backend.App.Models._Account_.Controllers
                 return Ok(new {error = true, message = error.Message});
             }
         }
-
-        [HttpGet("Profile")]
-        public async Task<IActionResult> GetProfile()
-        {
-            try
-            {
-                var req = new GetProfile();
-                var res = await _mediator.Send(req);
-                return Ok(res);
-            }
-            catch (Exception error)
-            {
-                return Ok(new {error = true, message = error.Message});
-            }
-        }
-
+        
         [HttpPost("Update()")]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileForm updateProfileForm)
         {
@@ -279,13 +264,13 @@ namespace tyenda_backend.App.Models._Account_.Controllers
         }
 
         [HttpPost("Profile/Upload")]
-        public async Task<IActionResult> UploadProfile([FromForm] IFormFile file)
+        public async Task<IActionResult> UploadProfile([FromForm] IFormFile file, [FromQuery] string? folder)
         {
             try
             {
-                var req = new UploadProfile(file);
+                var req = new UploadProfile(file, folder);
                 var res = await _mediator.Send(req);
-                return Ok(new {error = false, profileImage = res});
+                return Ok(new {error = false, Image = res});
             }
             catch (Exception error)
             {

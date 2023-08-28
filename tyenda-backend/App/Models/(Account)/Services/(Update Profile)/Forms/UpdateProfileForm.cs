@@ -1,4 +1,6 @@
-﻿namespace tyenda_backend.App.Models._Account_.Services._Update_Profile_.Forms
+﻿using System.Collections.Generic;
+
+namespace tyenda_backend.App.Models._Account_.Services._Update_Profile_.Forms
 {
     public class UpdateProfileForm
     {
@@ -19,6 +21,13 @@
     
     public class UpdateStoreForm
     {
-        
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Website { get; set; } = "";
+        public string Phone { get; set; } = "";
+        public string Description { get; set; } = "";
+        public string OwnerName { get; set; } = "";
+        public string OwnerEmail { get; set; } = "";
+        public List<string> CategoryIds { get; set; } = new List<string>();
     }
 }
