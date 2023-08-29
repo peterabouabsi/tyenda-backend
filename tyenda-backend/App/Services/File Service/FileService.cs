@@ -21,16 +21,13 @@ namespace tyenda_backend.App.Services.File_Service
         //folderType: Profiles, Backgrounds, Items
         public string UploadFile(IFormFile file, string folderName, string id)
         {
-
             var wwwroot = "wwwroot"; //Root Directory -> /wwwrooot
-            var profilesDirectory = Path.Combine(wwwroot, folderName); //Profiles Directory -> /wwwroot/Profiles
-            
-            
             if (!Directory.Exists(wwwroot))//if the path doesn’t exist, then create folder
             {
                 Directory.CreateDirectory(wwwroot);
             }
             
+            var profilesDirectory = Path.Combine(wwwroot, folderName); //Profiles Directory -> /wwwroot/Profiles
             if (!Directory.Exists(profilesDirectory))//create if it doesn’t exist
             {
                 Directory.CreateDirectory(profilesDirectory);
@@ -46,6 +43,7 @@ namespace tyenda_backend.App.Services.File_Service
                     innerFile.Delete();
                 }
                 
+                //Then remove directory
                 Directory.Delete(profileDirectory);
             }
             
@@ -62,6 +60,32 @@ namespace tyenda_backend.App.Services.File_Service
             }
 
             return folderName + "/" + id + "/" + fileName;
+        }
+
+        public void DeleteItemDirectory(string id)
+        {
+            try
+            {
+                var wwwroot = "wwwroot"; //Root Directory -> /wwwrooot
+                var itemsDirectory = Path.Combine(wwwroot, "Items"); //Folder Directory -> /wwwroot/{FOLDER}
+                var itemDirectory = Path.Combine(itemsDirectory, id);
+                if (Directory.Exists(itemDirectory))
+                {
+                    // Delete all files in the directory
+                    DirectoryInfo directoryInfo = new DirectoryInfo(itemDirectory);
+                    foreach (FileInfo innerFile in directoryInfo.GetFiles())
+                    {
+                        innerFile.Delete();
+                    }
+                    
+                    //Then Remove directory
+                    Directory.Delete(itemDirectory);
+                }
+            }
+            catch (Exception error)
+            {
+                throw new Exception(error.Message);
+            }
         }
 
         public string UploadItemImageFile(IFormFile file, string folderName, string imageId, string itemId)
