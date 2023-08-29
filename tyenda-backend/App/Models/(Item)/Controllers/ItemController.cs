@@ -11,6 +11,7 @@ using tyenda_backend.App.Models._Item_.Services._Add_Update_Image_;
 using tyenda_backend.App.Models._Item_.Services._Add_Update_Image_.Form;
 using tyenda_backend.App.Models._Item_.Services._Add_Update_Item_;
 using tyenda_backend.App.Models._Item_.Services._Add_Update_Item_.Forms;
+using tyenda_backend.App.Models._Item_.Services._Delete_Image_;
 using tyenda_backend.App.Models._Item_.Services._Delete_Item_;
 using tyenda_backend.App.Models._Item_.Services._Get_Item_;
 using tyenda_backend.App.Models._Item_.Services._Get_Item_For_Request_;
@@ -242,6 +243,22 @@ namespace tyenda_backend.App.Models._Item_.Controllers
                 var req = new AddUpdateImage(form);
                 var res = await _mediator.Send(req);
                 return Ok(res);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+
+        [Authorize(Policy = Constants.StorePolicy)]
+        [HttpPost("Image/Delete()")]
+        public async Task<IActionResult> DeleteItemImage([FromBody] string[] imageIds)
+        {
+            try
+            {
+                var req = new DeleteImage(imageIds);
+                await _mediator.Send(req);
+                return Ok(new {error = false, message = "Image(s) deleted successfully"});
             }
             catch (Exception error)
             {
