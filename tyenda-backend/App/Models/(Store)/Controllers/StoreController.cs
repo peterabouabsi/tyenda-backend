@@ -8,8 +8,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using tyenda_backend.App.Base_Controllers;
 using tyenda_backend.App.Models._Store_.Services._Add_Remove_Cart_;
+using tyenda_backend.App.Models._Store_.Services._Add_Update_Branches_;
+using tyenda_backend.App.Models._Store_.Services._Add_Update_Branches_.Form;
 using tyenda_backend.App.Models._Store_.Services._Follow_;
 using tyenda_backend.App.Models._Store_.Services._Follow_.Form;
+using tyenda_backend.App.Models._Store_.Services._Get_Branches_;
 using tyenda_backend.App.Models._Store_.Services._Get_Monthly_Incomes_;
 using tyenda_backend.App.Models._Store_.Services._Get_Random_Stores_;
 using tyenda_backend.App.Models._Store_.Services._Get_Similar_Stores_;
@@ -130,6 +133,22 @@ namespace tyenda_backend.App.Models._Store_.Controllers
             }
         }
 
+        [Authorize(Policy = Constants.StorePolicy)]
+        [HttpGet("Branches()")]
+        public async Task<IActionResult> GetStoreBranches()
+        {
+            try
+            {
+                var req = new GetBranches();
+                var res = await _mediator.Send(req);
+                return Ok(res);
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+        
         [HttpGet("TopItems/{storeId}")]
         public async Task<IActionResult> GetStoreTopSellingItems([FromRoute] string storeId)
         {
@@ -146,6 +165,22 @@ namespace tyenda_backend.App.Models._Store_.Controllers
             }
         }
 
+        [Authorize(Policy = Constants.StorePolicy)]
+        [HttpPost("Branch/AddUpdate()")]
+        public async Task<IActionResult> AddUpdateBranches([FromBody] ICollection<AddUpdateBranchForm> form)
+        {
+            try
+            {
+                var req = new AddUpdateBranch(form);
+                await _mediator.Send(req);
+                return Ok(new {error = false, message = "Branches Updated"});
+            }
+            catch (Exception error)
+            {
+                return Ok(new {error = true, message = error.Message});
+            }
+        }
+        
         [Authorize(Policy = Constants.StorePolicy)]
         [HttpGet("Incomes")]
         public async Task<IActionResult> GetMonthlyIncome([FromQuery] int year)
