@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "BkU0/BK7nmURcODsPayRKZvLB0sHMgmi/vaFMedgS/I=",
+  "Hash": "9cjAsKjbjTVtgViol3+mdhJ8R6fWbjVl9gOGSsCSbU8=",
   "Source": "tyenda-backend",
   "BasePath": "_content/tyenda-backend",
   "Mode": "Default",
@@ -15,5 +15,57 @@
       "Pattern": "**"
     }
   ],
-  "Assets": []
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Items\\a6409812-4b7b-4631-b854-048b59f6a713\\1a74c964-584d-4c3b-acf4-2fdd9a320807.jpg",
+      "SourceId": "tyenda-backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\",
+      "BasePath": "_content/tyenda-backend",
+      "RelativePath": "Items/a6409812-4b7b-4631-b854-048b59f6a713/1a74c964-584d-4c3b-acf4-2fdd9a320807.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Items\\a6409812-4b7b-4631-b854-048b59f6a713\\1a74c964-584d-4c3b-acf4-2fdd9a320807.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Profiles\\65e5708c-13f0-4c03-9962-87dff3d6bf93\\65e5708c-13f0-4c03-9962-87dff3d6bf93.jpg",
+      "SourceId": "tyenda-backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\",
+      "BasePath": "_content/tyenda-backend",
+      "RelativePath": "Profiles/65e5708c-13f0-4c03-9962-87dff3d6bf93/65e5708c-13f0-4c03-9962-87dff3d6bf93.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Profiles\\65e5708c-13f0-4c03-9962-87dff3d6bf93\\65e5708c-13f0-4c03-9962-87dff3d6bf93.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Profiles\\7901dfa7-88d0-409a-8e65-c69ec7dade1c\\7901dfa7-88d0-409a-8e65-c69ec7dade1c.jpg",
+      "SourceId": "tyenda-backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\",
+      "BasePath": "_content/tyenda-backend",
+      "RelativePath": "Profiles/7901dfa7-88d0-409a-8e65-c69ec7dade1c/7901dfa7-88d0-409a-8e65-c69ec7dade1c.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Profiles\\7901dfa7-88d0-409a-8e65-c69ec7dade1c\\7901dfa7-88d0-409a-8e65-c69ec7dade1c.jpg"
+    }
+  ]
 }

@@ -1,24 +1,16 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Backgrounds\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443.jpg",
-      "PackagePath": "staticwebassets\\Backgrounds\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443.jpg"
+      "Id": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Items\\a6409812-4b7b-4631-b854-048b59f6a713\\1a74c964-584d-4c3b-acf4-2fdd9a320807.jpg",
+      "PackagePath": "staticwebassets\\Items\\a6409812-4b7b-4631-b854-048b59f6a713\\1a74c964-584d-4c3b-acf4-2fdd9a320807.jpg"
     },
     {
-      "Id": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Profiles\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1.png",
-      "PackagePath": "staticwebassets\\Profiles\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1\\33e87db1-1aec-43e0-bb17-ca4a6d9d50e1.png"
+      "Id": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Profiles\\65e5708c-13f0-4c03-9962-87dff3d6bf93\\65e5708c-13f0-4c03-9962-87dff3d6bf93.jpg",
+      "PackagePath": "staticwebassets\\Profiles\\65e5708c-13f0-4c03-9962-87dff3d6bf93\\65e5708c-13f0-4c03-9962-87dff3d6bf93.jpg"
     },
     {
-      "Id": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Profiles\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443.jpg",
-      "PackagePath": "staticwebassets\\Profiles\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443.jpg"
-    },
-    {
-      "Id": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Profiles\\bdd1d806-0dae-4a94-8892-5e3124862a60\\bdd1d806-0dae-4a94-8892-5e3124862a60.jpg",
-      "PackagePath": "staticwebassets\\Profiles\\bdd1d806-0dae-4a94-8892-5e3124862a60\\bdd1d806-0dae-4a94-8892-5e3124862a60.jpg"
-    },
-    {
-      "Id": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Videos\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443.mp4",
-      "PackagePath": "staticwebassets\\Videos\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443\\6c78fe9d-1b9a-4794-a2e7-5ae57282e443.mp4"
+      "Id": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Profiles\\7901dfa7-88d0-409a-8e65-c69ec7dade1c\\7901dfa7-88d0-409a-8e65-c69ec7dade1c.jpg",
+      "PackagePath": "staticwebassets\\Profiles\\7901dfa7-88d0-409a-8e65-c69ec7dade1c\\7901dfa7-88d0-409a-8e65-c69ec7dade1c.jpg"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.tyenda-backend.props",
