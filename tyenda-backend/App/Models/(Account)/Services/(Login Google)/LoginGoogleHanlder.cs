@@ -124,7 +124,7 @@ namespace tyenda_backend.App.Models._Account_.Services._Login_Google_
                     {
                         AccessToken = accessToken,
                         RefreshToken = refreshToken,
-                        AccountId = account!.Id
+                        AccountId = accountId
                     };
                     
                     await _context.SaveChangesAsync(cancellationToken);

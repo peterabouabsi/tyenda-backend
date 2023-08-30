@@ -61,7 +61,7 @@ namespace tyenda_backend.App.Models._Account_.Services._Forget_Password_
                 await _context.Tokens.AddAsync(newToken, cancellationToken);
                 
                 // Create the HTML body of the message
-                var resetLink = _configuration["Jwt:audience"]+"/authentication/reset-password?token="+newToken.Value;
+                var resetLink = _configuration["Urls:Frontend"]+"/authentication/reset-password?token="+newToken.Value;
                 var subject = "Reset Password";
                 var body = $@"<html>
                 <body style='font-family: Arial, sans-serif; font-size: 14px;'>

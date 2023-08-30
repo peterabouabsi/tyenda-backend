@@ -63,7 +63,7 @@ namespace tyenda_backend.App.Models._Account_.Services._Send_Activation_Email_
                 await _context.Tokens.AddAsync(newToken, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
                 
-                var activationLink = _configuration["Jwt:audience"] + "/authentication/email-verification?token="+token;
+                var activationLink = _configuration["Urls:Frontend"] + "/authentication/email-verification?token="+token;
                 var body = $@"
                 <html>
                     <body style='font-family: Arial, sans-serif; font-size: 14px;'>
