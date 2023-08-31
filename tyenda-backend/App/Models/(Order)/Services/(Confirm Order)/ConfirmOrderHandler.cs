@@ -50,18 +50,36 @@ namespace tyenda_backend.App.Models._Order_.Services._Confirm_Order_
                     .Include(order => order.Feedbacks.OrderByDescending(feedback => feedback.CreatedAt))
                     .ThenInclude(feedback => feedback.Customer)
                     .ThenInclude(orderCustomer => orderCustomer!.Account)
+                    .Include(order => order.OrderItems)
                     .SingleOrDefaultAsync(order => order.Id == Guid.Parse(request.ConfirmOrderForm.OrderId) && order.CustomerId == customer.Id, cancellationToken);
                 
                 if (order == null) throw new Exception("Order not found");
 
                 order.OrderStatus = OrderStatus.OnGoing;
                 
-
                 order.CreatedAt = order.CreatedAt.ToUniversalTime();
                 order.UpdatedAt = DateTime.UtcNow;
-                    
+                
                 await Task.FromResult(_context.Orders.Update(order));
 
+                //Remove quantities from ItemColors Table
+                foreach (var orderItem in order.OrderItems)
+                {
+                    //If Quantity only
+                    if (String.IsNullOrEmpty(orderItem.ColorId.ToString()) && String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)
+                    {
+                        order.Item!.Quantity -= orderItem.Quantity;
+                        await Task.FromResult(_context.Items.Update(order.Item));
+                    }
+                    else
+                    {
+                        var itemColor = await _context.ItemColors.Where(ic => ic.Id == orderItem.ItemId).ToArrayAsync(cancellationToken);
+                        if (itemColor.Length == 0) throw new Exception("Item data not found");
+
+                        
+                    }
+                }
+                
                 var title = "<p><b>Order Confirmation</b></p>";
                 var message = "<p>Order <b>"+order.Reference+"</b> has been confirmed by customer "+order.Customer!.Firstname+" "+order.Customer.Lastname+" and you can proceed with the order.</p>";
                 var newNotification = new Notification()

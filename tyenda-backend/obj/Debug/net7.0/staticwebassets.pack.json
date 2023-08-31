@@ -1,6 +1,10 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Backgrounds\\7901dfa7-88d0-409a-8e65-c69ec7dade1c\\7901dfa7-88d0-409a-8e65-c69ec7dade1c.png",
+      "PackagePath": "staticwebassets\\Backgrounds\\7901dfa7-88d0-409a-8e65-c69ec7dade1c\\7901dfa7-88d0-409a-8e65-c69ec7dade1c.png"
+    },
+    {
       "Id": "C:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\wwwroot\\Items\\a6409812-4b7b-4631-b854-048b59f6a713\\1a74c964-584d-4c3b-acf4-2fdd9a320807.jpg",
       "PackagePath": "staticwebassets\\Items\\a6409812-4b7b-4631-b854-048b59f6a713\\1a74c964-584d-4c3b-acf4-2fdd9a320807.jpg"
     },
