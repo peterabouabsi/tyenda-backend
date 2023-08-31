@@ -62,23 +62,62 @@ namespace tyenda_backend.App.Models._Order_.Services._Confirm_Order_
                 
                 await Task.FromResult(_context.Orders.Update(order));
 
-                //Remove quantities from ItemColors Table
-                foreach (var orderItem in order.OrderItems)
+                var itemColors = await _context.ItemColors.Where(ic => ic.Id == order.ItemId).ToArrayAsync(cancellationToken);
+                
+                //Remove quantities from Item
+                if (itemColors.Length == 0)
                 {
+                    var orderItem = order.OrderItems.First();
                     //If Quantity only
                     if (String.IsNullOrEmpty(orderItem.ColorId.ToString()) && String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)
                     {
                         order.Item!.Quantity -= orderItem.Quantity;
                         await Task.FromResult(_context.Items.Update(order.Item));
                     }
-                    else
-                    {
-                        var itemColor = await _context.ItemColors.Where(ic => ic.Id == orderItem.ItemId).ToArrayAsync(cancellationToken);
-                        if (itemColor.Length == 0) throw new Exception("Item data not found");
-
-                        
-                    }
                 }
+                
+                //Remove quantities from ItemColors Table
+                else
+                {
+                    foreach (var orderItem in order.OrderItems)
+                    {
+                        if (!String.IsNullOrEmpty(orderItem.ColorId.ToString()) && String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)
+                        {
+                            var itemColor = itemColors.SingleOrDefault(ic => ic.ColorId == orderItem.OrderId);
+                            if (itemColor == null) throw new Exception("Item color not found");
+                            
+                            itemColor.Quantity -= orderItem.Quantity;
+                            await Task.FromResult(_context.ItemColors.Update(itemColor));
+                        }
+                        if (String.IsNullOrEmpty(orderItem.ColorId.ToString()) && !String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)
+                        {
+                            var itemColor = itemColors.SingleOrDefault(ic => ic.SizeCode == orderItem.SizeCode);
+                            if (itemColor == null) throw new Exception("Item color not found");
+                            
+                            itemColor.Quantity -= orderItem.Quantity;
+                            await Task.FromResult(_context.ItemColors.Update(itemColor));
+                        }
+                        if (!String.IsNullOrEmpty(orderItem.ColorId.ToString()) && !String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)
+                        {
+                            var itemColor = itemColors.SingleOrDefault(ic => ic.ColorId == orderItem.ColorId && ic.SizeCode == orderItem.SizeCode);
+                            if (itemColor == null) throw new Exception("Item color not found");
+                            
+                            itemColor.Quantity -= orderItem.Quantity;
+                            await Task.FromResult(_context.ItemColors.Update(itemColor));
+                        }
+                        if (!String.IsNullOrEmpty(orderItem.ColorId.ToString()) && String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber != null)
+                        {
+                            var itemColor = itemColors.SingleOrDefault(ic => ic.ColorId == orderItem.ColorId && ic.SizeNumber == orderItem.SizeNumber);
+                            if (itemColor == null) throw new Exception("Item color not found");
+                            
+                            itemColor.Quantity -= orderItem.Quantity;
+                            await Task.FromResult(_context.ItemColors.Update(itemColor));
+                        }
+                    }
+
+                    await _context.SaveChangesAsync(cancellationToken);
+                }
+
                 
                 var title = "<p><b>Order Confirmation</b></p>";
                 var message = "<p>Order <b>"+order.Reference+"</b> has been confirmed by customer "+order.Customer!.Firstname+" "+order.Customer.Lastname+" and you can proceed with the order.</p>";

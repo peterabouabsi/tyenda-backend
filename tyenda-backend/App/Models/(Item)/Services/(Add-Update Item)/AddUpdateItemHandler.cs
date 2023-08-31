@@ -63,7 +63,6 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                         };
                         await _context.ItemCategories.AddAsync(newItemCategory, cancellationToken);
                     }
-                    
                     foreach (var note in request.AddUpdateItemForm.Notes)
                     {
                         var newNote = new ItemNote()
@@ -116,7 +115,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                     }
                     else if (request.AddUpdateItemForm.ColorSizes!.Count > 0)
                     {
-                        foreach (var colorForm in request.AddUpdateItemForm.Colors)
+                        foreach (var colorForm in request.AddUpdateItemForm.ColorSizes)
                         {
                             var color = await _context.Colors.SingleOrDefaultAsync(color => color.Value == colorForm.Value, cancellationToken);
                             
@@ -126,7 +125,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                                 await _context.Colors.AddAsync(newColor, cancellationToken);
                             }
 
-                            foreach (var sizeForm in request.AddUpdateItemForm.Sizes)
+                            foreach (var sizeForm in colorForm.Sizes)
                             {
 
                                 var newItemColor = new ItemColor()
@@ -284,8 +283,7 @@ namespace tyenda_backend.App.Models._Item_.Services._Add_Update_Item_
                     {
                         foreach (var colorForm in request.AddUpdateItemForm.ColorSizes)
                         {
-                            var color = await _context.Colors.SingleOrDefaultAsync(c => c.Value == colorForm.Value,
-                                cancellationToken);
+                            var color = await _context.Colors.SingleOrDefaultAsync(c => c.Value == colorForm.Value, cancellationToken);
 
                             var newColor = new Color() {Id = Guid.NewGuid(), Value = colorForm.Value};
                             if (color == null)
