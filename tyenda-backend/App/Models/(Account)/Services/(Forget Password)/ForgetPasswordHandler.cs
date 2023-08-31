@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using Hangfire;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,16 +17,18 @@ namespace tyenda_backend.App.Models._Account_.Services._Forget_Password_
     public class ForgetPasswordHandler : IRequestHandler<ForgetPassword, object>
     {
         private readonly TyendaContext _context;
+        private readonly IBackgroundJobClient _backgroundJobClient;
         private readonly IConfiguration _configuration;
         private readonly ITokenService _tokenService;
         private readonly IEmailService _emailService;
 
-        public ForgetPasswordHandler(TyendaContext context, IEmailService emailService, ITokenService tokenService, IConfiguration configuration)
+        public ForgetPasswordHandler(TyendaContext context, IEmailService emailService, ITokenService tokenService, IConfiguration configuration, IBackgroundJobClient backgroundJobClient)
         {
             _context = context;
             _emailService = emailService;
             _tokenService = tokenService;
             _configuration = configuration;
+            _backgroundJobClient = backgroundJobClient;
         }
 
         public async Task<object> Handle(ForgetPassword request, CancellationToken cancellationToken)
@@ -76,7 +79,7 @@ namespace tyenda_backend.App.Models._Account_.Services._Forget_Password_
                 <p>Best regards,<br/>Tyenda Team<br/></p>
                 </body>
                 </html>";
-                await _emailService.SendEmailAsync(account.Email, subject, "html", body);
+                _backgroundJobClient.Enqueue(() => _emailService.SendEmailAsync(account.Email, subject, "html", body));
                 await _context.SaveChangesAsync(cancellationToken);
                 return true;
 

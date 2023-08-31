@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using AutoMapper;
+using Hangfire;
+using Hangfire.PostgreSql;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -76,12 +78,19 @@ namespace tyenda_backend
             //HttpContent Accessor
             services.AddHttpContextAccessor();
 
+            //Hangfire
+            services.AddHangfire(config =>
+            {
+                config.UseStorage(new PostgreSqlStorage(Configuration.GetConnectionString("connection")));
+            });
+            services.AddHangfireServer();
+
             //Services
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IFileService, FileService>();
             services.AddTransient<INotificationService, NotificationService>();
-
+            
             //Cors
             services.AddCors(options =>
             {
@@ -146,7 +155,9 @@ namespace tyenda_backend
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Projects - Tyenda v1"));
             }
-
+            
+            app.UseHangfireDashboard();
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();

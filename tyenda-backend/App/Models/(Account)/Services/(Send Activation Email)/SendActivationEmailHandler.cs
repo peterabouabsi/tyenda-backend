@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using Hangfire;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,16 +17,18 @@ namespace tyenda_backend.App.Models._Account_.Services._Send_Activation_Email_
     public class SendActivationEmailHandler : IRequestHandler<SendActivationEmail, bool>
     {
         private readonly TyendaContext _context;
+        private readonly IBackgroundJobClient _backgroundJobClient;
         private readonly IEmailService _emailService;
         private readonly ITokenService _tokenService;
         private readonly IConfiguration _configuration;
 
-        public SendActivationEmailHandler(TyendaContext context, IEmailService emailService, IConfiguration configuration, ITokenService tokenService)
+        public SendActivationEmailHandler(TyendaContext context, IEmailService emailService, IConfiguration configuration, ITokenService tokenService, IBackgroundJobClient backgroundJobClient)
         {
             _context = context;
             _emailService = emailService;
             _configuration = configuration;
             _tokenService = tokenService;
+            _backgroundJobClient = backgroundJobClient;
         }
 
         public async Task<bool> Handle(SendActivationEmail request, CancellationToken cancellationToken)
@@ -76,7 +79,7 @@ namespace tyenda_backend.App.Models._Account_.Services._Send_Activation_Email_
                         <p>Best regards,<br/>Tyenda Team<br/></p>
                     </body>
                 </html>";
-                await _emailService.SendEmailAsync(account.Email, "Activate Account",  "html", body);
+                _backgroundJobClient.Enqueue(() => _emailService.SendEmailAsync(account.Email, "Activate Account", "html", body));
                 return true;
             }
             

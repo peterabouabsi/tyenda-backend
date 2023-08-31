@@ -53,6 +53,14 @@
               "target": "Package",
               "version": "[1.57.0, )"
             },
+            "Hangfire": {
+              "target": "Package",
+              "version": "[1.8.5, )"
+            },
+            "Hangfire.PostgreSql": {
+              "target": "Package",
+              "version": "[1.20.2, )"
+            },
             "MailKit": {
               "target": "Package",
               "version": "[4.0.0, )"
