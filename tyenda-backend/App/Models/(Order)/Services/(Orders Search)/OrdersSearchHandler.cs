@@ -60,7 +60,7 @@ namespace tyenda_backend.App.Models._Order_.Services._Orders_Search_
                     
                     if (store == null)
                     { 
-                        throw new UnauthorizedAccessException("Customer not found");
+                        throw new UnauthorizedAccessException("Store not found");
                     }
                     var storeId = store.Id;
                     query =  query.Where(order => order.Item!.StoreId == storeId);
