@@ -13,7 +13,7 @@ namespace tyenda_backend.App.Models._ItemColor_
         public Guid ItemId { get; set; }
         public Item? Item { get; set; }
         
-        public Guid ColorId { get; set; }
+        public Guid? ColorId { get; set; }
         public Color? Color { get; set; }
 
         public SizeCode? SizeCode { get; set; }

@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using tyenda_backend.App.Context;
+using tyenda_backend.App.Models._ItemColor_;
 using tyenda_backend.App.Models._OrderItem_;
+using tyenda_backend.App.Models.Enums;
 using tyenda_backend.App.Services.Token_Service;
 
 namespace tyenda_backend.App.Models._Order_.Services._Delete_Order_
@@ -79,6 +81,69 @@ namespace tyenda_backend.App.Models._Order_.Services._Delete_Order_
                     else
                     {
                         throw new Exception("You don't own this order");
+                    }
+                }
+                
+                var itemColors = await _context.ItemColors.Where(ic => ic.ItemId == order.ItemId).ToArrayAsync(cancellationToken);
+                
+                /*When Order is ongoing and deleted */
+                if (order.OrderStatus == OrderStatus.OnGoing)
+                {
+                    //Add quantities to Item
+                    if (itemColors.Length == 0)
+                    {
+                        var orderItem = order.OrderItems.First();
+                        //If Quantity only
+                        if (String.IsNullOrEmpty(orderItem.ColorId.ToString()) && String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)
+                        {
+                            order.Item!.Quantity += orderItem.Quantity;
+                            await Task.FromResult(_context.Items.Update(order.Item));
+                        }
+                    }
+                    //Add quantities to ItemColors Table
+                    else
+                    {
+                        foreach (var orderItem in order.OrderItems)
+                        {
+                            var itemColor = new ItemColor();
+                            if (!String.IsNullOrEmpty(orderItem.ColorId.ToString()) && String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)
+                            {
+                                itemColor = itemColors.SingleOrDefault(ic => ic.ColorId == orderItem.OrderId);
+                            }
+                            if (String.IsNullOrEmpty(orderItem.ColorId.ToString()) && !String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)
+                            {
+                                itemColor = itemColors.SingleOrDefault(ic => ic.SizeCode == orderItem.SizeCode);
+                            }
+                            if (!String.IsNullOrEmpty(orderItem.ColorId.ToString()) && !String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)
+                            {
+                                itemColor = itemColors.SingleOrDefault(ic => ic.ColorId == orderItem.ColorId && ic.SizeCode == orderItem.SizeCode);
+                            }
+                            if (!String.IsNullOrEmpty(orderItem.ColorId.ToString()) && String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber != null)
+                            {
+                                itemColor = itemColors.SingleOrDefault(ic => ic.ColorId == orderItem.ColorId && ic.SizeNumber == orderItem.SizeNumber);
+                            }
+                            
+                            if (itemColor == null)
+                            {
+                                var newItemColor = new ItemColor()
+                                {
+                                    Id = Guid.NewGuid(),
+                                    ColorId = orderItem.ColorId,
+                                    ItemId = orderItem.ItemId,
+                                    SizeCode = orderItem.SizeCode,
+                                    SizeNumber = orderItem.SizeNumber,
+                                    Quantity = orderItem.Quantity
+                                };
+                                await _context.ItemColors.AddAsync(newItemColor, cancellationToken);
+                            }
+                            else
+                            {
+                                itemColor.Quantity += orderItem.Quantity;
+                                await Task.FromResult(_context.ItemColors.Update(itemColor));
+                            }
+                        }
+
+                        await _context.SaveChangesAsync(cancellationToken);
                     }
                 }
                 

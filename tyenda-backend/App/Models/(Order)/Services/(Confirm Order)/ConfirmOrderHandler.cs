@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using tyenda_backend.App.Context;
 using tyenda_backend.App.Models._Alert_;
+using tyenda_backend.App.Models._ItemColor_;
 using tyenda_backend.App.Models._Notification_;
 using tyenda_backend.App.Models.Enums;
 using tyenda_backend.App.Services.Notification_Service;
@@ -62,8 +63,8 @@ namespace tyenda_backend.App.Models._Order_.Services._Confirm_Order_
                 
                 await Task.FromResult(_context.Orders.Update(order));
 
-                var itemColors = await _context.ItemColors.Where(ic => ic.Id == order.ItemId).ToArrayAsync(cancellationToken);
-                
+                var itemColors = await _context.ItemColors.Where(ic => ic.ItemId == order.ItemId).ToArrayAsync(cancellationToken);
+
                 //Remove quantities from Item
                 if (itemColors.Length == 0)
                 {
@@ -81,44 +82,34 @@ namespace tyenda_backend.App.Models._Order_.Services._Confirm_Order_
                 {
                     foreach (var orderItem in order.OrderItems)
                     {
+                        var itemColor = new ItemColor();
                         if (!String.IsNullOrEmpty(orderItem.ColorId.ToString()) && String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)
                         {
-                            var itemColor = itemColors.SingleOrDefault(ic => ic.ColorId == orderItem.OrderId);
-                            if (itemColor == null) throw new Exception("Item color not found");
-                            
-                            itemColor.Quantity -= orderItem.Quantity;
-                            await Task.FromResult(_context.ItemColors.Update(itemColor));
+                            itemColor = itemColors.SingleOrDefault(ic => ic.ColorId == orderItem.OrderId);
                         }
                         if (String.IsNullOrEmpty(orderItem.ColorId.ToString()) && !String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)
                         {
-                            var itemColor = itemColors.SingleOrDefault(ic => ic.SizeCode == orderItem.SizeCode);
-                            if (itemColor == null) throw new Exception("Item color not found");
-                            
-                            itemColor.Quantity -= orderItem.Quantity;
-                            await Task.FromResult(_context.ItemColors.Update(itemColor));
+                            itemColor = itemColors.SingleOrDefault(ic => ic.SizeCode == orderItem.SizeCode);
                         }
                         if (!String.IsNullOrEmpty(orderItem.ColorId.ToString()) && !String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber == null)
                         {
-                            var itemColor = itemColors.SingleOrDefault(ic => ic.ColorId == orderItem.ColorId && ic.SizeCode == orderItem.SizeCode);
-                            if (itemColor == null) throw new Exception("Item color not found");
-                            
-                            itemColor.Quantity -= orderItem.Quantity;
-                            await Task.FromResult(_context.ItemColors.Update(itemColor));
+                            itemColor = itemColors.SingleOrDefault(ic => ic.ColorId == orderItem.ColorId && ic.SizeCode == orderItem.SizeCode);
                         }
                         if (!String.IsNullOrEmpty(orderItem.ColorId.ToString()) && String.IsNullOrEmpty(orderItem.SizeCode.ToString()) && orderItem.SizeNumber != null)
                         {
-                            var itemColor = itemColors.SingleOrDefault(ic => ic.ColorId == orderItem.ColorId && ic.SizeNumber == orderItem.SizeNumber);
-                            if (itemColor == null) throw new Exception("Item color not found");
-                            
-                            itemColor.Quantity -= orderItem.Quantity;
-                            await Task.FromResult(_context.ItemColors.Update(itemColor));
+                            itemColor = itemColors.SingleOrDefault(ic => ic.ColorId == orderItem.ColorId && ic.SizeNumber == orderItem.SizeNumber);
                         }
+                        if (itemColor == null) throw new Exception("Item color not found");
+                            
+                        itemColor.Quantity -= orderItem.Quantity;
+                        if(itemColor.Quantity > 0) await Task.FromResult(_context.ItemColors.Update(itemColor));
+                        else await Task.FromResult(_context.ItemColors.Remove(itemColor));
+
                     }
 
                     await _context.SaveChangesAsync(cancellationToken);
                 }
 
-                
                 var title = "<p><b>Order Confirmation</b></p>";
                 var message = "<p>Order <b>"+order.Reference+"</b> has been confirmed by customer "+order.Customer!.Firstname+" "+order.Customer.Lastname+" and you can proceed with the order.</p>";
                 var newNotification = new Notification()
