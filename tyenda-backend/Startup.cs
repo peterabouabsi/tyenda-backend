@@ -79,10 +79,11 @@ namespace tyenda_backend
             services.AddHttpContextAccessor();
 
             //Hangfire
-            services.AddHangfire(config =>
-            {
-                config.UseStorage(new PostgreSqlStorage(Configuration.GetConnectionString("connection")));
-            });
+            services.AddHangfire(config => 
+                config.UseSimpleAssemblyNameTypeSerializer()
+                    .UseRecommendedSerializerSettings()
+                    .UsePostgreSqlStorage(Configuration.GetConnectionString("connection"))
+            );
             services.AddHangfireServer();
 
             //Services
@@ -157,7 +158,7 @@ namespace tyenda_backend
             }
             
             app.UseHangfireDashboard();
-            
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

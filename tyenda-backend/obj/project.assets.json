@@ -3600,6 +3600,7 @@
       "BCrypt.Net-Next >= 4.0.3",
       "Google.Apis.Auth >= 1.57.0",
       "Hangfire >= 1.8.5",
+      "Hangfire.Core >= 1.8.5",
       "Hangfire.PostgreSql >= 1.20.2",
       "MailKit >= 4.0.0",
       "MediatR >= 7.0.0",
@@ -3672,6 +3673,10 @@
             "version": "[1.57.0, )"
           },
           "Hangfire": {
+            "target": "Package",
+            "version": "[1.8.5, )"
+          },
+          "Hangfire.Core": {
             "target": "Package",
             "version": "[1.8.5, )"
           },
