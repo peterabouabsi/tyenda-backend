@@ -37,7 +37,7 @@ namespace tyenda_backend.App.Models._Item_.Services._My_Item_Orders_
                 var itemId = Guid.Parse(request.ItemId);
 
                 var orders = await _context.Orders
-                    .Where(order => order.ItemId == itemId)
+                    .Where(order => order.ItemId == itemId && order.CustomerId == customer.Id)
                     .Include(order => order.Item)
                     .ThenInclude(item => item!.Orders.Where(order => order.CustomerId == customerId))
                     .Include(order => order.Item!.Store)
