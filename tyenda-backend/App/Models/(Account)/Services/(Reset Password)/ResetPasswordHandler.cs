@@ -47,16 +47,19 @@ namespace tyenda_backend.App.Models._Account_.Services._Reset_Password_
                 {
                     throw new Exception("Invalid or expired token");
                 }
-
                 
                 //Reset password
                 var account = await _context.Accounts
                     .SingleOrDefaultAsync(account => account.Id == Guid.Parse(accountId), cancellationToken);
-             
-                var pwdMatch = BCrypt.Net.BCrypt.Verify(newPassword, account!.Password);
-                if (pwdMatch)
-                {
-                    throw new Exception("New password must differ from current.");
+
+                if (account == null) throw new Exception("Account not found");
+                
+                if(account.Password != null){
+                    var pwdMatch = BCrypt.Net.BCrypt.Verify(newPassword, account!.Password);
+                    if (pwdMatch)
+                    {
+                        throw new Exception("New password must differ from current.");
+                    }
                 }
 
                 account.Password = BCrypt.Net.BCrypt.HashPassword(newPassword);
