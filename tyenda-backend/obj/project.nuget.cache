@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vesD+L0zCfgkx3PjfoXK3LCvPoTr6cySrHyjoVIadLyp2F/Wq15SMWP/XQXoDUVisz/L3/xLymkHJybTT6EQzA==",
+  "dgSpecHash": "iDvGpCVUEmokaYDrbJuLOAlkqJuPG2dVBDGfPd98JspJ6ctg7wS+xUwSJh06YiYkWcmfMx2ia8wUd10QFoDVSg==",
   "success": true,
-  "projectFilePath": "c:\\Users\\User\\Desktop\\MyProjects Tyenda\\tyenda-backend\\tyenda-backend\\tyenda-backend.csproj",
+  "projectFilePath": "C:\\Users\\User\\Desktop\\My Projects\\tyenda-backend\\tyenda-backend\\tyenda-backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\automapper\\9.0.0\\automapper.9.0.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\automapper.extensions.microsoft.dependencyinjection\\7.0.0\\automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
